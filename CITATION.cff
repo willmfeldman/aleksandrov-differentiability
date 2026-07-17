@@ -1,0 +1,55 @@
+cff-version: 1.2.0
+message: "If you use this Lean formalization, please cite it using this metadata."
+title: "Aleksandrov Differentiability"
+version: "0.1.0"
+date-released: 2026-06-27
+license: "Apache-2.0"
+repository-code: "https://github.com/willmfeldman/aleksandrov-differentiability"
+authors:
+  - name: "AleksandrovDifferentiability contributors"
+abstract: >-
+  Lean formalization of the finite-dimensional convex Aleksandrov second-order
+  differentiability theorem.
+keywords:
+  - Lean
+  - Mathlib
+  - formalized mathematics
+  - convex analysis
+  - Aleksandrov theorem
+  - second-order differentiability
+references:
+  - type: article
+    authors:
+      - family-names: Aleksandrov
+        given-names: "A. D."
+    title: "Almost everywhere existence of the second differential of a convex function and some properties of convex surfaces connected with it"
+    journal: "Leningrad State University Annals [Uchenye Zapiski], Mathematics Series"
+    year: 1939
+    volume: "6"
+    start: 3
+    end: 35
+  - type: article
+    authors:
+      - family-names: Hirsch
+        given-names: Jonas
+    title: "A note on the a.e. second-order differentiability of rank-one convex functions"
+    date-published: 2025-11-11
+    status: preprint
+    identifiers:
+      - type: doi
+        value: "10.48550/arXiv.2511.08397"
+      - type: url
+        value: "https://arxiv.org/abs/2511.08397"
+  - type: book
+    authors:
+      - family-names: Rockafellar
+        given-names: "R. Tyrrell"
+    title: "Convex Analysis"
+    collection-title: "Princeton Landmarks in Mathematics"
+    edition: "Reprint of the 1970 Princeton Mathematical Series 28 edition"
+    publisher:
+      name: "Princeton University Press"
+      city: "Princeton, NJ"
+    year: 1997
+    year-original: 1970
+    isbn: "978-0-691-01586-6"

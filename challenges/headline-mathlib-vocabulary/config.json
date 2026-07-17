@@ -1,0 +1,8 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "AleksandrovDifferentiability.challenge_headline_in_mathlib_vocabulary"
+  ],
+  "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"]
+}

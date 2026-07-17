@@ -1,0 +1,167 @@
+# Ad hoc publicization metadata, modeled on theorem-manifest conventions used by public Lean
+# formalization repositories. The CI workflow validates that the listed target and smoke-test
+# Lean names resolve, checks the targets against axioms.expected exactly, and elaborates the
+# external challenge workspace files.
+schema_version: "1"
+project:
+  name: "AleksandrovDifferentiability"
+  title: "Aleksandrov Differentiability"
+  authors:
+    - "AleksandrovDifferentiability contributors"
+  repository: "https://github.com/willmfeldman/aleksandrov-differentiability"
+  license: "Apache-2.0"
+  language: "Lean"
+  theorem_prover: "Lean 4"
+  lean_toolchain: "leanprover/lean4:v4.30.0"
+  mathlib: "v4.30.0"
+
+build:
+  package_file: "lakefile.lean"
+  manifest_file: "lake-manifest.json"
+  root_import: "AleksandrovDifferentiability"
+  comparator_target: "AleksandrovDifferentiabilityComparator"
+  commands:
+    - "lake exe cache get"
+    - "lake build"
+
+axioms:
+  expected:
+    - "propext"
+    - "Classical.choice"
+    - "Quot.sound"
+
+automation:
+  methods:
+    - method: "agent-assisted formalization"
+      models:
+        - "ChatGPT/Codex"
+      framework: "OpenAI ChatGPT/Codex agentic coding workflow"
+      review_status: "human-supervised"
+      notes: >-
+        The Lean code was developed primarily with AI coding agents under human
+        supervision. Public attribution and citation metadata are recorded at the
+        repository level rather than in per-file Lean author headers.
+
+targets:
+  - id: "convex-aleksandrov-ae"
+    title: "Finite-dimensional convex Aleksandrov theorem"
+    kind: "headline-theorem"
+    lean_name: "AleksandrovDifferentiability.convexAleksandrovAE"
+    lean_file: "AleksandrovDifferentiability/Statements/Aleksandrov/Final.lean"
+    challenge: "challenges/headline-mathlib-vocabulary"
+    statement: >-
+      If u is convex on an open convex subset Omega of a finite-dimensional real
+      inner product space, then u is second-order differentiable at volume
+      restricted to Omega almost every point.
+  - id: "convex-aleksandrov-statement-layer"
+    title: "Named statement predicate"
+    kind: "statement-interface"
+    lean_name: "AleksandrovDifferentiability.ConvexAleksandrovAEStatement"
+    lean_file: "AleksandrovDifferentiability/Statements/Aleksandrov/Core.lean"
+    challenge: "challenges/statement-predicate"
+  - id: "one-dimensional-smooth-check"
+    title: "Smooth one-dimensional scalar estimate check"
+    kind: "sanity-check"
+    lean_name: "AleksandrovDifferentiability.smoothOneDimensionalScalarEstimateStatement"
+    lean_file: "AleksandrovDifferentiability/Statements/OneDimensional/Core.lean"
+
+comparator:
+  smoke_test:
+    lean_file: "AleksandrovDifferentiability/Comparator.lean"
+    lake_target: "AleksandrovDifferentiabilityComparator"
+    purpose: >-
+      Small Lean API-regression smoke-test surface for checking that public imports,
+      statement-level interfaces, model cases, and headline theorem applications
+      remain available to downstream users. This is not the publication comparator
+      substitute.
+  external_challenges:
+    directory: "challenges"
+    purpose: >-
+      Standalone comparator challenge workspaces. Challenge files import Mathlib only;
+      Solution files import AleksandrovDifferentiability and prove the same statements.
+    toolchain: "leanprover/lean4:v4.30.0"
+    mathlib: "v4.30.0"
+    permitted_axioms:
+      - "propext"
+      - "Classical.choice"
+      - "Quot.sound"
+    entries:
+      - id: "headline-mathlib-vocabulary"
+        path: "challenges/headline-mathlib-vocabulary"
+        theorem_name: "AleksandrovDifferentiability.challenge_headline_in_mathlib_vocabulary"
+        checks: "The headline theorem unfolds to a statement using only Mathlib vocabulary for symmetry and the quadratic little-o expansion."
+      - id: "statement-predicate"
+        path: "challenges/statement-predicate"
+        theorem_name: "AleksandrovDifferentiability.challenge_statement_predicate"
+        checks: "The named statement predicate is discharged by the exported theorem."
+      - id: "norm-convex-headline"
+        path: "challenges/norm-convex-headline"
+        theorem_name: "AleksandrovDifferentiability.challenge_norm_convex_headline"
+        checks: "The headline theorem applies to Mathlib's nontrivial convex example x |-> ||x|| on the full space."
+      - id: "open-positive-square-headline"
+        path: "challenges/open-positive-square-headline"
+        theorem_name: "AleksandrovDifferentiability.challenge_open_positive_square_headline"
+        checks: "The headline theorem applies on the nonempty open convex domain (0, infinity) to Mathlib's concrete convex function x |-> x^2."
+      - id: "second-order-witness-interface"
+        path: "challenges/second-order-witness-interface"
+        theorem_name: "AleksandrovDifferentiability.challenge_second_order_witness_interface"
+        checks: "The public second-order differentiability predicate exposes gradient and symmetric Hessian witnesses."
+      - id: "affine-model-case"
+        path: "challenges/affine-model-case"
+        theorem_name: "AleksandrovDifferentiability.challenge_affine_model_case"
+        checks: "Affine functions represented by an inner-product slope satisfy the public predicate."
+  api_smoke_challenges:
+    purpose: >-
+      Small Lean API-regression smoke-test surface for checking that public imports,
+      statement-level interfaces, model cases, and headline theorem applications
+      remain available to downstream users.
+    challenges:
+      - id: "root-import-headline-theorem"
+        lean_name: "AleksandrovDifferentiability.Comparator.challenge_root_import_headline_theorem"
+        checks: "The root import exposes the headline almost-everywhere theorem."
+      - id: "statement-layer-headline-theorem"
+        lean_name: "AleksandrovDifferentiability.Comparator.challenge_statement_layer_headline_theorem"
+        checks: "The named statement predicate is discharged by the exported theorem."
+      - id: "null-bad-set-equivalence-interface"
+        lean_name: "AleksandrovDifferentiability.Comparator.challenge_null_bad_set_equivalence_interface"
+        checks: "The public statement layer exposes the equivalence between the a.e. theorem statement and the null exceptional set formulation."
+      - id: "headline-in-mathlib-vocabulary"
+        lean_name: "AleksandrovDifferentiability.Comparator.challenge_headline_in_mathlib_vocabulary"
+        checks: "The headline theorem unfolds to a statement using only Mathlib vocabulary for symmetry and the quadratic little-o expansion."
+      - id: "second-order-witness-interface"
+        lean_name: "AleksandrovDifferentiability.Comparator.challenge_second_order_witness_interface"
+        checks: "The public second-order differentiability predicate exposes gradient and symmetric Hessian witnesses."
+      - id: "second-order-little-o-definition"
+        lean_name: "AleksandrovDifferentiability.Comparator.challenge_second_order_expansion_is_littleO"
+        checks: "The project second-order expansion predicate unfolds to the advertised quadratic little-o remainder."
+      - id: "constant-model-case"
+        lean_name: "AleksandrovDifferentiability.Comparator.challenge_constant_model_case"
+        checks: "Constant functions satisfy the public second-order differentiability predicate."
+      - id: "affine-model-case"
+        lean_name: "AleksandrovDifferentiability.Comparator.challenge_affine_model_case"
+        checks: "Affine functions represented by an inner-product slope satisfy the public predicate."
+      - id: "mathlib-norm-convex-headline-theorem"
+        lean_name: "AleksandrovDifferentiability.Comparator.challenge_mathlib_norm_convex_headline_theorem"
+        checks: "The headline theorem applies to Mathlib's nontrivial convex example x |-> ||x|| on the full space."
+      - id: "open-positive-square-headline-theorem"
+        lean_name: "AleksandrovDifferentiability.Comparator.challenge_open_positive_square_headline_theorem"
+        checks: "The headline theorem applies on the nonempty open convex domain (0, infinity) to Mathlib's concrete convex function x |-> x^2."
+      - id: "isup-affine-family-headline-theorem"
+        lean_name: "AleksandrovDifferentiability.Comparator.challenge_iSup_affine_family_headline_theorem"
+        checks: "The headline theorem applies to the pointwise supremum of a nonempty pointwise bounded-above family of affine functions x |-> <p_i, x> + b_i."
+      - id: "smooth-one-dimensional-check"
+        lean_name: "AleksandrovDifferentiability.Comparator.challenge_smooth_one_dimensional_check"
+        checks: "The one-dimensional smooth sanity check remains exported."
+      - id: "gradient-bridge"
+        lean_name: "AleksandrovDifferentiability.Comparator.challenge_gradient_bridge"
+        checks: "A second-order expansion yields Mathlib's Frechet derivative, with the first-order vector represented through the inner product."
+      - id: "abs-not-second-order-differentiable"
+        lean_name: "AleksandrovDifferentiability.Comparator.challenge_abs_not_second_order_differentiable"
+        checks: "Negative test: the absolute value fails the public second-order differentiability predicate at 0."
+      - id: "exists-second-order-point"
+        lean_name: "AleksandrovDifferentiability.Comparator.challenge_exists_second_order_point"
+        checks: "Existence: the a.e. headline conclusion is non-vacuous, producing a concrete second-order differentiability point of x |-> x^2 in (0, infinity)."
+
+ci:
+  workflow: ".github/workflows/ci.yml"
+  expected_check: "lake build, comparator target, YAML lean-name checks, challenge workspace elaboration, proof-integrity grep, and exact axiom check"

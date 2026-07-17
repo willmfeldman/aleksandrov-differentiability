@@ -1,0 +1,9 @@
+/.lake
+**/.lake
+.DS_Store
+
+# Local working material; not part of the release.
+/*.md
+!/README.md
+!/CONTRIBUTING.md
+docs/

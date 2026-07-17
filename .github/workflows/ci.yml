@@ -1,0 +1,90 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Lake build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build Lean project
+        uses: leanprover/lean-action@v1
+        with:
+          build: true
+          test: false
+          use-mathlib-cache: true
+
+      - name: Validate formalization metadata
+        run: |
+          ruby -e 'require "yaml"; YAML.load_file("formalization.yaml")'
+
+      - name: Check formalization Lean names
+        run: |
+          ruby -ryaml -e '
+            data = YAML.load_file("formalization.yaml")
+            names = []
+            names.concat((data["targets"] || []).map { |t| t["lean_name"] }.compact)
+            smoke = ((data["comparator"] || {})["api_smoke_challenges"] || {})
+            names.concat((smoke["challenges"] || []).map { |c| c["lean_name"] }.compact)
+            File.write(ENV["RUNNER_TEMP"] + "/formalization_checks.lean",
+              "import AleksandrovDifferentiability.Comparator\n" +
+              names.map { |n| "#check #{n}\n" }.join)
+          '
+          lake env lean "$RUNNER_TEMP/formalization_checks.lean"
+
+      - name: Check proof integrity
+        run: |
+          ! grep -RInE --include='*.lean' '\bsorry\b|^axiom |\badmit\b|native_decide' \
+            AleksandrovDifferentiability AleksandrovDifferentiability.lean
+          ! grep -RInE '\bsorry\b|^axiom |\badmit\b|native_decide' challenges/*/Solution.lean
+
+      - name: Elaborate challenge workspace files
+        run: |
+          for f in challenges/*/Challenge.lean challenges/*/Solution.lean; do
+            echo "== $f"
+            lake env lean "$f"
+          done
+
+      - name: Check manifest target axioms
+        run: |
+          ruby -ryaml -e '
+            data = YAML.load_file("formalization.yaml")
+            names = (data["targets"] || []).map { |t| t["lean_name"] }.compact
+            File.write(ENV["RUNNER_TEMP"] + "/axiom_check.lean",
+              "import AleksandrovDifferentiability\n" +
+              names.map { |n| "#print axioms #{n}\n" }.join)
+          '
+          lake env lean "$RUNNER_TEMP/axiom_check.lean" | tee "$RUNNER_TEMP/axiom_check.out"
+          ruby -ryaml <<'RUBY'
+            data = YAML.load_file("formalization.yaml")
+            expected = (data.dig("axioms", "expected") || []).sort
+            abort "formalization.yaml axioms.expected is empty" if expected.empty?
+            names = (data["targets"] || []).map { |t| t["lean_name"] }.compact
+            out = File.read(ENV["RUNNER_TEMP"] + "/axiom_check.out").gsub(/\s+/, " ")
+            failures = []
+            names.each do |n|
+              if out.match(/'#{Regexp.escape(n)}' does not depend on any axioms/)
+                next
+              end
+              m = out.match(/'#{Regexp.escape(n)}' depends on axioms: \[([^\]]*)\]/)
+              if m.nil?
+                failures << "#{n}: no axiom report found"
+              else
+                actual = m[1].split(",").map(&:strip).sort
+                unless actual == expected
+                  failures << "#{n}: axioms #{actual.inspect} differ from expected #{expected.inspect}"
+                end
+              end
+            end
+            failures.each { |f| warn f }
+            exit 1 unless failures.empty?
+            puts "All #{names.size} targets depend on exactly #{expected.inspect} (or nothing)."
+          RUBY

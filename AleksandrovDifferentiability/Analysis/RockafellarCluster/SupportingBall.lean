@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed
+module
+
+public import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed
 
 /-!
 # Supporting balls in the Straszewicz argument
@@ -8,7 +10,7 @@ Straszewicz's theorem: a point of a set which is farthest from a center is expos
 supporting hyperplane to the corresponding closed ball.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AleksandrovDifferentiability
 

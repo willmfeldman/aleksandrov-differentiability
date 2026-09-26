@@ -1,14 +1,16 @@
-import AleksandrovDifferentiability.Analysis.LocalizedMaximal.Basic
-import AleksandrovDifferentiability.Analysis.LocalizedMaximal.Covering
-import AleksandrovDifferentiability.Analysis.LocalizedMaximal.Estimate
-import AleksandrovDifferentiability.Analysis.OneDimSecondDerivative.Controls
-import AleksandrovDifferentiability.Analysis.QuadraticTrap.RealScalar
-import AleksandrovDifferentiability.Foundation.Subgradient
-import AleksandrovDifferentiability.Geometry.Cube
-import AleksandrovDifferentiability.Statements.Cube.Basic.Core
-import AleksandrovDifferentiability.Statements.Cube.Basic.Sets
-import Mathlib.MeasureTheory.Integral.Prod
-import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
+module
+
+public import AleksandrovDifferentiability.Analysis.LocalizedMaximal.Basic
+public import AleksandrovDifferentiability.Analysis.LocalizedMaximal.Covering
+public import AleksandrovDifferentiability.Analysis.LocalizedMaximal.Estimate
+public import AleksandrovDifferentiability.Analysis.OneDimSecondDerivative.Controls
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.RealScalar
+public import AleksandrovDifferentiability.Foundation.Subgradient
+public import AleksandrovDifferentiability.Geometry.Cube
+public import AleksandrovDifferentiability.Statements.Cube.Basic.Core
+public import AleksandrovDifferentiability.Statements.Cube.Basic.Sets
+public import Mathlib.MeasureTheory.Integral.Prod
+public import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
 
 /-!
 # Localized maximal slice predicates on source cubes
@@ -17,7 +19,7 @@ This file connects the one-dimensional localized maximal-function notation to th
 coordinate-slice bad predicate used in the upper-contact estimate.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

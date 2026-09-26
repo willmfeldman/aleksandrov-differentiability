@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Analysis.LineRestriction.UpperContact
+module
+
+public import AleksandrovDifferentiability.Analysis.LineRestriction.UpperContact
 
 /-!
 # Restrictions to affine lines

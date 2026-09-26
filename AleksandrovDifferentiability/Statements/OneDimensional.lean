@@ -1,1 +1,3 @@
-import AleksandrovDifferentiability.Statements.OneDimensional.Directional
+module
+
+public import AleksandrovDifferentiability.Statements.OneDimensional.Directional

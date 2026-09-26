@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Analysis.OneDimSecondDerivative.Controls
+module
+
+public import AleksandrovDifferentiability.Analysis.OneDimSecondDerivative.Controls
 
 /-!
 # One-dimensional convex second-derivative measure interfaces

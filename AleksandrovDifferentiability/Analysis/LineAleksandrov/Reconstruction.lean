@@ -1,12 +1,14 @@
-import AleksandrovDifferentiability.Analysis.LineAleksandrov.Fubini
-import AleksandrovDifferentiability.Statements.Aleksandrov.Equivalence
-import AleksandrovDifferentiability.Statements.Aleksandrov.SliceReconstruction.DirectionalLine
+module
+
+public import AleksandrovDifferentiability.Analysis.LineAleksandrov.Fubini
+public import AleksandrovDifferentiability.Statements.Aleksandrov.Equivalence
+public import AleksandrovDifferentiability.Statements.Aleksandrov.SliceReconstruction.DirectionalLine
 
 /-!
 # Reconstruction assembly from line estimates
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

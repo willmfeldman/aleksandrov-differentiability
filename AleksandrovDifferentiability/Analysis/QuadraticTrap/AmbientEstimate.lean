@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Analysis.QuadraticTrap.Basic
+module
+
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.Basic
 
 /-!
 # Ambient quadratic estimates
@@ -6,7 +8,7 @@ import AleksandrovDifferentiability.Analysis.QuadraticTrap.Basic
 Ambient quadratic remainder estimate predicates and their connection to second-order expansions.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open scoped BigOperators
 

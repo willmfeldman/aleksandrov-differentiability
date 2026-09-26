@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Measurability.Wrappers
+module
+
+public import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Measurability.Wrappers
 
 /-!
 # Measurability reductions for Stieltjes coordinate-slice measures

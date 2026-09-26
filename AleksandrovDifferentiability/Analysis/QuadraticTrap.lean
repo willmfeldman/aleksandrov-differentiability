@@ -1,1 +1,3 @@
-import AleksandrovDifferentiability.Analysis.QuadraticTrap.ZeroHessian
+module
+
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.ZeroHessian

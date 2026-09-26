@@ -2,7 +2,7 @@ import Lake
 open Lake DSL
 
 package "AleksandrovDifferentiability" where
-  version := v!"0.1.0"
+  version := v!"0.2.0"
   keywords := #["math"]
   leanOptions := #[
     ⟨`pp.unicode.fun, true⟩, -- pretty-prints `fun a ↦ b`

@@ -1,15 +1,17 @@
-import AleksandrovDifferentiability.Analysis.LineRestriction.Basic
-import AleksandrovDifferentiability.Analysis.LocalizedMaximal.Basic
-import AleksandrovDifferentiability.Analysis.LocalizedMaximal.Covering
-import AleksandrovDifferentiability.Analysis.OneDimSecondDerivative.Basic
-import AleksandrovDifferentiability.Analysis.OneDimSecondDerivative.Controls
-import AleksandrovDifferentiability.Analysis.QuadraticTrap.RealScalar
-import AleksandrovDifferentiability.Foundation.Subgradient
-import AleksandrovDifferentiability.Geometry.Cube
-import AleksandrovDifferentiability.Statements.Cube.Maximal.Basic
-import AleksandrovDifferentiability.Statements.Cube.Maximal.Fubini
-import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Basic
-import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Controls
+module
+
+public import AleksandrovDifferentiability.Analysis.LineRestriction.Basic
+public import AleksandrovDifferentiability.Analysis.LocalizedMaximal.Basic
+public import AleksandrovDifferentiability.Analysis.LocalizedMaximal.Covering
+public import AleksandrovDifferentiability.Analysis.OneDimSecondDerivative.Basic
+public import AleksandrovDifferentiability.Analysis.OneDimSecondDerivative.Controls
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.RealScalar
+public import AleksandrovDifferentiability.Foundation.Subgradient
+public import AleksandrovDifferentiability.Geometry.Cube
+public import AleksandrovDifferentiability.Statements.Cube.Maximal.Basic
+public import AleksandrovDifferentiability.Statements.Cube.Maximal.Fubini
+public import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Basic
+public import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Controls
 
 /-!
 # Basic measurability interfaces for Stieltjes coordinate-slice measures
@@ -18,7 +20,7 @@ This file contains the basic endpoint and countable-interval interfaces used by 
 source-local Stieltjes route.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open Filter

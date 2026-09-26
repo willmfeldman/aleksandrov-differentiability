@@ -1,6 +1,8 @@
-import AleksandrovDifferentiability.Statements.Cube.Envelope
-import AleksandrovDifferentiability.Analysis.EpigraphLineLift
-import AleksandrovDifferentiability.Analysis.LineIntegral
+module
+
+public import AleksandrovDifferentiability.Statements.Cube.Envelope
+public import AleksandrovDifferentiability.Analysis.EpigraphLineLift
+public import AleksandrovDifferentiability.Analysis.LineIntegral
 
 /-!
 # Cube-local second-order assembly
@@ -11,7 +13,7 @@ into `SecondOrderDifferentiableAt`.  Once that pointwise bridge is available, th
 statement follows immediately from the countable good-set/envelope theorem.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open Asymptotics

@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed.Face
+module
+
+public import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed.Face
 
 /-!
 # Norm thickenings and cluster tools
@@ -7,7 +9,7 @@ This module contains the open norm-thickening API and general cluster-point lemm
 Rockafellar directional outer-semicontinuity argument.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AleksandrovDifferentiability
 

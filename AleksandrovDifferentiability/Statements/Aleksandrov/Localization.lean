@@ -1,10 +1,12 @@
-import AleksandrovDifferentiability.Statements.Aleksandrov.Transport
-import AleksandrovDifferentiability.Statements.Cube.ClusterDensity
-import Mathlib.Analysis.Convex.Continuous
-import Mathlib.MeasureTheory.Group.MeasurableEquiv
-import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
-import Mathlib.MeasureTheory.Measure.MeasureSpace
-import Mathlib.Topology.Compactness.Lindelof
+module
+
+public import AleksandrovDifferentiability.Statements.Aleksandrov.Transport
+public import AleksandrovDifferentiability.Statements.Cube.ClusterDensity
+public import Mathlib.Analysis.Convex.Continuous
+public import Mathlib.MeasureTheory.Group.MeasurableEquiv
+public import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
+public import Mathlib.MeasureTheory.Measure.MeasureSpace
+public import Mathlib.Topology.Compactness.Lindelof
 
 /-!
 # Localization from source cubes to affine images
@@ -15,7 +17,7 @@ arguments: a.e. second-order differentiability of the pullback `z â†¦ u (a + r â
 to a.e. second-order differentiability of `u` with respect to the image measure.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

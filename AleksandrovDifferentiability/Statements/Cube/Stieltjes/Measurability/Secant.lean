@@ -1,5 +1,7 @@
-import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Measurability.Basic
-import Mathlib.Analysis.SpecificLimits.Basic
+module
+
+public import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Measurability.Basic
+public import Mathlib.Analysis.SpecificLimits.Basic
 
 /-!
 # Secant approximations for clamped coordinate-slice right derivatives
@@ -8,7 +10,7 @@ This file proves measurability of fixed coordinate-slice secant slopes and the s
 secant approximation identity for the clamped right derivative.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open Filter

@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Statements.Aleksandrov.Localization
+module
+
+public import AleksandrovDifferentiability.Statements.Aleksandrov.Localization
 
 /-!
 # Final convex Aleksandrov theorem
@@ -7,7 +9,7 @@ This module provides the public theorem endpoint for the convex Aleksandrov seco
 differentiability theorem in finite-dimensional real inner product spaces.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

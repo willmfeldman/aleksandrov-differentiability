@@ -1,11 +1,13 @@
-import AleksandrovDifferentiability.Statements.Cube.ClusterDensity.Ray
-import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Measurability.Wrappers
+module
+
+public import AleksandrovDifferentiability.Statements.Cube.ClusterDensity.Ray
+public import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Measurability.Wrappers
 
 /-!
 # Source-cube cluster-density final assembly
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

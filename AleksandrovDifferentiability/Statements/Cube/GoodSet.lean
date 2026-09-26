@@ -1,6 +1,8 @@
-import AleksandrovDifferentiability.Statements.Cube.FirstOrder
-import AleksandrovDifferentiability.Statements.Cube.Oscillation
-import Mathlib.Analysis.Normed.Operator.Asymptotics
+module
+
+public import AleksandrovDifferentiability.Statements.Cube.FirstOrder
+public import AleksandrovDifferentiability.Statements.Cube.Oscillation
+public import Mathlib.Analysis.Normed.Operator.Asymptotics
 
 /-!
 # Cube-local good-set coverage
@@ -10,7 +12,7 @@ This file packages the source proof's countable good-set cover
 upper-contact opening a.e. have been established.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open Asymptotics

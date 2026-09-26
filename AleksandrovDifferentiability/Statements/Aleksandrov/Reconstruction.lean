@@ -1,10 +1,12 @@
-import AleksandrovDifferentiability.Statements.Aleksandrov.Transport
+module
+
+public import AleksandrovDifferentiability.Statements.Aleksandrov.Transport
 
 /-!
 # Reconstruction statement interfaces
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

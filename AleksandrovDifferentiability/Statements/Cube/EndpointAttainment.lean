@@ -1,6 +1,8 @@
-import AleksandrovDifferentiability.Analysis.EpigraphLineLift
-import AleksandrovDifferentiability.Analysis.LineRestriction
-import AleksandrovDifferentiability.Statements.Cube.Oscillation
+module
+
+public import AleksandrovDifferentiability.Analysis.EpigraphLineLift
+public import AleksandrovDifferentiability.Analysis.LineRestriction
+public import AleksandrovDifferentiability.Statements.Cube.Oscillation
 
 /-!
 # Cube-local endpoint attainment
@@ -11,7 +13,7 @@ theorem; the boundedness of the subdifferential on `Q_{3/2}` is supplied by the 
 estimate on `Q_3`.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open scoped Topology
 

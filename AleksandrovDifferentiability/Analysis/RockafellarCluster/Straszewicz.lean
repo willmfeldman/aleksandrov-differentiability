@@ -1,5 +1,7 @@
-import AleksandrovDifferentiability.Analysis.RockafellarCluster.ConvexHull
-import AleksandrovDifferentiability.Analysis.RockafellarCluster.SupportingBall
+module
+
+public import AleksandrovDifferentiability.Analysis.RockafellarCluster.ConvexHull
+public import AleksandrovDifferentiability.Analysis.RockafellarCluster.SupportingBall
 
 /-!
 # Compact Straszewicz theorem
@@ -8,7 +10,7 @@ This module assembles the compact finite-dimensional Straszewicz theorem from th
 pieces in `ConvexHull` and `SupportingBall`.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AleksandrovDifferentiability
 

@@ -1,5 +1,7 @@
-import AleksandrovDifferentiability.Analysis.GoodSet
-import AleksandrovDifferentiability.Analysis.QuadraticTrap
+module
+
+public import AleksandrovDifferentiability.Analysis.GoodSet
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap
 
 /-!
 # Assembly from quadratic estimates
@@ -8,7 +10,7 @@ This file packages the passage from full-measure sets carrying pointwise quadrat
 estimates to the project almost-everywhere differentiability conclusions.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

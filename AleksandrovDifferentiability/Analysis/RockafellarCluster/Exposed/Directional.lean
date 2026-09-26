@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed.Thickening
+module
+
+public import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed.Thickening
 
 /-!
 # Directional exposed-face outer semicontinuity
@@ -7,7 +9,7 @@ This module packages the subgradient inequalities and compactness wrapper leadin
 membership in norm thickenings of an exposed face.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AleksandrovDifferentiability
 

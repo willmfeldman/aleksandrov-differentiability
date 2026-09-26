@@ -1,9 +1,11 @@
-import AleksandrovDifferentiability.Analysis.LocalizedMaximal.Basic
-import AleksandrovDifferentiability.Analysis.LocalizedMaximal.Covering
-import AleksandrovDifferentiability.Analysis.OneDimConvex
-import AleksandrovDifferentiability.Analysis.QuadraticTrap.Basic
-import AleksandrovDifferentiability.Foundation.Subgradient
-import Mathlib.MeasureTheory.Measure.Stieltjes
+module
+
+public import AleksandrovDifferentiability.Analysis.LocalizedMaximal.Basic
+public import AleksandrovDifferentiability.Analysis.LocalizedMaximal.Covering
+public import AleksandrovDifferentiability.Analysis.OneDimConvex
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.Basic
+public import AleksandrovDifferentiability.Foundation.Subgradient
+public import Mathlib.MeasureTheory.Measure.Stieltjes
 
 /-!
 # One-dimensional convex second-derivative measure interfaces
@@ -14,7 +16,7 @@ work; the statements here isolate exactly the mass and endpoint-control facts ne
 localized maximal argument.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open Filter

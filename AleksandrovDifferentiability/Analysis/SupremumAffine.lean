@@ -1,5 +1,7 @@
-import Mathlib.Analysis.Convex.Function
-import Mathlib.Analysis.InnerProductSpace.Basic
+module
+
+public import Mathlib.Analysis.Convex.Function
+public import Mathlib.Analysis.InnerProductSpace.Basic
 
 /-!
 # Suprema of affine functions
@@ -8,7 +10,7 @@ This file records a small convexity fact used by the public comparator: a pointw
 affine functions is convex when the real supremum is pointwise bounded above.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AleksandrovDifferentiability
 

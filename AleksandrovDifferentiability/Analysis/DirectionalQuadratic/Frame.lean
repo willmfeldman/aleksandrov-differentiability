@@ -1,6 +1,8 @@
-import AleksandrovDifferentiability.Foundation.SecondOrder
-import Mathlib.Analysis.InnerProductSpace.LinearMap
-import Mathlib.Analysis.InnerProductSpace.PiL2
+module
+
+public import AleksandrovDifferentiability.Foundation.SecondOrder
+public import Mathlib.Analysis.InnerProductSpace.LinearMap
+public import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
 # Directional quadratic operators
@@ -11,7 +13,7 @@ produce scalar coefficients along selected directions; these definitions package
 rank-one symmetric operators.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open scoped BigOperators
 

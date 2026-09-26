@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Analysis.QuadraticTrap.RealScalar
+module
+
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.RealScalar
 
 /-!
 # Zero Hessian estimate constructors
@@ -6,7 +8,7 @@ import AleksandrovDifferentiability.Analysis.QuadraticTrap.RealScalar
 Convenience constructors for second-order differentiability with zero Hessian.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open scoped BigOperators
 

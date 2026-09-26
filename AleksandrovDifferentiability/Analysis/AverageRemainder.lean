@@ -1,6 +1,8 @@
-import AleksandrovDifferentiability.Analysis.OneDimConvex
-import Mathlib.Analysis.Convex.Continuous
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+module
+
+public import AleksandrovDifferentiability.Analysis.OneDimConvex
+public import Mathlib.Analysis.Convex.Continuous
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 
 /-!
 # Averaged one-dimensional remainders
@@ -10,7 +12,7 @@ The first named fact records the exact integral of the linear model that will ap
 linearizing the right derivative.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open Filter Set

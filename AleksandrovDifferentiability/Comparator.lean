@@ -1,7 +1,9 @@
-import AleksandrovDifferentiability
-import Mathlib.Analysis.Calculus.Deriv.Abs
-import Mathlib.Analysis.Convex.Mul
-import Mathlib.Analysis.Normed.Module.Convex
+module
+
+public import AleksandrovDifferentiability
+public import Mathlib.Analysis.Calculus.Deriv.Abs
+public import Mathlib.Analysis.Convex.Mul
+public import Mathlib.Analysis.Normed.Module.Convex
 
 /-!
 # Comparator challenges
@@ -14,7 +16,7 @@ supremum-of-affine-functions challenge, the gradient bridge to Mathlib's Fréche
 negative test on the absolute value, and a concrete non-vacuousness witness for the a.e. theorem.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open Asymptotics
 open MeasureTheory

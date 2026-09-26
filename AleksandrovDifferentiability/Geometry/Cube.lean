@@ -1,10 +1,12 @@
-import Mathlib.Analysis.Convex.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.InnerProductSpace.ProdL2
-import Mathlib.Topology.MetricSpace.Bounded
-import Mathlib.Topology.MetricSpace.Basic
-import Mathlib.Topology.Algebra.Module.Basic
-import Mathlib.Topology.Algebra.Order.Field
+module
+
+public import Mathlib.Analysis.Convex.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.InnerProductSpace.ProdL2
+public import Mathlib.Topology.MetricSpace.Bounded
+public import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Topology.Algebra.Module.Basic
+public import Mathlib.Topology.Algebra.Order.Field
 
 /-!
 # Source-normalized coordinate cubes
@@ -13,7 +15,7 @@ This file records the cube notation used in the source proof.  The normalized th
 proved on `Q 3 = (-3, 3)^n` with conclusion on `Q 1 = (-1, 1)^n`.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AleksandrovDifferentiability
 

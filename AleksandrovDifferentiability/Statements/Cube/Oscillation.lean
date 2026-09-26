@@ -1,8 +1,10 @@
-import AleksandrovDifferentiability.Analysis.QuadraticTrap.Basic
-import AleksandrovDifferentiability.Foundation.Subgradient
-import AleksandrovDifferentiability.Geometry.Cube
-import AleksandrovDifferentiability.Statements.Cube.Basic.Core
-import AleksandrovDifferentiability.Statements.Cube.Basic.Sets
+module
+
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.Basic
+public import AleksandrovDifferentiability.Foundation.Subgradient
+public import AleksandrovDifferentiability.Geometry.Cube
+public import AleksandrovDifferentiability.Statements.Cube.Basic.Core
+public import AleksandrovDifferentiability.Statements.Cube.Basic.Sets
 
 /-!
 # Oscillation bounds on source cubes
@@ -11,7 +13,7 @@ This file records source-cube order estimates involving `oscOn`.  These are used
 large-increment part of the upper-contact estimate.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

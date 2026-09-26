@@ -1,12 +1,14 @@
-import AleksandrovDifferentiability.Statements.Aleksandrov.Equivalence
-import AleksandrovDifferentiability.Statements.Aleksandrov.EstimateData
-import AleksandrovDifferentiability.Statements.Aleksandrov.CountableAE
+module
+
+public import AleksandrovDifferentiability.Statements.Aleksandrov.Equivalence
+public import AleksandrovDifferentiability.Statements.Aleksandrov.EstimateData
+public import AleksandrovDifferentiability.Statements.Aleksandrov.CountableAE
 
 /-!
 # Estimate-data reductions to null bad sets
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

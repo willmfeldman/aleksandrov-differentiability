@@ -1,1 +1,3 @@
-import AleksandrovDifferentiability.Statements.Aleksandrov.SliceReconstruction.Fubini
+module
+
+public import AleksandrovDifferentiability.Statements.Aleksandrov.SliceReconstruction.Fubini

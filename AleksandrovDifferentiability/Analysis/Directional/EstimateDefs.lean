@@ -1,10 +1,12 @@
-import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Operators
-import AleksandrovDifferentiability.Analysis.GoodSet
-import AleksandrovDifferentiability.Analysis.LineRestriction.Basic
-import AleksandrovDifferentiability.Analysis.QuadraticTrap.Basic
-import AleksandrovDifferentiability.Analysis.QuadraticTrap.RealScalar
-import AleksandrovDifferentiability.Analysis.LineSecondOrder
-import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
+module
+
+public import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Operators
+public import AleksandrovDifferentiability.Analysis.GoodSet
+public import AleksandrovDifferentiability.Analysis.LineRestriction.Basic
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.Basic
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.RealScalar
+public import AleksandrovDifferentiability.Analysis.LineSecondOrder
+public import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
 
 /-!
 # Assembly from directional quadratic estimates
@@ -14,7 +16,7 @@ from finitely many directional coefficients.  It is a small bridge between futur
 the existing `SecondOrderDifferentiableAEOn` interface.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

@@ -1,10 +1,12 @@
-import AleksandrovDifferentiability.Analysis.Directional.Assembly
-import AleksandrovDifferentiability.Analysis.Directional.CountableNull
-import AleksandrovDifferentiability.Analysis.Directional.EstimateDefs
-import AleksandrovDifferentiability.Analysis.Directional.FullMeasure
-import AleksandrovDifferentiability.Analysis.Directional.LineScalar
-import AleksandrovDifferentiability.Analysis.Directional.Reconstruction
-import AleksandrovDifferentiability.Analysis.Directional.Transport
+module
+
+public import AleksandrovDifferentiability.Analysis.Directional.Assembly
+public import AleksandrovDifferentiability.Analysis.Directional.CountableNull
+public import AleksandrovDifferentiability.Analysis.Directional.EstimateDefs
+public import AleksandrovDifferentiability.Analysis.Directional.FullMeasure
+public import AleksandrovDifferentiability.Analysis.Directional.LineScalar
+public import AleksandrovDifferentiability.Analysis.Directional.Reconstruction
+public import AleksandrovDifferentiability.Analysis.Directional.Transport
 
 /-!
 # Directional estimate assembly

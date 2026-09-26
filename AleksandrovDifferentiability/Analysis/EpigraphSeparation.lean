@@ -1,5 +1,7 @@
-import Mathlib.Analysis.Convex.Continuous
-import Mathlib.Analysis.LocallyConvex.Separation
+module
+
+public import Mathlib.Analysis.Convex.Continuous
+public import Mathlib.Analysis.LocallyConvex.Separation
 
 /-!
 # Epigraph separation for convex functions
@@ -10,7 +12,7 @@ Aleksandrov proof: supporting functionals are produced by applying Mathlib separ
 reproving Hahn-Banach.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open Set
 open scoped Topology

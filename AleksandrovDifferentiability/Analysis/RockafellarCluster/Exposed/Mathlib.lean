@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed.Point
+module
+
+public import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed.Point
 
 /-!
 # Exposed points and Mathlib bridges
@@ -7,7 +9,7 @@ This module defines the project-local exposed-point carrier and relates it to Ma
 `Set.exposedPoints`.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AleksandrovDifferentiability
 

@@ -1,10 +1,12 @@
-import AleksandrovDifferentiability.Analysis.LineAleksandrov.Finite
+module
+
+public import AleksandrovDifferentiability.Analysis.LineAleksandrov.Finite
 
 /-!
 # Orthonormal-basis assembly from line estimates
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

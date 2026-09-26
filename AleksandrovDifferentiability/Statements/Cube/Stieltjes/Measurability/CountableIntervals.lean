@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Measurability.Endpoint
+module
+
+public import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Measurability.Endpoint
 
 /-!
 # Countable interval reductions for Stieltjes coordinate-slice maximal sets
@@ -7,7 +9,7 @@ This file connects endpoint-average measurability to fixed-interval average maps
 countable interval formulation of the source-local maximal bad sets.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open Filter

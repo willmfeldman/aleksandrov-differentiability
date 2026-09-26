@@ -1,6 +1,8 @@
-import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Assembly
-import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Measurability.CountableIntervals
-import AleksandrovDifferentiability.Statements.Cube.GoodSet
+module
+
+public import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Assembly
+public import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Measurability.CountableIntervals
+public import AleksandrovDifferentiability.Statements.Cube.GoodSet
 
 /-!
 # Source-route wrappers from Stieltjes measurability reductions
@@ -9,7 +11,7 @@ This file packages the countable-interval and endpoint measurability reductions 
 source-local upper-contact estimate statement interfaces.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open Filter

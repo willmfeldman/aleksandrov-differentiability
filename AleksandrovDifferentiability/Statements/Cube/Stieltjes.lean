@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Assembly
+module
+
+public import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Assembly
 
 /-!
 # Stieltjes coordinate-slice measures on source cubes

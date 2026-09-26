@@ -1,5 +1,7 @@
-import AleksandrovDifferentiability.Analysis.AverageRemainder
-import AleksandrovDifferentiability.Analysis.QuadraticTrap.AmbientEstimate
+module
+
+public import AleksandrovDifferentiability.Analysis.AverageRemainder
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.AmbientEstimate
 
 /-!
 # Line-integral endpoint estimates
@@ -11,7 +13,7 @@ integrand is uniformly close to the affine model
 model `(1 / 2) * inner ℝ z (B z)`.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open Filter

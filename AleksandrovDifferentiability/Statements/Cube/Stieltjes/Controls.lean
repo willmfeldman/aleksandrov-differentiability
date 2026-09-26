@@ -1,10 +1,12 @@
-import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Basic
+module
+
+public import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Basic
 
 /-!
 # Concrete Stieltjes endpoint and mass controls
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

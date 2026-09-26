@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Measurability.Secant
+module
+
+public import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Measurability.Secant
 
 /-!
 # Endpoint measurability reductions for Stieltjes coordinate-slice measures
@@ -7,7 +9,7 @@ This file reduces Stieltjes endpoint values and endpoint left limits to countabl
 secant approximations, then packages the concrete convex endpoint measurability facts.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open Filter

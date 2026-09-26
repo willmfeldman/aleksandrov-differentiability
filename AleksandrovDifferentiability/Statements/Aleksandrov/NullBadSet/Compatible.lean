@@ -1,11 +1,13 @@
-import AleksandrovDifferentiability.Statements.Aleksandrov.NullBadSet.SliceReconstruction
-import AleksandrovDifferentiability.Statements.Aleksandrov.SliceReconstruction.Compatible
+module
+
+public import AleksandrovDifferentiability.Statements.Aleksandrov.NullBadSet.SliceReconstruction
+public import AleksandrovDifferentiability.Statements.Aleksandrov.SliceReconstruction.Compatible
 
 /-!
 # Compatible-frame reductions to null bad sets
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

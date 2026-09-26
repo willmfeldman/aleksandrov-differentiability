@@ -1,10 +1,12 @@
-import AleksandrovDifferentiability.Statements.Aleksandrov.Reconstruction
+module
+
+public import AleksandrovDifferentiability.Statements.Aleksandrov.Reconstruction
 
 /-!
 # Equivalent Aleksandrov statement forms
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

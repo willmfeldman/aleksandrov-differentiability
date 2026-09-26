@@ -1,5 +1,7 @@
-import AleksandrovDifferentiability.Statements.Cube.GoodSet
-import Mathlib.Analysis.Calculus.LocalExtr.Basic
+module
+
+public import AleksandrovDifferentiability.Statements.Cube.GoodSet
+public import Mathlib.Analysis.Calculus.LocalExtr.Basic
 
 /-!
 # Cube-local Lipschitz-envelope squeeze lemmas
@@ -10,7 +12,7 @@ the coordinate gradient has the corresponding first-order expansion along the di
 set.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open Asymptotics

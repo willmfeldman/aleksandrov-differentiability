@@ -1,10 +1,12 @@
-import AleksandrovDifferentiability.Statements.Aleksandrov.SliceReconstruction.Compatible
+module
+
+public import AleksandrovDifferentiability.Statements.Aleksandrov.SliceReconstruction.Compatible
 
 /-!
 # Basis AE slice reconstruction reductions
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

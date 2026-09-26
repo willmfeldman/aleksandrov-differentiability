@@ -1,11 +1,13 @@
-import AleksandrovDifferentiability.Statements.Cube.Basic.Core
-import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
+module
+
+public import AleksandrovDifferentiability.Statements.Cube.Basic.Core
+public import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
 
 /-!
 # Cube-local bad sets and estimates
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

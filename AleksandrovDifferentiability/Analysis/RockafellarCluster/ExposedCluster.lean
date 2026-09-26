@@ -1,6 +1,8 @@
-import AleksandrovDifferentiability.Analysis.RockafellarCluster.ExposedCluster.Pointwise
-import AleksandrovDifferentiability.Analysis.RockafellarCluster.ExposedCluster.Compact
-import AleksandrovDifferentiability.Analysis.RockafellarCluster.ExposedCluster.Local
+module
+
+public import AleksandrovDifferentiability.Analysis.RockafellarCluster.ExposedCluster.Pointwise
+public import AleksandrovDifferentiability.Analysis.RockafellarCluster.ExposedCluster.Compact
+public import AleksandrovDifferentiability.Analysis.RockafellarCluster.ExposedCluster.Local
 
 /-!
 # Exposed subgradients as gradient cluster limits

@@ -1,10 +1,12 @@
-import AleksandrovDifferentiability.Statements.Aleksandrov.EstimateData
+module
+
+public import AleksandrovDifferentiability.Statements.Aleksandrov.EstimateData
 
 /-!
 # Slice-reconstruction reductions to the a.e. theorem
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

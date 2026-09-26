@@ -1,8 +1,12 @@
-import AleksandrovDifferentiability.Analysis.LineRestriction.Lifts
+module
+
+public import AleksandrovDifferentiability.Analysis.LineRestriction.Lifts
 
 /-!
 # Upper-contact line restriction consequences
 -/
+
+@[expose] public section
 
 open scoped Topology
 

@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Analysis.RockafellarCluster.ConvexHull
+module
+
+public import AleksandrovDifferentiability.Analysis.RockafellarCluster.ConvexHull
 
 /-!
 # Pointwise exposed subgradient cluster bridges
@@ -7,7 +9,7 @@ This module contains the pointwise exposed-point reduction and the filter/ray wr
 Rockafellar exposed-face outer semicontinuity into membership in the gradient cluster hull.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AleksandrovDifferentiability
 

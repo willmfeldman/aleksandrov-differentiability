@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Operators
+module
+
+public import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Operators
 
 /-!
 # Polarized directional quadratic coefficients
@@ -6,7 +8,7 @@ import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Operators
 Coordinate identities for recovering mixed quadratic models from finite directional data.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open scoped BigOperators
 

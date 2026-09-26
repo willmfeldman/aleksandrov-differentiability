@@ -1,10 +1,12 @@
-import AleksandrovDifferentiability.Analysis.LocalizedMaximal.Basic
+module
+
+public import AleksandrovDifferentiability.Analysis.LocalizedMaximal.Basic
 
 /-!
 # Localized maximal witness intervals
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open Filter

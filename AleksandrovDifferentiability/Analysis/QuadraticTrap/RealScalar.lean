@@ -1,5 +1,7 @@
-import AleksandrovDifferentiability.Analysis.QuadraticTrap.AmbientEstimate
-import Mathlib.Analysis.Calculus.Taylor
+module
+
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.AmbientEstimate
+public import Mathlib.Analysis.Calculus.Taylor
 
 /-!
 # Real scalar quadratic estimates
@@ -7,7 +9,7 @@ import Mathlib.Analysis.Calculus.Taylor
 One-dimensional scalar quadratic estimate predicates and transport lemmas.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open scoped BigOperators
 

@@ -1,5 +1,7 @@
-import AleksandrovDifferentiability.Analysis.Directional.FullMeasure
-import AleksandrovDifferentiability.Analysis.EstimateAssembly
+module
+
+public import AleksandrovDifferentiability.Analysis.Directional.FullMeasure
+public import AleksandrovDifferentiability.Analysis.EstimateAssembly
 
 /-!
 # Directional full-measure assembly
@@ -8,7 +10,7 @@ This file assembles full-measure hypotheses for finite directional quadratic dat
 almost-everywhere second-order differentiability conclusions.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

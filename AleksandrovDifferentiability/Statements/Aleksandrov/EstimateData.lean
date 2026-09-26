@@ -1,12 +1,14 @@
-import AleksandrovDifferentiability.Analysis.Directional.Assembly
-import AleksandrovDifferentiability.Analysis.EstimateAssembly
-import AleksandrovDifferentiability.Statements.Aleksandrov.Equivalence
+module
+
+public import AleksandrovDifferentiability.Analysis.Directional.Assembly
+public import AleksandrovDifferentiability.Analysis.EstimateAssembly
+public import AleksandrovDifferentiability.Statements.Aleksandrov.Equivalence
 
 /-!
 # Estimate-data reductions to the a.e. theorem
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

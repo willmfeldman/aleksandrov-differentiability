@@ -1,6 +1,8 @@
-import AleksandrovDifferentiability.Foundation.SecondOrder
-import Mathlib.Analysis.Asymptotics.Lemmas
-import Mathlib.Analysis.Calculus.FDeriv.Basic
+module
+
+public import AleksandrovDifferentiability.Foundation.SecondOrder
+public import Mathlib.Analysis.Asymptotics.Lemmas
+public import Mathlib.Analysis.Calculus.FDeriv.Basic
 
 /-!
 # First-order consequence of the second-order expansion
@@ -9,7 +11,7 @@ This file bridges the project second-order expansion predicate to Mathlib's Fré
 a second-order expansion at `x` with first-order vector `p` yields `HasFDerivAt u (innerSL ℝ p) x`.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open Asymptotics
 open scoped Topology

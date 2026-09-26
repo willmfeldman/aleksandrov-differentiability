@@ -1,8 +1,10 @@
-import AleksandrovDifferentiability.Analysis.Directional.EstimateDefs
-import AleksandrovDifferentiability.Analysis.LineRestriction.Basic
-import AleksandrovDifferentiability.Analysis.LineSecondOrder
-import AleksandrovDifferentiability.Analysis.QuadraticTrap.AmbientEstimate
-import AleksandrovDifferentiability.Analysis.QuadraticTrap.RealScalar
+module
+
+public import AleksandrovDifferentiability.Analysis.Directional.EstimateDefs
+public import AleksandrovDifferentiability.Analysis.LineRestriction.Basic
+public import AleksandrovDifferentiability.Analysis.LineSecondOrder
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.AmbientEstimate
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.RealScalar
 
 /-!
 # Scalar estimates along affine lines
@@ -11,7 +13,7 @@ This file records zero-direction cases and transport wrappers for scalar quadrat
 line restrictions.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

@@ -1,5 +1,7 @@
-import AleksandrovDifferentiability.Analysis.RockafellarCluster.Basic
-import Mathlib.Analysis.Convex.Exposed
+module
+
+public import AleksandrovDifferentiability.Analysis.RockafellarCluster.Basic
+public import Mathlib.Analysis.Convex.Exposed
 
 /-!
 # Exposed faces
@@ -8,7 +10,7 @@ This module defines the project-local exposed-face and strictly exposed-point pr
 their basic compactness, convexity, and extremality properties.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AleksandrovDifferentiability
 

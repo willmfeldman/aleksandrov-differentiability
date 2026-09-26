@@ -1,11 +1,13 @@
-import AleksandrovDifferentiability.Analysis.LocalizedMaximal.Estimate
-import AleksandrovDifferentiability.Analysis.OneDimSecondDerivative.Basic
+module
+
+public import AleksandrovDifferentiability.Analysis.LocalizedMaximal.Estimate
+public import AleksandrovDifferentiability.Analysis.OneDimSecondDerivative.Basic
 
 /-!
 # One-dimensional second-derivative controls
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open Filter

@@ -1,8 +1,10 @@
-import AleksandrovDifferentiability.Statements.OneDimensional.Core
-import AleksandrovDifferentiability.Statements.OneDimensional.RealLine
-import AleksandrovDifferentiability.Statements.Aleksandrov.NullBadSet.StandardBasis
-import AleksandrovDifferentiability.Statements.Aleksandrov.SliceReconstruction.Basis
-import AleksandrovDifferentiability.Statements.Aleksandrov.SliceReconstruction.Fubini
+module
+
+public import AleksandrovDifferentiability.Statements.OneDimensional.Core
+public import AleksandrovDifferentiability.Statements.OneDimensional.RealLine
+public import AleksandrovDifferentiability.Statements.Aleksandrov.NullBadSet.StandardBasis
+public import AleksandrovDifferentiability.Statements.Aleksandrov.SliceReconstruction.Basis
+public import AleksandrovDifferentiability.Statements.Aleksandrov.SliceReconstruction.Fubini
 
 /-!
 # One-dimensional directional assembly
@@ -11,7 +13,7 @@ Real-line directional and Fubini/reconstruction wrappers built from the one-dime
 estimate theorem.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

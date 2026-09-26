@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Analysis.Directional.Transport.Quadratic
+module
+
+public import AleksandrovDifferentiability.Analysis.Directional.Transport.Quadratic
 
 /-!
 # Measure transport under linear isometries
@@ -6,7 +8,7 @@ import AleksandrovDifferentiability.Analysis.Directional.Transport.Quadratic
 This file records null-set transport lemmas for Lebesgue volume under linear isometry equivalences.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

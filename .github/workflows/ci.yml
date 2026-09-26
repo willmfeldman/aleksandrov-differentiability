@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: ["main"]
+    branches: ["**"]
   pull_request:
     branches: ["main"]
   workflow_dispatch:
@@ -25,6 +25,7 @@ jobs:
       - name: Validate formalization metadata
         run: |
           ruby -e 'require "yaml"; YAML.load_file("formalization.yaml")'
+          ruby scripts/check-comparator-inventory.rb
 
       - name: Check formalization Lean names
         run: |
@@ -46,11 +47,17 @@ jobs:
             AleksandrovDifferentiability AleksandrovDifferentiability.lean
           ! grep -RInE '\bsorry\b|^axiom |\badmit\b|native_decide' challenges/*/Solution.lean
 
-      - name: Elaborate challenge workspace files
+      - name: Elaborate challenge and solution sources
         run: |
-          for f in challenges/*/Challenge.lean challenges/*/Solution.lean; do
-            echo "== $f"
-            lake env lean "$f"
+          for config in challenges/*/config.json; do
+            dir="${config%/config.json}"
+            name="${dir#challenges/}"
+            statement_dir="$RUNNER_TEMP/challenge-statements/$name"
+            mkdir -p "$statement_dir"
+            echo "== $dir"
+            lake env lean -o "$statement_dir/Statement.olean" "$dir/Statement.lean"
+            LEAN_PATH="$statement_dir" lake env lean "$dir/Challenge.lean"
+            LEAN_PATH="$statement_dir" lake env lean "$dir/Solution.lean"
           done
 
       - name: Check manifest target axioms

@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Analysis.Directional.Assembly
+module
+
+public import AleksandrovDifferentiability.Analysis.Directional.Assembly
 
 /-!
 # Countable directional null-set assembly
@@ -7,7 +9,7 @@ This file upgrades countable families of full-measure directional estimate sets 
 almost-everywhere second-order differentiability statements used by the final assembly layer.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

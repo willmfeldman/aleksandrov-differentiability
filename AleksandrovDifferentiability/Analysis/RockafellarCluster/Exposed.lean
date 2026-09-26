@@ -1,8 +1,10 @@
-import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed.Face
-import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed.Thickening
-import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed.Directional
-import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed.Point
-import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed.Mathlib
+module
+
+public import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed.Face
+public import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed.Thickening
+public import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed.Directional
+public import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed.Point
+public import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed.Mathlib
 
 /-!
 # Exposed faces and exposed points for the Rockafellar cluster argument

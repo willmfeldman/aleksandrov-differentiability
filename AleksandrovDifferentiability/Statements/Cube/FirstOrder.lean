@@ -1,7 +1,9 @@
-import AleksandrovDifferentiability.Statements.Cube.Basic
-import Mathlib.Analysis.Calculus.Rademacher
-import Mathlib.Analysis.Convex.Continuous
-import Mathlib.Topology.Algebra.MetricSpace.Lipschitz
+module
+
+public import AleksandrovDifferentiability.Statements.Cube.Basic
+public import Mathlib.Analysis.Calculus.Rademacher
+public import Mathlib.Analysis.Convex.Continuous
+public import Mathlib.Topology.Algebra.MetricSpace.Lipschitz
 
 /-!
 # First-order differentiability almost everywhere on source cubes
@@ -13,7 +15,7 @@ compact neighborhood of `Q_1`; Rademacher then gives differentiability almost ev
 `Q_1`.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

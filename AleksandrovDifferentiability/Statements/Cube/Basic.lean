@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Statements.Cube.Basic.Sets
+module
+
+public import AleksandrovDifferentiability.Statements.Cube.Basic.Sets
 
 /-!
 # Cube-local Aleksandrov statement interfaces

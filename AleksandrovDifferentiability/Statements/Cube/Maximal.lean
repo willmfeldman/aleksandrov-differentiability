@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Statements.Cube.Maximal.Assembly
+module
+
+public import AleksandrovDifferentiability.Statements.Cube.Maximal.Assembly
 
 /-!
 # Localized maximal slice predicates on source cubes

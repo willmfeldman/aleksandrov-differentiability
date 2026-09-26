@@ -1,7 +1,9 @@
-import AleksandrovDifferentiability.Analysis.Directional.EstimateDefs
-import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Polarization
-import AleksandrovDifferentiability.Analysis.QuadraticTrap.AmbientEstimate
-import AleksandrovDifferentiability.Analysis.QuadraticTrap.Basic
+module
+
+public import AleksandrovDifferentiability.Analysis.Directional.EstimateDefs
+public import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Polarization
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.AmbientEstimate
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.Basic
 
 /-!
 # Transport of mixed directional quadratic data
@@ -9,7 +11,7 @@ import AleksandrovDifferentiability.Analysis.QuadraticTrap.Basic
 This file pulls mixed directional quadratic estimate data across linear isometry equivalences.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

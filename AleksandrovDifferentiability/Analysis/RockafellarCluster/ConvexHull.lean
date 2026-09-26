@@ -1,7 +1,9 @@
-import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed
-import Mathlib.Analysis.Convex.Caratheodory
-import Mathlib.Analysis.Convex.KreinMilman
-import Mathlib.Analysis.Convex.StdSimplex
+module
+
+public import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed
+public import Mathlib.Analysis.Convex.Caratheodory
+public import Mathlib.Analysis.Convex.KreinMilman
+public import Mathlib.Analysis.Convex.StdSimplex
 
 /-!
 # Closed convex hull and Straszewicz reductions
@@ -10,7 +12,7 @@ This module packages the closed-convex-hull algebra and compact Krein-Milman/Str
 interfaces used in the Rockafellar 25.6 route.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AleksandrovDifferentiability
 

@@ -1,6 +1,8 @@
-import AleksandrovDifferentiability.Analysis.RockafellarCluster
-import AleksandrovDifferentiability.Statements.Cube.SecondOrder
-import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Measurability.Secant
+module
+
+public import AleksandrovDifferentiability.Analysis.RockafellarCluster
+public import AleksandrovDifferentiability.Statements.Cube.SecondOrder
+public import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Measurability.Secant
 
 /-!
 # Source-cube subgradient cluster-density boundary
@@ -11,7 +13,7 @@ records that, once this density input is available, the normalized cube Aleksand
 from the already-formalized upper-contact/Stieltjes route and second-order assembly.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

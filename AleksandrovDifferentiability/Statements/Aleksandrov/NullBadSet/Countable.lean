@@ -1,11 +1,13 @@
-import AleksandrovDifferentiability.Statements.OneDimensional.RealLine
-import AleksandrovDifferentiability.Statements.Aleksandrov.NullBadSet.StandardBasis
+module
+
+public import AleksandrovDifferentiability.Statements.OneDimensional.RealLine
+public import AleksandrovDifferentiability.Statements.Aleksandrov.NullBadSet.StandardBasis
 
 /-!
 # Countable and real-line reductions to null bad sets
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

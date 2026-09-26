@@ -1,18 +1,20 @@
-import AleksandrovDifferentiability.Analysis.Directional.CountableNull
-import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Frame
-import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Operators
-import AleksandrovDifferentiability.Analysis.EstimateAssembly
-import AleksandrovDifferentiability.Analysis.QuadraticTrap.Basic
-import AleksandrovDifferentiability.Analysis.QuadraticTrap.RealScalar
-import AleksandrovDifferentiability.Foundation.SecondOrder
-import AleksandrovDifferentiability.Statements.OneDimensional.RealLine
-import AleksandrovDifferentiability.Statements.Aleksandrov.Core
+module
+
+public import AleksandrovDifferentiability.Analysis.Directional.CountableNull
+public import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Frame
+public import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Operators
+public import AleksandrovDifferentiability.Analysis.EstimateAssembly
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.Basic
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.RealScalar
+public import AleksandrovDifferentiability.Foundation.SecondOrder
+public import AleksandrovDifferentiability.Statements.OneDimensional.RealLine
+public import AleksandrovDifferentiability.Statements.Aleksandrov.Core
 
 /-!
 # Countable and real-line reductions to the a.e. theorem
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

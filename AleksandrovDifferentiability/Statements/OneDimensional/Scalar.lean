@@ -1,5 +1,7 @@
-import AleksandrovDifferentiability.Analysis.AverageRemainder
-import AleksandrovDifferentiability.Analysis.QuadraticTrap.RealScalar
+module
+
+public import AleksandrovDifferentiability.Analysis.AverageRemainder
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.RealScalar
 
 /-!
 # One-dimensional scalar estimate theorem
@@ -8,7 +10,7 @@ The scalar one-dimensional target and the convex-function proof route through th
 right-derivative average remainder.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

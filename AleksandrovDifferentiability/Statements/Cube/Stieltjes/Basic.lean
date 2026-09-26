@@ -1,5 +1,7 @@
-import AleksandrovDifferentiability.Statements.Cube.Maximal
-import AleksandrovDifferentiability.Statements.Cube.FirstOrder
+module
+
+public import AleksandrovDifferentiability.Statements.Cube.Maximal
+public import AleksandrovDifferentiability.Statements.Cube.FirstOrder
 
 /-!
 # Stieltjes coordinate-slice measures on source cubes
@@ -8,7 +10,7 @@ This file specializes the abstract coordinate-slice measure family from `Cube.Ma
 Stieltjes measures of the project-local right derivatives of coordinate-line restrictions.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

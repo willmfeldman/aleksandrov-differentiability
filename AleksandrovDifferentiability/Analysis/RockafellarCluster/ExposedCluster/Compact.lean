@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Analysis.RockafellarCluster.ExposedCluster.Pointwise
+module
+
+public import AleksandrovDifferentiability.Analysis.RockafellarCluster.ExposedCluster.Pointwise
 
 /-!
 # Compact and bounded Straszewicz cluster reductions
@@ -7,7 +9,7 @@ This module packages compact and bounded subdifferential versions of the Rockafe
 route, leaving the Straszewicz approximation input explicit.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AleksandrovDifferentiability
 

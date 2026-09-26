@@ -1,5 +1,7 @@
-import AleksandrovDifferentiability.Analysis.QuadraticTrap
-import AleksandrovDifferentiability.Foundation.SecondOrder
+module
+
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap
+public import AleksandrovDifferentiability.Foundation.SecondOrder
 
 /-!
 # Second order expansions on affine lines
@@ -8,7 +10,7 @@ This file connects the ambient second-order expansion predicate to one-dimension
 along affine lines.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AleksandrovDifferentiability
 

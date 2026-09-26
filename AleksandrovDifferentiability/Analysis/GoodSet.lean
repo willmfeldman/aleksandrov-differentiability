@@ -1,6 +1,8 @@
-import AleksandrovDifferentiability.Foundation.SecondOrder
-import Mathlib.MeasureTheory.Integral.Prod
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+module
+
+public import AleksandrovDifferentiability.Foundation.SecondOrder
+public import Mathlib.MeasureTheory.Integral.Prod
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 
 /-!
 # Good and bad sets for second-order differentiability
@@ -9,7 +11,7 @@ This file gives names to the full-measure and exceptional-set formulations of th
 second-order differentiability conclusion.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

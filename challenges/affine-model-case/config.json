@@ -4,5 +4,6 @@
   "theorem_names": [
     "AleksandrovDifferentiability.challenge_affine_model_case"
   ],
-  "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"]
+  "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"],
+  "enable_nanoda": false
 }

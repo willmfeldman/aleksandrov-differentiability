@@ -1,6 +1,8 @@
-import AleksandrovDifferentiability.Analysis.LineRestriction
-import AleksandrovDifferentiability.Foundation.Subgradient
-import Mathlib.Analysis.Convex.Continuous
+module
+
+public import AleksandrovDifferentiability.Analysis.LineRestriction
+public import AleksandrovDifferentiability.Foundation.Subgradient
+public import Mathlib.Analysis.Convex.Continuous
 
 /-!
 # Basic Rockafellar-style subgradient cluster-density interfaces
@@ -9,7 +11,7 @@ This module contains the local cluster-density predicate, elementary topological
 Rockafellar ray construction, and the basic convex-gradient cluster facts used by later modules.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AleksandrovDifferentiability
 

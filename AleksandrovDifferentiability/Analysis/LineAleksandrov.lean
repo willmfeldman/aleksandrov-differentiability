@@ -1,1 +1,3 @@
-import AleksandrovDifferentiability.Analysis.LineAleksandrov.StandardBasis
+module
+
+public import AleksandrovDifferentiability.Analysis.LineAleksandrov.StandardBasis

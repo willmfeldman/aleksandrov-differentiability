@@ -1,10 +1,12 @@
-import AleksandrovDifferentiability.Statements.Aleksandrov.SliceReconstruction.DirectionalLine
+module
+
+public import AleksandrovDifferentiability.Statements.Aleksandrov.SliceReconstruction.DirectionalLine
 
 /-!
 # Fubini AE reconstruction reductions
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

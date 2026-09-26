@@ -1,10 +1,12 @@
-import AleksandrovDifferentiability.Statements.Cube.Maximal.Fubini
+module
+
+public import AleksandrovDifferentiability.Statements.Cube.Maximal.Fubini
 
 /-!
 # Coordinate-slice maximal estimate assembly
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

@@ -1,10 +1,12 @@
-import AleksandrovDifferentiability.Statements.Aleksandrov.NullBadSet.Compatible
+module
+
+public import AleksandrovDifferentiability.Statements.Aleksandrov.NullBadSet.Compatible
 
 /-!
 # Standard-basis reductions to null bad sets
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

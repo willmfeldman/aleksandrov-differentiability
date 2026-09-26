@@ -1,2 +1,4 @@
-import AleksandrovDifferentiability.Statements.Aleksandrov.NullBadSet.Countable
-import AleksandrovDifferentiability.Statements.Aleksandrov.SliceReconstruction
+module
+
+public import AleksandrovDifferentiability.Statements.Aleksandrov.NullBadSet.Countable
+public import AleksandrovDifferentiability.Statements.Aleksandrov.SliceReconstruction

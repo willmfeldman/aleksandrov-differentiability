@@ -1,3 +1,4 @@
+import Statement
 import AleksandrovDifferentiability
 
 noncomputable section
@@ -7,11 +8,9 @@ open scoped MeasureTheory
 
 namespace AleksandrovDifferentiability
 
-theorem challenge_statement_predicate
-    (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E]
-    [MeasurableSpace E] [BorelSpace E] [FiniteDimensional ℝ E]
-    (Ω : Set E) (u : E → ℝ) :
-    ConvexAleksandrovAEStatement E Ω u :=
-  convexAleksandrovAEStatement E Ω u
+theorem challenge_statement_predicate : StatementPredicateStatement.Claim := by
+  unfold StatementPredicateStatement.Claim
+  intro E _ _ _ _ _ Ω u hΩ hu
+  exact convexAleksandrovAEStatement E Ω u hΩ hu
 
 end AleksandrovDifferentiability

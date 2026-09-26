@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Statements.Cube.ClusterDensity.Final
+module
+
+public import AleksandrovDifferentiability.Statements.Cube.ClusterDensity.Final
 
 /-!
 # Source-cube subgradient cluster-density boundary

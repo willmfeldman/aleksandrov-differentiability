@@ -1,6 +1,8 @@
-import AleksandrovDifferentiability.Geometry.Cube
-import AleksandrovDifferentiability.Statements.Cube.Basic.Core
-import AleksandrovDifferentiability.Statements.Cube.Basic.Sets
+module
+
+public import AleksandrovDifferentiability.Geometry.Cube
+public import AleksandrovDifferentiability.Statements.Cube.Basic.Core
+public import AleksandrovDifferentiability.Statements.Cube.Basic.Sets
 
 /-!
 # Measure assembly for source-cube bad sets
@@ -10,7 +12,7 @@ analytic estimates for individual coordinate slices live elsewhere; this module 
 common finite-union step.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory BigOperators

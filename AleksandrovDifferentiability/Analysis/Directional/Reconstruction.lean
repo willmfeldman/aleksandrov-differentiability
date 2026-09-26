@@ -1,13 +1,15 @@
-import AleksandrovDifferentiability.Analysis.Directional.EstimateDefs
-import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Frame
-import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Operators
-import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Polarization
-import AleksandrovDifferentiability.Analysis.LineRestriction.Basic
-import AleksandrovDifferentiability.Analysis.LineSecondOrder
-import AleksandrovDifferentiability.Analysis.QuadraticTrap.AmbientEstimate
-import AleksandrovDifferentiability.Analysis.QuadraticTrap.Basic
-import AleksandrovDifferentiability.Analysis.QuadraticTrap.RealScalar
-import AleksandrovDifferentiability.Foundation.SecondOrder
+module
+
+public import AleksandrovDifferentiability.Analysis.Directional.EstimateDefs
+public import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Frame
+public import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Operators
+public import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Polarization
+public import AleksandrovDifferentiability.Analysis.LineRestriction.Basic
+public import AleksandrovDifferentiability.Analysis.LineSecondOrder
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.AmbientEstimate
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.Basic
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.RealScalar
+public import AleksandrovDifferentiability.Foundation.SecondOrder
 
 /-!
 # Reconstruction from directional quadratic data
@@ -16,7 +18,7 @@ This file converts mixed directional quadratic estimate data into the project-lo
 second-order differentiability predicate.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

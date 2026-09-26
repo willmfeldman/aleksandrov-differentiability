@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed.Thickening
+module
+
+public import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed.Thickening
 
 /-!
 # Strict exposed points
@@ -7,7 +9,7 @@ This module proves the singleton exposed-face characterization, unit-normal norm
 singleton norm-thickening estimate for project-local exposed points.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AleksandrovDifferentiability
 

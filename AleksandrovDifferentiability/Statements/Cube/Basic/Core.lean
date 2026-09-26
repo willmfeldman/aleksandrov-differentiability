@@ -1,13 +1,15 @@
-import AleksandrovDifferentiability.Geometry.Cube
-import AleksandrovDifferentiability.Analysis.LineRestriction.Basic
-import AleksandrovDifferentiability.Analysis.QuadraticTrap.Basic
-import AleksandrovDifferentiability.Foundation.Subgradient
-import AleksandrovDifferentiability.Foundation.UpperContact
-import Mathlib.Analysis.Calculus.FDeriv.Basic
-import Mathlib.Analysis.Convex.Jensen
-import Mathlib.Analysis.InnerProductSpace.Dual
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+module
+
+public import AleksandrovDifferentiability.Geometry.Cube
+public import AleksandrovDifferentiability.Analysis.LineRestriction.Basic
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.Basic
+public import AleksandrovDifferentiability.Foundation.Subgradient
+public import AleksandrovDifferentiability.Foundation.UpperContact
+public import Mathlib.Analysis.Calculus.FDeriv.Basic
+public import Mathlib.Analysis.Convex.Jensen
+public import Mathlib.Analysis.InnerProductSpace.Dual
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 
 /-!
 # Cube-local Aleksandrov statement interfaces
@@ -18,7 +20,7 @@ the proof route will fill these targets using the upper-contact estimate from th
 document.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

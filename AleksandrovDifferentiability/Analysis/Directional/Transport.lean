@@ -1,1 +1,3 @@
-import AleksandrovDifferentiability.Analysis.Directional.Transport.DirectionalMeasure
+module
+
+public import AleksandrovDifferentiability.Analysis.Directional.Transport.DirectionalMeasure

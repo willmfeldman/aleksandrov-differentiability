@@ -1,11 +1,13 @@
-import AleksandrovDifferentiability.Analysis.LineAleksandrov.Geometry
-import AleksandrovDifferentiability.Statements.Aleksandrov.Transport
+module
+
+public import AleksandrovDifferentiability.Analysis.LineAleksandrov.Geometry
+public import AleksandrovDifferentiability.Statements.Aleksandrov.Transport
 
 /-!
 # Slicewise Fubini reductions for line estimates
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

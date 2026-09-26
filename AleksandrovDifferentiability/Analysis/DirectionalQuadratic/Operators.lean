@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Frame
+module
+
+public import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Frame
 
 /-!
 # Directional quadratic operators
@@ -6,7 +8,7 @@ import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Frame
 Rank-one and mixed directional quadratic operators, together with finite sums.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open scoped BigOperators
 

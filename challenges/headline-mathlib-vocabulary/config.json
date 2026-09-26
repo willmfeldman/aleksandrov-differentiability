@@ -4,5 +4,6 @@
   "theorem_names": [
     "AleksandrovDifferentiability.challenge_headline_in_mathlib_vocabulary"
   ],
-  "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"]
+  "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"],
+  "enable_nanoda": false
 }

@@ -4,5 +4,6 @@
   "theorem_names": [
     "AleksandrovDifferentiability.challenge_norm_convex_headline"
   ],
-  "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"]
+  "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"],
+  "enable_nanoda": false
 }

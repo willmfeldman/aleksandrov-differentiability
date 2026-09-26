@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Basic
+module
+
+public import AleksandrovDifferentiability.Basic
 
 /-!
 # Aleksandrov Differentiability

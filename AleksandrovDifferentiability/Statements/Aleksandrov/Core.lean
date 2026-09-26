@@ -1,12 +1,14 @@
-import AleksandrovDifferentiability.Analysis.Directional.EstimateDefs
-import AleksandrovDifferentiability.Analysis.Directional.FullMeasure
-import AleksandrovDifferentiability.Analysis.Directional.LineScalar
-import AleksandrovDifferentiability.Analysis.GoodSet
-import AleksandrovDifferentiability.Analysis.LineRestriction.Basic
-import AleksandrovDifferentiability.Foundation.SecondOrder
-import AleksandrovDifferentiability.Foundation.Subgradient
-import Mathlib.Analysis.Convex.Continuous
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+module
+
+public import AleksandrovDifferentiability.Analysis.Directional.EstimateDefs
+public import AleksandrovDifferentiability.Analysis.Directional.FullMeasure
+public import AleksandrovDifferentiability.Analysis.Directional.LineScalar
+public import AleksandrovDifferentiability.Analysis.GoodSet
+public import AleksandrovDifferentiability.Analysis.LineRestriction.Basic
+public import AleksandrovDifferentiability.Foundation.SecondOrder
+public import AleksandrovDifferentiability.Foundation.Subgradient
+public import Mathlib.Analysis.Convex.Continuous
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 
 /-!
 # Statement of the convex Aleksandrov theorem
@@ -14,7 +16,7 @@ import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 This file freezes the target theorem surface without asserting the theorem as an axiom.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

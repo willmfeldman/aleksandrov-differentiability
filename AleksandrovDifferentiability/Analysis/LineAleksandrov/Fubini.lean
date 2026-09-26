@@ -1,10 +1,12 @@
-import AleksandrovDifferentiability.Analysis.LineAleksandrov.Measurable
+module
+
+public import AleksandrovDifferentiability.Analysis.LineAleksandrov.Measurable
 
 /-!
 # Fubini and finite-slice transfer from line estimates
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

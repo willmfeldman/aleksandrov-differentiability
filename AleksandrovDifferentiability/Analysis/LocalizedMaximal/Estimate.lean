@@ -1,10 +1,12 @@
-import AleksandrovDifferentiability.Analysis.LocalizedMaximal.Covering
+module
+
+public import AleksandrovDifferentiability.Analysis.LocalizedMaximal.Covering
 
 /-!
 # Localized maximal estimates
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open Filter

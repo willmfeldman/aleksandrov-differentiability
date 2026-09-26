@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed
+module
+
+public import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed
 
 /-!
 # Recession directions and no-line facts for subgradient sets
@@ -7,7 +9,7 @@ This module contains the recession-direction computations used to match Rockafel
 that interior-point subdifferentials contain no affine lines.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AleksandrovDifferentiability
 

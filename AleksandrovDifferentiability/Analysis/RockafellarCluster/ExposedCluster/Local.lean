@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Analysis.RockafellarCluster.ExposedCluster.Compact
+module
+
+public import AleksandrovDifferentiability.Analysis.RockafellarCluster.ExposedCluster.Compact
 
 /-!
 # Local Rockafellar cluster-density assembly
@@ -7,7 +9,7 @@ This module turns compact or bounded subdifferentials, Straszewicz approximation
 outer semicontinuity into `LocalSubgradientClusterDensityOn`.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AleksandrovDifferentiability
 

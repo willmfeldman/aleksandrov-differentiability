@@ -1,6 +1,8 @@
-import AleksandrovDifferentiability.Analysis.LineRestriction
-import AleksandrovDifferentiability.Foundation.SecondOrder
-import Mathlib.Analysis.Calculus.Taylor
+module
+
+public import AleksandrovDifferentiability.Analysis.LineRestriction
+public import AleksandrovDifferentiability.Foundation.SecondOrder
+public import Mathlib.Analysis.Calculus.Taylor
 
 /-!
 # Quadratic trapping
@@ -8,6 +10,8 @@ import Mathlib.Analysis.Calculus.Taylor
 This file records elementary trapping lemmas obtained by subtracting an affine function from a
 convex function with a lower supporting hyperplane and an upper quadratic contact.
 -/
+
+@[expose] public section
 
 namespace AleksandrovDifferentiability
 

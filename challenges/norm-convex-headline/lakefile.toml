@@ -1,10 +1,19 @@
 name = "norm_convex_headline"
 version = "0.1.0"
-defaultTargets = ["Challenge", "Solution"]
+# Keep `lake build` safe for the comparator workflow: it elaborates only the
+# trusted statement surface.  CI elaborates `Solution` explicitly in a trusted
+# checkout.
+defaultTargets = ["Challenge"]
+# Share the root workspace's dependency checkouts and builds; the manifests
+# lock identical revisions.
+packagesDir = "../../.lake/packages"
 
 [[require]]
 name = "AleksandrovDifferentiability"
 path = "../.."
+
+[[lean_lib]]
+name = "Statement"
 
 [[lean_lib]]
 name = "Challenge"

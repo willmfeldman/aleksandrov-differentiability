@@ -1,10 +1,12 @@
-import AleksandrovDifferentiability.Statements.Cube.ClusterDensity.Basic
+module
+
+public import AleksandrovDifferentiability.Statements.Cube.ClusterDensity.Basic
 
 /-!
 # Source-cube cluster-density ray reductions
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

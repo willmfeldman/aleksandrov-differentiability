@@ -1,10 +1,12 @@
-import AleksandrovDifferentiability.Statements.Cube.SecondOrder.Pointwise
+module
+
+public import AleksandrovDifferentiability.Statements.Cube.SecondOrder.Pointwise
 
 /-!
 # Cube-local second-order a.e. assembly
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

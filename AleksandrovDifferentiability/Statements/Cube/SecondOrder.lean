@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Statements.Cube.SecondOrder.Assembly
+module
+
+public import AleksandrovDifferentiability.Statements.Cube.SecondOrder.Assembly
 
 /-!
 # Cube-local second-order assembly

@@ -1,5 +1,7 @@
-import AleksandrovDifferentiability.Analysis.Directional.Transport.Core
-import AleksandrovDifferentiability.Analysis.Directional.Transport.Measure
+module
+
+public import AleksandrovDifferentiability.Analysis.Directional.Transport.Core
+public import AleksandrovDifferentiability.Analysis.Directional.Transport.Measure
 
 /-!
 # Measure transport for directional estimates
@@ -7,7 +9,7 @@ import AleksandrovDifferentiability.Analysis.Directional.Transport.Measure
 This file combines isometric measure transport with fixed-direction scalar estimate sets.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

@@ -1,5 +1,7 @@
-import AleksandrovDifferentiability.Analysis.Directional.Reconstruction
-import AleksandrovDifferentiability.Analysis.Directional.LineScalar
+module
+
+public import AleksandrovDifferentiability.Analysis.Directional.Reconstruction
+public import AleksandrovDifferentiability.Analysis.Directional.LineScalar
 
 /-!
 # Full-measure directional estimate assembly
@@ -8,7 +10,7 @@ This file turns directional scalar estimate sets and mixed-directional quadratic
 data into full-measure second-order differentiability statements.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

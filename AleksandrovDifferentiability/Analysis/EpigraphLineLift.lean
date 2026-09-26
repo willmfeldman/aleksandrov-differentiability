@@ -1,5 +1,7 @@
-import AleksandrovDifferentiability.Analysis.EpigraphSeparation
-import AleksandrovDifferentiability.Analysis.LineRestriction
+module
+
+public import AleksandrovDifferentiability.Analysis.EpigraphSeparation
+public import AleksandrovDifferentiability.Analysis.LineRestriction
 
 /-!
 # Line-lift consequences of epigraph separation
@@ -10,7 +12,7 @@ later in the Aleksandrov proof.  It still does not prove the endpoint-specific n
 attainment wrappers.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open Set
 open scoped Topology

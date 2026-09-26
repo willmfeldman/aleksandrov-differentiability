@@ -1,8 +1,12 @@
-import AleksandrovDifferentiability.Analysis.LineRestriction.Basic
+module
+
+public import AleksandrovDifferentiability.Analysis.LineRestriction.Basic
 
 /-!
 # Line subgradient lift interfaces
 -/
+
+@[expose] public section
 
 open scoped Topology
 

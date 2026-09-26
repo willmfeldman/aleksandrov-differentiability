@@ -1,10 +1,12 @@
-import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Controls
+module
+
+public import AleksandrovDifferentiability.Statements.Cube.Stieltjes.Controls
 
 /-!
 # Concrete Stieltjes upper-contact estimate assembly
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

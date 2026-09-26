@@ -1,7 +1,9 @@
-import AleksandrovDifferentiability.Foundation.Subgradient
-import AleksandrovDifferentiability.Foundation.UpperContact
-import Mathlib.Analysis.Calculus.Monotone
-import Mathlib.Analysis.Convex.Deriv
+module
+
+public import AleksandrovDifferentiability.Foundation.Subgradient
+public import AleksandrovDifferentiability.Foundation.UpperContact
+public import Mathlib.Analysis.Calculus.Monotone
+public import Mathlib.Analysis.Convex.Deriv
 
 /-!
 # One-dimensional convex analysis
@@ -10,7 +12,7 @@ This file gives project-local names for the one-dimensional slope and one-sided 
 used at the start of the convex Aleksandrov proof route.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open Filter Set

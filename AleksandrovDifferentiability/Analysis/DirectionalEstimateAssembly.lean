@@ -1,1 +1,3 @@
-import AleksandrovDifferentiability.Analysis.Directional
+module
+
+public import AleksandrovDifferentiability.Analysis.Directional

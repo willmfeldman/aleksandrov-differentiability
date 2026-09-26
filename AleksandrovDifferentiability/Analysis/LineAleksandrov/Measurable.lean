@@ -1,10 +1,12 @@
-import AleksandrovDifferentiability.Analysis.LineAleksandrov.Slicewise
+module
+
+public import AleksandrovDifferentiability.Analysis.LineAleksandrov.Slicewise
 
 /-!
 # Measurability interfaces for unit-direction good sets
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

@@ -1,6 +1,8 @@
-import AleksandrovDifferentiability.Analysis.EstimateAssembly
-import AleksandrovDifferentiability.Statements.Aleksandrov.Equivalence
-import AleksandrovDifferentiability.Statements.OneDimensional.Scalar
+module
+
+public import AleksandrovDifferentiability.Analysis.EstimateAssembly
+public import AleksandrovDifferentiability.Statements.Aleksandrov.Equivalence
+public import AleksandrovDifferentiability.Statements.OneDimensional.Scalar
 
 /-!
 # One-dimensional theorem boundary
@@ -9,7 +11,7 @@ This file names the remaining one-dimensional scalar estimate target and connect
 real-line specialization of the convex Aleksandrov statement.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

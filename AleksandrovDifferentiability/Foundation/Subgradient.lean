@@ -1,12 +1,14 @@
-import Mathlib.Analysis.Calculus.Gradient.Basic
-import Mathlib.Analysis.Calculus.LocalExtr.Basic
-import Mathlib.Analysis.Convex.Function
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.InnerProductSpace.Dual
-import Mathlib.Analysis.LocallyConvex.Separation
-import Mathlib.Analysis.Normed.Module.Convex
-import Mathlib.Topology.ClusterPt
-import Mathlib.Topology.MetricSpace.Bounded
+module
+
+public import Mathlib.Analysis.Calculus.Gradient.Basic
+public import Mathlib.Analysis.Calculus.LocalExtr.Basic
+public import Mathlib.Analysis.Convex.Function
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.InnerProductSpace.Dual
+public import Mathlib.Analysis.LocallyConvex.Separation
+public import Mathlib.Analysis.Normed.Module.Convex
+public import Mathlib.Topology.ClusterPt
+public import Mathlib.Topology.MetricSpace.Bounded
 
 /-!
 # Convex subgradients
@@ -14,6 +16,8 @@ import Mathlib.Topology.MetricSpace.Bounded
 This file records the project-local subgradient predicate for real-valued convex functions on an
 inner product space.
 -/
+
+@[expose] public section
 
 namespace AleksandrovDifferentiability
 

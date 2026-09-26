@@ -1,7 +1,9 @@
-import Mathlib.Analysis.Asymptotics.Defs
-import Mathlib.Analysis.InnerProductSpace.Dual
-import Mathlib.Analysis.InnerProductSpace.Adjoint
-import Mathlib.Analysis.InnerProductSpace.Symmetric
+module
+
+public import Mathlib.Analysis.Asymptotics.Defs
+public import Mathlib.Analysis.InnerProductSpace.Dual
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import Mathlib.Analysis.InnerProductSpace.Symmetric
 
 /-!
 # Second order expansion interfaces
@@ -10,7 +12,7 @@ This file contains the local formulation of second order differentiability used
 for the convex Aleksandrov theorem.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open Asymptotics
 open InnerProduct

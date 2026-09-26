@@ -1,6 +1,8 @@
-import AleksandrovDifferentiability.Analysis.EstimateAssembly
-import AleksandrovDifferentiability.Statements.Aleksandrov.Core
-import AleksandrovDifferentiability.Statements.OneDimensional.Scalar
+module
+
+public import AleksandrovDifferentiability.Analysis.EstimateAssembly
+public import AleksandrovDifferentiability.Statements.Aleksandrov.Core
+public import AleksandrovDifferentiability.Statements.OneDimensional.Scalar
 
 /-!
 # Real-line Aleksandrov theorem wrappers
@@ -8,7 +10,7 @@ import AleksandrovDifferentiability.Statements.OneDimensional.Scalar
 Endpoint real-line forms of the one-dimensional scalar estimate theorem.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

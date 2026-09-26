@@ -1,7 +1,9 @@
-import Mathlib.Data.Rat.Denumerable
-import Mathlib.Data.Countable.Basic
-import Mathlib.MeasureTheory.Covering.Vitali
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+module
+
+public import Mathlib.Data.Rat.Denumerable
+public import Mathlib.Data.Countable.Basic
+public import Mathlib.MeasureTheory.Covering.Vitali
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 
 /-!
 # Localized one-dimensional maximal functions
@@ -11,7 +13,7 @@ measure estimate.  The analytic weak-type proof is intentionally kept as a named
 boundary; later work should prove it using Mathlib's one-dimensional Vitali covering machinery.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open Filter

@@ -80,10 +80,11 @@ the root import, the expected build commands, and the comparator challenge set. 
 readers and tooling that want a compact index of the formalization without reverse-engineering the
 Lake project.
 
-The directory `challenges/` contains standalone comparator challenge workspaces. Their
-`Challenge.lean` files import Mathlib only and restate project-local vocabulary inline; their
-`Solution.lean` files import `AleksandrovDifferentiability` and discharge the corresponding
-statements through the public API.
+The directory `challenges/` contains standalone comparator challenge workspaces. Each trusted
+Mathlib-only claim lives in `Statement.lean`; both `Challenge.lean` and `Solution.lean` import that
+single claim surface, while only the solution wrapper imports `AleksandrovDifferentiability`.
+Ordinary CI elaborates these sources, but exact statement equality and permitted axioms are gated
+by `.github/workflows/release-comparator.yml` on a GitHub-hosted Linux runner.
 
 The file `AleksandrovDifferentiability/Comparator.lean` remains a Lean API-regression smoke-test
 surface for public imports and supporting interfaces. It is wired as the default Lake target

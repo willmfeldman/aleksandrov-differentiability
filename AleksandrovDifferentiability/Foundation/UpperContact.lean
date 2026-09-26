@@ -1,10 +1,14 @@
-import Mathlib.Analysis.InnerProductSpace.Basic
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Basic
 
 /-!
 # Upper quadratic contacts
 
 This file contains the upper-contact predicate used in the Aleksandrov proof route.
 -/
+
+@[expose] public section
 
 namespace AleksandrovDifferentiability
 

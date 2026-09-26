@@ -1,7 +1,9 @@
-import AleksandrovDifferentiability.Analysis.LineRestriction
-import AleksandrovDifferentiability.Statements.OneDimensional.RealLine
-import Mathlib.Analysis.InnerProductSpace.ProdL2
-import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
+module
+
+public import AleksandrovDifferentiability.Analysis.LineRestriction
+public import AleksandrovDifferentiability.Statements.OneDimensional.RealLine
+public import Mathlib.Analysis.InnerProductSpace.ProdL2
+public import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
 
 /-!
 # Aleksandrov theorem on affine-line restrictions
@@ -11,7 +13,7 @@ function to affine lines.  It is intended as a slicing-facing interface for late
 assembly.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

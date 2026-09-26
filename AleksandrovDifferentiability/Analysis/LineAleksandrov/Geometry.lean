@@ -1,10 +1,12 @@
-import AleksandrovDifferentiability.Analysis.LineAleksandrov.Core
+module
+
+public import AleksandrovDifferentiability.Analysis.LineAleksandrov.Core
 
 /-!
 # Line geometry for unit-direction slicing
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Analysis.LocalizedMaximal.Estimate
+module
+
+public import AleksandrovDifferentiability.Analysis.LocalizedMaximal.Estimate
 
 /-!
 # Localized one-dimensional maximal functions

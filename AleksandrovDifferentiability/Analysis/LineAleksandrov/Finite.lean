@@ -1,10 +1,12 @@
-import AleksandrovDifferentiability.Analysis.LineAleksandrov.Reconstruction
+module
+
+public import AleksandrovDifferentiability.Analysis.LineAleksandrov.Reconstruction
 
 /-!
 # Finite reconstruction assembly from line estimates
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

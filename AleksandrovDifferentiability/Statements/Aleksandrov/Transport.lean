@@ -1,12 +1,14 @@
-import AleksandrovDifferentiability.Analysis.Directional.Transport.DirectionalMeasure
-import AleksandrovDifferentiability.Statements.Aleksandrov.Core
-import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
+module
+
+public import AleksandrovDifferentiability.Analysis.Directional.Transport.DirectionalMeasure
+public import AleksandrovDifferentiability.Statements.Aleksandrov.Core
+public import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
 
 /-!
 # Linear-isometry transport for Aleksandrov statement interfaces
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory Topology

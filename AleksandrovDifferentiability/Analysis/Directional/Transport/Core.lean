@@ -1,4 +1,6 @@
-import AleksandrovDifferentiability.Analysis.Directional.EstimateDefs
+module
+
+public import AleksandrovDifferentiability.Analysis.Directional.EstimateDefs
 
 /-!
 # Directional estimate transport
@@ -7,7 +9,7 @@ This file proves pointwise and set-level transport lemmas for fixed-direction sc
 under linear isometry equivalences.
 -/
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MeasureTheory
 open scoped MeasureTheory

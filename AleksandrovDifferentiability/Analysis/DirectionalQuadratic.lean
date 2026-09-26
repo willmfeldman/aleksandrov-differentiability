@@ -1,1 +1,3 @@
-import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Polarization
+module
+
+public import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Polarization

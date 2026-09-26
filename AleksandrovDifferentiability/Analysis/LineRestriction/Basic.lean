@@ -1,8 +1,10 @@
-import AleksandrovDifferentiability.Analysis.OneDimConvex
-import AleksandrovDifferentiability.Foundation.Subgradient
-import AleksandrovDifferentiability.Foundation.UpperContact
-import Mathlib.Analysis.Calculus.LineDeriv.Basic
-import Mathlib.Analysis.InnerProductSpace.Dual
+module
+
+public import AleksandrovDifferentiability.Analysis.OneDimConvex
+public import AleksandrovDifferentiability.Foundation.Subgradient
+public import AleksandrovDifferentiability.Foundation.UpperContact
+public import Mathlib.Analysis.Calculus.LineDeriv.Basic
+public import Mathlib.Analysis.InnerProductSpace.Dual
 
 /-!
 # Restrictions to affine lines
@@ -10,6 +12,8 @@ import Mathlib.Analysis.InnerProductSpace.Dual
 This file starts the bridge between ambient convex/subgradient statements and the
 one-dimensional restrictions used in the Aleksandrov proof.
 -/
+
+@[expose] public section
 
 namespace AleksandrovDifferentiability
 

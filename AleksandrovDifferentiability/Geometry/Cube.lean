@@ -192,7 +192,7 @@ theorem convex_sourceOpenCubeAt {n : ℕ} (c : SourceCubeSpace n) (r : ℝ) :
   rw [sourceOpenCubeAt_eq_iInter]
   refine convex_iInter fun i => ?_
   intro x hx y hy a b ha hb hab
-  simp only [Set.mem_setOf_eq] at hx hy ⊢
+  simp only [Set.mem_ofPred_eq] at hx hy ⊢
   have hcoord :
       (a • x + b • y) i - c i =
         a * (x i - c i) + b * (y i - c i) := by
@@ -493,7 +493,7 @@ theorem sourceCoordinateChartInverseLinearMap_comp {n : ℕ} (i : Fin n) :
 theorem sourceCoordinateChartLinearMap_norm {n : ℕ} (i : Fin n)
     (p : WithLp 2 (SourceTransverseSpace i × ℝ)) :
     ‖sourceCoordinateChartLinearMap i p‖ = ‖p‖ := by
-  haveI : Subsingleton {j : Fin n // ¬ j ≠ i} := by
+  have : Subsingleton {j : Fin n // ¬ j ≠ i} := by
     refine ⟨fun a b => ?_⟩
     apply Subtype.ext
     exact (by_contra fun h => a.property h).trans (by_contra fun h => b.property h).symm
@@ -525,7 +525,7 @@ theorem sourceCoordinateChartLinearMap_norm {n : ℕ} (i : Fin n)
 cube. -/
 def sourceCoordinateChartLinearIsometryEquiv {n : ℕ} (i : Fin n) :
     WithLp 2 (SourceTransverseSpace i × ℝ) ≃ₗᵢ[ℝ] SourceCubeSpace n where
-  toLinearEquiv := LinearEquiv.ofLinear
+  toLinearEquiv := LinearEquiv.ofLinearMap
     (sourceCoordinateChartLinearMap i)
     (sourceCoordinateChartInverseLinearMap i)
     (sourceCoordinateChartLinearMap_comp_inverse i)

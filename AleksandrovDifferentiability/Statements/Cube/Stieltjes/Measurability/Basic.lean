@@ -37,7 +37,6 @@ theorem stieltjesFunction_leftLim_eq_iSup_rat_lt (F : StieltjesFunction ℝ) (c 
   let A : Set ℝ := F '' Set.Iio c
   have hleft : Function.leftLim F c = sSup A :=
     F.mono.leftLim_eq_sSup
-      (neBot_iff.mp (inferInstance : NeBot (nhdsWithin c (Set.Iio c))))
   rw [hleft]
   have hA_nonempty : A.Nonempty := by
     refine ⟨F (c - 1), ?_⟩
@@ -53,7 +52,7 @@ theorem stieltjesFunction_leftLim_eq_iSup_rat_lt (F : StieltjesFunction ℝ) (c 
     refine ⟨F c, ?_⟩
     rintro y ⟨q, rfl⟩
     exact F.mono q.property.le
-  haveI : Nonempty {q' : ℚ // (q' : ℝ) < c} := by
+  have : Nonempty {q' : ℚ // (q' : ℝ) < c} := by
     rcases exists_rat_lt c with ⟨q, hq⟩
     exact ⟨⟨q, hq⟩⟩
   apply le_antisymm
@@ -74,8 +73,7 @@ theorem monotone_rightLim_eq_iInf_rat_gt {g : ℝ → ℝ} (hg : Monotone g) (c 
     Function.rightLim g c = ⨅ q : {q' : ℚ // c < (q' : ℝ)}, g (q : ℝ) := by
   have hright :
       Function.rightLim g c = ⨅ r : Set.Ioi c, g (r : ℝ) := by
-    rw [hg.rightLim_eq_sInf
-      (neBot_iff.mp (inferInstance : NeBot (nhdsWithin c (Set.Ioi c))))]
+    rw [hg.rightLim_eq_sInf]
     rw [sInf_image']
   have hbdd : BddBelow (g '' Set.Ioi c) := by
     refine ⟨g c, ?_⟩

@@ -343,7 +343,7 @@ theorem ext_of_quadraticForm_eq_on_frame_and_add
     intro x y
     calc
       inner ℝ ((B - C) x) y = inner ℝ (B x) y - inner ℝ (C x) y := by
-        simp [ContinuousLinearMap.sub_apply, inner_sub_left]
+        simp [inner_sub_left]
       _ = inner ℝ x (B y) - inner ℝ x (C y) := by
         have hBx : inner ℝ (B x) y = inner ℝ x (B y) := by
           simpa using hB x y
@@ -351,11 +351,11 @@ theorem ext_of_quadraticForm_eq_on_frame_and_add
           simpa using hC x y
         rw [hBx, hCx]
       _ = inner ℝ x ((B - C) y) := by
-        simp [ContinuousLinearMap.sub_apply, inner_sub_right]
+        simp [inner_sub_right]
   have hzero : B - C = 0 := by
     refine hv.eq_zero_of_quadraticForm_eq_zero_on_frame_and_add hsymm ?_ ?_
     · intro i hi
-      simpa [ContinuousLinearMap.sub_apply, inner_sub_right] using
+      simpa [sub_apply, inner_sub_right] using
         sub_eq_zero.mpr (hpure hi)
     · intro i hi j hj
       let d := v i + v j
@@ -363,7 +363,7 @@ theorem ext_of_quadraticForm_eq_on_frame_and_add
         inner ℝ d ((B - C) d)
             = inner ℝ d (B (v i) + B (v j)) -
                 inner ℝ d (C (v i) + C (v j)) := by
-              simp [d, ContinuousLinearMap.sub_apply, map_add, inner_sub_right,
+              simp [d, map_add, inner_sub_right,
                 inner_add_right]
               ring
         _ = inner ℝ d (B d) - inner ℝ d (C d) := by
@@ -444,7 +444,7 @@ theorem ext_of_quadraticForm_eq_on_frame_and_add_offDiagonal
     intro x y
     calc
       inner ℝ ((B - C) x) y = inner ℝ (B x) y - inner ℝ (C x) y := by
-        simp [ContinuousLinearMap.sub_apply, inner_sub_left]
+        simp [inner_sub_left]
       _ = inner ℝ x (B y) - inner ℝ x (C y) := by
         have hBx : inner ℝ (B x) y = inner ℝ x (B y) := by
           simpa using hB x y
@@ -452,11 +452,11 @@ theorem ext_of_quadraticForm_eq_on_frame_and_add_offDiagonal
           simpa using hC x y
         rw [hBx, hCx]
       _ = inner ℝ x ((B - C) y) := by
-        simp [ContinuousLinearMap.sub_apply, inner_sub_right]
+        simp [inner_sub_right]
   have hzero : B - C = 0 := by
     refine hv.eq_zero_of_quadraticForm_eq_zero_on_frame_and_add_offDiagonal hsymm ?_ ?_
     · intro i hi
-      simpa [ContinuousLinearMap.sub_apply, inner_sub_right] using
+      simpa [sub_apply, inner_sub_right] using
         sub_eq_zero.mpr (hpure hi)
     · intro i hi j hj hij
       let d := v i + v j
@@ -464,7 +464,7 @@ theorem ext_of_quadraticForm_eq_on_frame_and_add_offDiagonal
         inner ℝ d ((B - C) d)
             = inner ℝ d (B (v i) + B (v j)) -
                 inner ℝ d (C (v i) + C (v j)) := by
-              simp [d, ContinuousLinearMap.sub_apply, map_add, inner_sub_right,
+              simp [d, map_add, inner_sub_right,
                 inner_add_right]
               ring
         _ = inner ℝ d (B d) - inner ℝ d (C d) := by

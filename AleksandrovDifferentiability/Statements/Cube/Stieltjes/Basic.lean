@@ -280,7 +280,13 @@ theorem CoordinateSliceSourceMassBound.of_sourceRightDerivStieltjes {n : ℕ}
       (coordinateSliceSourceRightDerivStieltjesMeasureFamily u hmono) osc := by
   classical
   intro i y hy
-  simpa [coordinateSliceSourceRightDerivStieltjesMeasureFamily, hy] using hmass i hy
+  have hfamily :
+      coordinateSliceSourceRightDerivStieltjesMeasureFamily u hmono i y =
+        sourceRightDerivStieltjesSecondDerivativeMeasure
+          (lineRestriction u (coordinateLineBase i y) (sourceCoordinateVector i)) (hmono i hy) := by
+    simp [coordinateSliceSourceRightDerivStieltjesMeasureFamily, hy]
+  rw [hfamily]
+  exact hmass i hy
 
 /-- Source jump bounds for the clamped source-local Stieltjes slices supply the abstract
 coordinate-slice source mass bound. -/

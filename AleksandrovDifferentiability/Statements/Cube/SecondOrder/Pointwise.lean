@@ -38,7 +38,8 @@ theorem cubeGoodSet_subgradient_eq_frechetGradient
     sourceOpenCube_one_subset_interior_three hxQ
   have hs : sourceOpenCube n 3 ∈ 𝓝 x :=
     (isOpen_sourceOpenCube (n := n) 3).mem_nhds (interior_subset hxInterior)
-  simpa [frechetGradient] using hp.eq_gradient_of_differentiableAt hs hdiff
+  change p = gradient u x
+  exact hp.eq_gradient_of_differentiableAt hs hdiff
 
 /-- Cube-local subgradient extension from cluster-gradient density.
 

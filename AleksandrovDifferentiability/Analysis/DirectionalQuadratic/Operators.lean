@@ -22,7 +22,7 @@ theorem isSymmetricOperator_sum {ι : Type*} {s : Finset ι} {B : ι → E →L[
     IsSymmetricOperator (∑ i ∈ s, B i) := by
   intro x y
   change inner ℝ ((∑ i ∈ s, B i) x) y = inner ℝ x ((∑ i ∈ s, B i) y)
-  rw [ContinuousLinearMap.sum_apply, ContinuousLinearMap.sum_apply]
+  rw [sum_apply, sum_apply]
   rw [sum_inner, inner_sum]
   exact Finset.sum_congr rfl fun i hi => hB i hi x y
 
@@ -142,9 +142,9 @@ theorem inner_directionalQuadraticSum_self
     inner ℝ z (directionalQuadraticSum s v q z) =
       ∑ i ∈ s, q i * (inner ℝ (v i) z) ^ 2 := by
   unfold directionalQuadraticSum
-  rw [ContinuousLinearMap.sum_apply, inner_sum]
+  rw [sum_apply, inner_sum]
   refine Finset.sum_congr rfl fun i hi => ?_
-  rw [ContinuousLinearMap.smul_apply, real_inner_smul_right,
+  rw [smul_apply, real_inner_smul_right,
     inner_directionalQuadraticOperator_self]
 
 /-- A finite matrix of mixed directional quadratic operators. The coefficient `a i j` multiplies
@@ -196,11 +196,11 @@ theorem inner_mixedDirectionalQuadraticSum_self
       ∑ i ∈ s, ∑ j ∈ s,
         a i j * inner ℝ (v i) z * inner ℝ (v j) z := by
   unfold mixedDirectionalQuadraticSum
-  rw [ContinuousLinearMap.sum_apply, inner_sum]
+  rw [sum_apply, inner_sum]
   refine Finset.sum_congr rfl fun i hi => ?_
-  rw [ContinuousLinearMap.sum_apply, inner_sum]
+  rw [sum_apply, inner_sum]
   refine Finset.sum_congr rfl fun j hj => ?_
-  rw [ContinuousLinearMap.smul_apply, real_inner_smul_right,
+  rw [smul_apply, real_inner_smul_right,
     inner_mixedDirectionalQuadraticOperator_self]
   ring
 
@@ -315,9 +315,9 @@ theorem mixedDirectionalQuadraticSum_diagonal
       directionalQuadraticSum s v q := by
   unfold mixedDirectionalQuadraticSum directionalQuadraticSum
   ext z
-  rw [ContinuousLinearMap.sum_apply, ContinuousLinearMap.sum_apply]
+  rw [sum_apply, sum_apply]
   refine Finset.sum_congr rfl fun i hi => ?_
-  rw [ContinuousLinearMap.sum_apply]
+  rw [sum_apply]
   by_cases his : i ∈ s
   · rw [Finset.sum_eq_single i]
     · simp [mixedDirectionalQuadraticOperator_self]

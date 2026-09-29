@@ -96,7 +96,8 @@ theorem IsOpen.exists_pos_forall_pos_lt_add_smul_mem
     have hcont : ContinuousAt (fun t : ℝ => y + t • normal) 0 := by fun_prop
     have hdomain0 : domain ∈ 𝓝 ((fun t : ℝ => y + t • normal) 0) := by
       simpa using hopen.mem_nhds hy
-    simpa using hcont hdomain0
+    change ((fun t : ℝ => y + t • normal) ⁻¹' domain) ∈ 𝓝 0
+    exact hcont hdomain0
   rw [Metric.mem_nhds_iff] at hpre
   rcases hpre with ⟨δ, hδ_pos, hδ_sub⟩
   refine ⟨δ, hδ_pos, ?_⟩
@@ -285,7 +286,7 @@ theorem ConvexOn.subgradientOn_gradient_of_differentiableAt
   ConvexOn.subgradientOn_of_hasFDerivAt_of_forall_eq_inner
     hu hx hd.hasFDerivAt
     (fun v => by
-      simpa using (hd.hasGradientAt.fderiv_apply (y := v)))
+      simp)
 
 set_option linter.unusedSectionVars false in
 /-- A gradient cluster value is a subgradient at the base point.
@@ -324,7 +325,7 @@ theorem GradientClusterSet.subset_subgradientOn_of_convexOn
     filter_upwards [hmemD.filter_mono (inf_le_left : l ≤ F)] with w hw
     rcases hw with ⟨hw_sample, hw_diff⟩
     exact ConvexOn.subgradientOn_gradient_of_differentiableAt hu (hsample hw_sample) hw_diff
-  haveI : Filter.NeBot l := hne_l
+  have : Filter.NeBot l := hne_l
   exact
     SubgradientOn.of_tendsto_of_continuousAt
       (s := domain) (u := u) (x := y) (p := q)

@@ -139,7 +139,8 @@ theorem eq_zero_of_forall_inner_sub_nonpos_of_mem_nhds
     have hcont : ContinuousAt (fun t : ℝ => y + t • q) 0 := by fun_prop
     have hdomain0 : domain ∈ 𝓝 ((fun t : ℝ => y + t • q) 0) := by
       simpa using hdomain
-    simpa using hcont hdomain0
+    change ((fun t : ℝ => y + t • q) ⁻¹' domain) ∈ 𝓝 0
+    exact hcont hdomain0
   rw [Metric.mem_nhds_iff] at hpre
   rcases hpre with ⟨ε, hε_pos, hε_sub⟩
   let t : ℝ := ε / 2

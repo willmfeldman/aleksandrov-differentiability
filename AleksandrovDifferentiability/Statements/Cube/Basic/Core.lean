@@ -63,6 +63,11 @@ def frechetGradient {n : ℕ} (u : SourceCubeSpace n → ℝ) (x : SourceCubeSpa
     SourceCubeSpace n :=
   (InnerProductSpace.toDual ℝ (SourceCubeSpace n)).symm (fderiv ℝ u x)
 
+/-- The source gradient vector is Mathlib's `gradient`. -/
+theorem frechetGradient_eq_gradient {n : ℕ} (u : SourceCubeSpace n → ℝ) :
+    frechetGradient u = gradient u :=
+  rfl
+
 /-- The Fréchet derivative is represented by the source gradient vector. -/
 theorem fderiv_apply_eq_inner_frechetGradient {n : ℕ} (u : SourceCubeSpace n → ℝ)
     (x z : SourceCubeSpace n) :

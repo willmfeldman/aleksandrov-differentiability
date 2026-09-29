@@ -1,8 +1,8 @@
 cff-version: 1.2.0
 message: "If you use this Lean formalization, please cite it using this metadata."
 title: "Aleksandrov Differentiability"
-version: "0.2.0"
-date-released: 2026-09-26
+version: "0.3.0"
+date-released: 2026-09-29
 license: "Apache-2.0"
 repository-code: "https://github.com/willmfeldman/aleksandrov-differentiability"
 authors:

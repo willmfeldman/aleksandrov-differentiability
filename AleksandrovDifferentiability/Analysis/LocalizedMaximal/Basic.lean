@@ -1,7 +1,7 @@
 module
 
 public import Mathlib.Data.Rat.Denumerable
-public import Mathlib.Data.Countable.Basic
+public import Mathlib.Basic.Countable.Basic
 public import Mathlib.MeasureTheory.Covering.Vitali
 public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 
@@ -301,9 +301,9 @@ interval and only source-admissible intervals. -/
 theorem exists_sourceRationalIntervalEnumeration :
     ∃ a b : ℕ → ℝ, SourceRationalIntervalEnumeration a b := by
   classical
-  haveI : Nonempty SourceRationalAdmissibleInterval :=
+  have : Nonempty SourceRationalAdmissibleInterval :=
     nonempty_sourceRationalAdmissibleInterval
-  haveI : Countable SourceRationalAdmissibleInterval := by
+  have : Countable SourceRationalAdmissibleInterval := by
     dsimp [SourceRationalAdmissibleInterval]
     infer_instance
   rcases exists_surjective_nat SourceRationalAdmissibleInterval with ⟨e, he⟩

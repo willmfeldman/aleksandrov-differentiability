@@ -148,7 +148,7 @@ theorem mem_mathlib_exposedPoints_of_unique_isMaxOn
 set_option linter.unusedSectionVars false in
 /-- A Mathlib exposed point supplies a continuous linear functional with a unique maximum.
 
-This is the unpacked form of `Set.exposedPoints`, phrased with `IsMaxOn` so downstream
+This is the unpacked form of `Set.exposedPoints`, phrased with `IsMaxOn` so later
 Rockafellar-style arguments can use the standard extremum API. -/
 theorem exists_unique_isMaxOn_of_mem_mathlib_exposedPoints
     {s : Set E} {p : E} (hp : p ∈ Set.exposedPoints ℝ s) :

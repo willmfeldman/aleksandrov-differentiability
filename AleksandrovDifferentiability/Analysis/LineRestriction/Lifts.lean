@@ -196,14 +196,14 @@ theorem LineSubgradientLiftsToAmbientFunctional.smul_add_smul
           = a * (u (x + t • z) + ℓ₀ (y - (x + t • z))) +
               b * (u (x + t • z) + ℓ₁ (y - (x + t • z))) := by
             have hb_eq : b = 1 - a := by linarith
-            rw [ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply,
-              ContinuousLinearMap.smul_apply, hb_eq]
+            rw [add_apply, smul_apply,
+              smul_apply, hb_eq]
             ring
       _ ≤ a * u y + b * u y := hcombo
       _ = u y := by
         rw [← add_mul, hab, one_mul]
-  · rw [ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply,
-      ContinuousLinearMap.smul_apply, ← hq₀, ← hq₁]
+  · rw [add_apply, smul_apply,
+      smul_apply, ← hq₀, ← hq₁]
     simp [smul_eq_mul]
 
 /-- If the left and right derivatives of a convex line restriction have functional ambient lifts,

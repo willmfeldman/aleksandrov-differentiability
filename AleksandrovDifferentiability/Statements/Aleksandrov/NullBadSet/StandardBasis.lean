@@ -23,7 +23,7 @@ theorem convexAleksandrovNullBadSetOnStatement_of_stdOrthonormalBasis_compatible
     (hrecon : CompatiblePolarizedDirectionalSliceReconstructionStatement Finset.univ E Ω u
       (stdOrthonormalBasis ℝ E)) :
     ConvexAleksandrovNullBadSetOnStatement E Ω u := by
-  haveI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
   exact
     convexAleksandrovNullBadSetOnStatement_of_orthonormalBasis_compatibleFullMeasure
       E Ω u (stdOrthonormalBasis ℝ E) hslice hrecon
@@ -41,7 +41,7 @@ theorem
       CompatiblePolarizedDirectionalSliceQuotientReconstructionStatement Finset.univ E Ω u
         (stdOrthonormalBasis ℝ E)) :
     ConvexAleksandrovNullBadSetOnStatement E Ω u := by
-  haveI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
   exact
     convexAleksandrovNullBadSetOnStatement_of_orthonormalBasis_compatibleQuotientFullMeasure
       E Ω u (stdOrthonormalBasis ℝ E) hslice hrecon
@@ -59,7 +59,7 @@ theorem
       CompatiblePolarizedDirectionalSliceQuotientReconstructionStatement Finset.univ E Ω u
         (stdOrthonormalBasis ℝ E)) :
     ConvexAleksandrovNullBadSetOnStatement E Ω u := by
-  haveI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
   exact
     convexAleksandrovNullBadSetOnStatement_of_compatibleFullMeasure_and_quotientReconstruction
       Finset.univ E Ω u (stdOrthonormalBasis ℝ E)
@@ -77,7 +77,7 @@ theorem convexAleksandrovNullBadSetOnStatement_of_stdOrthonormalBasis_symmetricF
       SymmetricCompatiblePolarizedDirectionalSliceReconstructionStatement Finset.univ E Ω u
         (stdOrthonormalBasis ℝ E)) :
     ConvexAleksandrovNullBadSetOnStatement E Ω u := by
-  haveI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
   exact
     convexAleksandrovNullBadSetOnStatement_of_basis_symmetricCompatibleFullMeasure
       E Ω u (stdOrthonormalBasis ℝ E) hslice hrecon
@@ -95,7 +95,7 @@ theorem
       SymmetricCompatiblePolarizedDirectionalSliceQuotientReconstructionStatement Finset.univ E Ω u
         (stdOrthonormalBasis ℝ E)) :
     ConvexAleksandrovNullBadSetOnStatement E Ω u := by
-  haveI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
   exact
     convexAleksandrovNullBadSetOnStatement_of_basis_symmetricCompatibleQuotientFullMeasure
       E Ω u (stdOrthonormalBasis ℝ E) hslice hrecon
@@ -113,7 +113,7 @@ theorem
       SymmetricCompatiblePolarizedDirectionalSliceQuotientReconstructionStatement Finset.univ E Ω u
         (stdOrthonormalBasis ℝ E)) :
     ConvexAleksandrovNullBadSetOnStatement E Ω u := by
-  haveI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
   exact
     convexAleksandrovNullBadSetOnStatement_of_basis_symmetricFullMeasure_quotientRecon
       E Ω u (stdOrthonormalBasis ℝ E) hslice hrecon
@@ -762,7 +762,7 @@ theorem convexAleksandrovNullBadSetOnStatement_of_stdOrthonormalBasis_fubini_and
     (hrecon : PolarizedDirectionalSliceReconstructionStatement Finset.univ E Ω u
       (stdOrthonormalBasis ℝ E)) :
     ConvexAleksandrovNullBadSetOnStatement E Ω u := by
-  haveI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
   exact
     convexAleksandrovNullBadSetOnStatement_of_orthonormalBasis_fubini_and_reconstruction
       E Ω u (stdOrthonormalBasis ℝ E) hfubini hrecon
@@ -778,7 +778,7 @@ theorem
     (hrecon : PolarizedDirectionalSliceQuotientReconstructionStatement Finset.univ E Ω u
       (stdOrthonormalBasis ℝ E)) :
     ConvexAleksandrovNullBadSetOnStatement E Ω u := by
-  haveI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
   exact
     convexAleksandrovNullBadSetOnStatement_of_orthonormalBasis_quotient_fubini_and_reconstruction
       E Ω u (stdOrthonormalBasis ℝ E) hfubini hrecon
@@ -794,7 +794,7 @@ theorem
     (hrecon : PolarizedDirectionalSliceQuotientReconstructionStatement Finset.univ E Ω u
       (stdOrthonormalBasis ℝ E)) :
     ConvexAleksandrovNullBadSetOnStatement E Ω u := by
-  haveI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
   exact
     convexAleksandrovNullBadSetOnStatement_of_orthonormalBasis_fubini_and_quotient_reconstruction
       E Ω u (stdOrthonormalBasis ℝ E) hfubini hrecon
@@ -809,7 +809,7 @@ theorem convexAleksandrovNullBadSetStatement_of_stdOrthonormalBasis_fubini_and_r
     (hrecon : PolarizedDirectionalSliceReconstructionStatement Finset.univ E Ω u
       (stdOrthonormalBasis ℝ E)) :
     ConvexAleksandrovNullBadSetStatement E Ω u := by
-  haveI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
   exact
     convexAleksandrovNullBadSetStatement_of_fubini_and_polarized_reconstruction
       Finset.univ E Ω u (stdOrthonormalBasis ℝ E)
@@ -826,7 +826,7 @@ theorem
     (hrecon : PolarizedDirectionalSliceQuotientReconstructionStatement Finset.univ E Ω u
       (stdOrthonormalBasis ℝ E)) :
     ConvexAleksandrovNullBadSetStatement E Ω u := by
-  haveI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
   exact
     convexAleksandrovNullBadSetStatement_of_quotient_fubini_and_polarized_reconstruction
       Finset.univ E Ω u (stdOrthonormalBasis ℝ E)
@@ -842,7 +842,7 @@ theorem
     (hrecon : PolarizedDirectionalSliceQuotientReconstructionStatement Finset.univ E Ω u
       (stdOrthonormalBasis ℝ E)) :
     ConvexAleksandrovNullBadSetStatement E Ω u := by
-  haveI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
   exact
     convexAleksandrovNullBadSetStatement_of_fubini_and_quotient_reconstruction
       Finset.univ E Ω u (stdOrthonormalBasis ℝ E)

@@ -102,12 +102,14 @@ theorem ConvexOn.hasDerivWithinAt_leftDeriv
 /-- Right derivatives of a one-dimensional convex function are monotone on the interior. -/
 theorem ConvexOn.monotoneOn_projectRightDeriv (hf : ConvexOn ℝ S f) :
     MonotoneOn (rightDeriv f) (interior S) := by
-  simpa [rightDeriv] using hf.monotoneOn_rightDeriv
+  change MonotoneOn (fun x => derivWithin f (Ioi x) x) (interior S)
+  exact hf.monotoneOn_rightDeriv
 
 /-- Left derivatives of a one-dimensional convex function are monotone on the interior. -/
 theorem ConvexOn.monotoneOn_projectLeftDeriv (hf : ConvexOn ℝ S f) :
     MonotoneOn (leftDeriv f) (interior S) := by
-  simpa [leftDeriv] using hf.monotoneOn_leftDeriv
+  change MonotoneOn (fun x => derivWithin f (Iio x) x) (interior S)
+  exact hf.monotoneOn_leftDeriv
 
 /-- The project-local right derivative of a one-dimensional convex function is differentiable
 almost everywhere on the interior, in implication form. -/
@@ -184,7 +186,8 @@ theorem ConvexOn.measure_interior_diff_rightDerivDifferentiabilitySet_eq_zero
         interior S \ rightDerivDifferentiabilitySet S f := by
     ext x
     simp [rightDerivDifferentiabilitySet]
-  simpa [hset] using hae
+  rw [hset] at hae
+  exact hae
 
 /-- The exceptional set inside the interior where the project-local left derivative is not
 differentiable has zero Lebesgue measure. -/
@@ -201,7 +204,8 @@ theorem ConvexOn.measure_interior_diff_leftDerivDifferentiabilitySet_eq_zero
         interior S \ leftDerivDifferentiabilitySet S f := by
     ext x
     simp [leftDerivDifferentiabilitySet]
-  simpa [hset] using hae
+  rw [hset] at hae
+  exact hae
 
 /-- The exceptional set inside the interior where one of the one-sided derivative functions is
 not differentiable has zero Lebesgue measure. -/
@@ -452,7 +456,7 @@ theorem ConvexOn.rightDeriv_le_leftDeriv_of_continuousWithinAt_rightDeriv
     rw [inter_comm]
     exact nhdsWithin_inter_of_mem'
       (nhdsWithin_le_nhds (isOpen_interior.mem_nhds hx))
-  haveI : NeBot (nhdsWithin x (interior S ∩ Iio x)) := by
+  have : NeBot (nhdsWithin x (interior S ∩ Iio x)) := by
     rw [hfilter]
     infer_instance
   have hevent :

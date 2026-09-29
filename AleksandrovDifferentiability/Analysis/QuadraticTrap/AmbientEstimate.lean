@@ -244,7 +244,9 @@ theorem isSymmetricOperator_linearIsometryEquivConjCLM
     exact
       (LinearMap.isSymmetric_linearIsometryEquiv_conj_iff
         (T := (B : F →ₗ[ℝ] F)) (f := e.symm)).2 hB
-  simpa [IsSymmetricOperator, linearIsometryEquivConjCLM, LinearMap.comp_assoc] using hconj
+  change ((e.symm.toLinearIsometry.toLinearMap : F →ₗ[ℝ] E) ∘ₗ
+    (B : F →ₗ[ℝ] F) ∘ₗ (e.toLinearIsometry.toLinearMap : E →ₗ[ℝ] F)).IsSymmetric
+  exact hconj
 
 /-- The quadratic form of a conjugated operator is the coordinate-model quadratic form. -/
 theorem inner_linearIsometryEquivConjCLM_self

@@ -323,7 +323,7 @@ neighborhood within `D`, so no continuity of `G` is required. -/
 theorem GradientClusterSet.mem_of_mem
     {D : Set E} {G : E → E} {y : E} (hy : y ∈ D) :
     G y ∈ GradientClusterSet D G y := by
-  rw [GradientClusterSet, Set.mem_setOf_eq, mapClusterPt_def]
+  rw [GradientClusterSet, Set.mem_ofPred_eq, mapClusterPt_def]
   have hmap : Filter.map G (pure y) ≤ Filter.map G (𝓝[D] y) :=
     Filter.map_mono (m := G) (pure_le_nhdsWithin hy)
   have hpure : ClusterPt (G y) (Filter.map G (pure y)) := by
@@ -342,7 +342,7 @@ theorem GradientClusterSet.mem_of_tendsto
     {D : Set E} {G : E → E} {y q : E}
     (hne : (𝓝[D] y).NeBot) (hG : Filter.Tendsto G (𝓝[D] y) (𝓝 q)) :
     q ∈ GradientClusterSet D G y := by
-  rw [GradientClusterSet, Set.mem_setOf_eq, mapClusterPt_def]
+  rw [GradientClusterSet, Set.mem_ofPred_eq, mapClusterPt_def]
   exact ClusterPt.of_le_nhds hG
 
 set_option linter.unusedSectionVars false in
@@ -784,9 +784,8 @@ theorem eventually_increment_estimates
       Filter.Tendsto (fun z : E => x + z) (𝓝 (0 : E)) (𝓝[approach] x) := by
     rw [tendsto_nhdsWithin_iff]
     constructor
-    · simpa using
-        ((continuousAt_const.add continuousAt_id :
-          ContinuousAt (fun z : E => x + z) 0).tendsto)
+    · have hc : ContinuousAt (fun z : E => x + z) 0 := by fun_prop
+      simpa using hc.tendsto
     · exact happroach
   filter_upwards [hmap.eventually (hlin ε hε)] with z hz p hp
   simpa using hz p hp
@@ -905,7 +904,9 @@ theorem SubgradientOn.eq_gradient_of_hasGradientAt {s : Set E} {u : E → ℝ} {
     (InnerProductSpace.toDual ℝ E p).hasFDerivAt
   have hg : HasFDerivAt g
       (InnerProductSpace.toDual ℝ E q - InnerProductSpace.toDual ℝ E p) x := by
-    simpa [g, InnerProductSpace.toDual_apply_apply] using hd.hasFDerivAt.sub hinner
+    change HasFDerivAt (u - fun y : E => inner ℝ p y)
+      (InnerProductSpace.toDual ℝ E q - InnerProductSpace.toDual ℝ E p) x
+    exact hd.hasFDerivAt.sub hinner
   have hzero :
       InnerProductSpace.toDual ℝ E q - InnerProductSpace.toDual ℝ E p = 0 :=
     hmin.hasFDerivAt_eq_zero hg

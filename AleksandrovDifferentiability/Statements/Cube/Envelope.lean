@@ -277,7 +277,7 @@ theorem lowerMcShaneEnvelope_eq_on_of_cross_bound
     {x : SourceCubeSpace n} (hx : x ∈ F) :
     lowerMcShaneEnvelope K E g x = g x := by
   have hxE : x ∈ E := hFE hx
-  haveI : Nonempty E := ⟨⟨x, hxE⟩⟩
+  have : Nonempty E := ⟨⟨x, hxE⟩⟩
   apply le_antisymm
   · simpa using
       lowerMcShaneEnvelope_le_base (K := K) (E := E) (g := g) hbound (x := x) (y := x) hxE
@@ -304,7 +304,7 @@ theorem upperMcShaneEnvelope_eq_on_of_cross_bound
     {x : SourceCubeSpace n} (hx : x ∈ F) :
     upperMcShaneEnvelope K E g x = g x := by
   have hxE : x ∈ E := hFE hx
-  haveI : Nonempty E := ⟨⟨x, hxE⟩⟩
+  have : Nonempty E := ⟨⟨x, hxE⟩⟩
   apply le_antisymm
   · dsimp [upperMcShaneEnvelope]
     have hnegBound : ∃ M : ℝ, ∀ y ∈ E, -M ≤ -g y := by
@@ -437,7 +437,8 @@ theorem lipschitzEnvelope_touching_hasFDerivAt_eq
     dsimp [h]
     linarith
   have hd : HasFDerivAt h (Lplus - Lminus) x0 := by
-    simpa [h] using hdplus.sub hdminus
+    change HasFDerivAt (gplus - gminus) (Lplus - Lminus) x0
+    exact hdplus.sub hdminus
   have hzero : Lplus - Lminus = 0 :=
     hmin.hasFDerivAt_eq_zero hd
   exact (sub_eq_zero.mp hzero).symm
@@ -798,7 +799,7 @@ theorem cubeGoodSet_nat_ae_coordinateGradient_expansion_three_halves_of_mem
     rcases hzeroClosure Set.univ isOpen_univ trivial with ⟨y, _hy_univ, hyE⟩
     exact ⟨y, hyE⟩
   rcases hEnonempty with ⟨y0, hy0E⟩
-  letI : Nonempty E := ⟨⟨y0, hy0E⟩⟩
+  let : Nonempty E := ⟨⟨y0, hy0E⟩⟩
   have hLower :
       ∃ M : ℝ, ∀ y ∈ E, -M ≤ (fun z : SourceCubeSpace n => frechetGradient u z i) y := by
     simpa [E] using
@@ -901,7 +902,7 @@ theorem ae_restrict_sourceOpenCube_exists_goodSet_frechetGradient_expansion_thre
         {x : SourceCubeSpace n | ¬ x ∈ G} ∩ sourceOpenCube n 1 =
           sourceOpenCube n 1 \ G := by
       ext x
-      simp [Set.diff_eq, and_comm]
+      simp [Set.sdiff_eq, and_comm]
     rwa [hset]
   have hAE :
       ∀ᵐ x ∂(volume : Measure (SourceCubeSpace n)), ∀ m : ℕ,

@@ -182,8 +182,7 @@ theorem sourceRightDerivExtension_leftLim_eq_of_tendsto_rightDeriv_nhdsLT
   have hlim_ext :
       Tendsto (sourceRightDerivExtension v) (nhdsWithin s (Set.Iio s)) (nhds L) :=
     hlim.congr' (sourceRightDerivExtension_eventuallyEq_rightDeriv_nhdsLT hs).symm
-  exact leftLim_eq_of_tendsto
-    (neBot_iff.mp (inferInstance : NeBot (nhdsWithin s (Set.Iio s)))) hlim_ext
+  exact leftLim_eq_of_tendsto hlim_ext
 
 /-- A right limit of the ordinary right derivative transfers to the clamped source extension at
 points strictly inside the source interval. -/
@@ -194,8 +193,7 @@ theorem sourceRightDerivExtension_rightLim_eq_of_tendsto_rightDeriv_nhdsGT
   have hlim_ext :
       Tendsto (sourceRightDerivExtension v) (nhdsWithin s (Set.Ioi s)) (nhds L) :=
     hlim.congr' (sourceRightDerivExtension_eventuallyEq_rightDeriv_nhdsGT hs).symm
-  exact rightLim_eq_of_tendsto
-    (neBot_iff.mp (inferInstance : NeBot (nhdsWithin s (Set.Ioi s)))) hlim_ext
+  exact rightLim_eq_of_tendsto hlim_ext
 
 /-- A right derivative monotone on the source interval `[-2,2]` gives a globally monotone
 clamped extension. -/
@@ -330,8 +328,10 @@ theorem sourceRightDerivStieltjesFunction_neg_two_ge_of_rightDeriv_lower
   have hg_neg_two : lower ≤ g (-2 : ℝ) := by
     simpa [g, sourceRightDerivExtension, sourceDerivativeClamp] using hlower
   exact hg_neg_two.trans (by
-    simpa [g, sourceRightDerivStieltjesSecondDerivativeFunction,
-      monotoneStieltjesSecondDerivativeFunction] using hle_rightLim)
+    change g (-2 : ℝ) ≤
+      (monotone_sourceRightDerivExtension hmono).stieltjesFunction (-2 : ℝ)
+    rw [(monotone_sourceRightDerivExtension hmono).stieltjesFunction_eq]
+    exact hle_rightLim)
 
 theorem sourceRightDerivStieltjesFunction_leftLim_two_le_of_rightDeriv_upper
     {v : ℝ → ℝ} {hmono : MonotoneOn (rightDeriv v) (Set.Icc (-2 : ℝ) 2)}
@@ -347,8 +347,10 @@ theorem sourceRightDerivStieltjesFunction_leftLim_two_le_of_rightDeriv_upper
   have hF_two_le_g_three : F (2 : ℝ) ≤ g (3 : ℝ) := by
     have hright : Function.rightLim g (2 : ℝ) ≤ g (3 : ℝ) :=
       hg.rightLim_le (by norm_num : (2 : ℝ) < 3)
-    simpa [F, sourceRightDerivStieltjesSecondDerivativeFunction,
-      monotoneStieltjesSecondDerivativeFunction, g] using hright
+    change (monotone_sourceRightDerivExtension hmono).stieltjesFunction (2 : ℝ) ≤
+      g (3 : ℝ)
+    rw [(monotone_sourceRightDerivExtension hmono).stieltjesFunction_eq]
+    exact hright
   have hg_three_le : g (3 : ℝ) ≤ upper := by
     have hclamp : sourceDerivativeClamp (3 : ℝ) = 2 := by
       norm_num [sourceDerivativeClamp]

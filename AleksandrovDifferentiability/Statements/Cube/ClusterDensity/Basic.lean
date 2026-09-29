@@ -67,8 +67,8 @@ theorem SourceCubeSubgradientClusterDensity.of_rockafellarLocal
   filter_upwards [eventually_mem_nhdsWithin] with y hy p hp
   have hy_sample : y ∈ sourceOpenCube n (3 / 2 : ℝ) := hy.1
   have hdensity := hlocal hy_sample hp
-  simpa [differentiabilitySetOn, sourceCubeDifferentiabilitySet,
-    firstOrderDifferentiabilitySet, frechetGradient, gradient] using hdensity
+  simpa only [differentiabilitySetOn, sourceCubeDifferentiabilitySet,
+    firstOrderDifferentiabilitySet, frechetGradient_eq_gradient] using hdensity
 
 set_option linter.unusedSectionVars false in
 /-- In a source cube, sufficiently small positive steps in any fixed direction remain in the
@@ -508,8 +508,8 @@ theorem SourceCubeSubgradientClusterDensity.of_bounded_straszewiczClosure_outer_
       (D₁ := differentiabilitySetOn (sourceOpenCube n 1) u)
       (D₂ := differentiabilitySetOn (sourceOpenCube n (3 / 2 : ℝ)) u)
       (G := gradient u) (y := y) (p := p) hD hdensity
-  simpa [differentiabilitySetOn, sourceCubeDifferentiabilitySet,
-    firstOrderDifferentiabilitySet, frechetGradient, gradient] using hmono
+  simpa only [differentiabilitySetOn, sourceCubeDifferentiabilitySet,
+    firstOrderDifferentiabilitySet, frechetGradient_eq_gradient] using hmono
 
 set_option linter.unusedSectionVars false in
 /-- Inner-cube source-cube cluster density from the source-faithful directional outer input.
@@ -587,8 +587,8 @@ theorem SourceCubeSubgradientClusterDensity.of_bounded_straszewiczClosure_direct
       (D₁ := differentiabilitySetOn (sourceOpenCube n 1) u)
       (D₂ := differentiabilitySetOn (sourceOpenCube n (3 / 2 : ℝ)) u)
       (G := gradient u) (y := y) (p := p) hD hdensity
-  simpa [differentiabilitySetOn, sourceCubeDifferentiabilitySet,
-    firstOrderDifferentiabilitySet, frechetGradient, gradient] using hmono
+  simpa only [differentiabilitySetOn, sourceCubeDifferentiabilitySet,
+    firstOrderDifferentiabilitySet, frechetGradient_eq_gradient] using hmono
 
 set_option linter.unusedSectionVars false in
 /-- Inner-cube source-cube cluster density from Rockafellar's concrete ray sequence.
@@ -677,8 +677,8 @@ theorem SourceCubeSubgradientClusterDensity.of_bounded_straszewiczClosure_ray_so
       (D₁ := differentiabilitySetOn (sourceOpenCube n 1) u)
       (D₂ := differentiabilitySetOn (sourceOpenCube n (3 / 2 : ℝ)) u)
       (G := gradient u) (y := y) (p := p) hD hdensity
-  simpa [differentiabilitySetOn, sourceCubeDifferentiabilitySet,
-    firstOrderDifferentiabilitySet, frechetGradient, gradient] using hmono
+  simpa only [differentiabilitySetOn, sourceCubeDifferentiabilitySet,
+    firstOrderDifferentiabilitySet, frechetGradient_eq_gradient] using hmono
 
 set_option linter.unusedSectionVars false in
 /-- Inner-cube source-cube cluster density from Rockafellar's concrete ray sequence, with the

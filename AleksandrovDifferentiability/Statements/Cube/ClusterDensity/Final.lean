@@ -83,8 +83,8 @@ theorem SourceCubeSubgradientClusterDensity.of_bounded_mathlibStraszewicz_outer_
       (D₁ := differentiabilitySetOn (sourceOpenCube n 1) u)
       (D₂ := differentiabilitySetOn (sourceOpenCube n (3 / 2 : ℝ)) u)
       (G := gradient u) (y := y) (p := p) hD hdensity
-  simpa [differentiabilitySetOn, sourceCubeDifferentiabilitySet,
-    firstOrderDifferentiabilitySet, frechetGradient, gradient] using hmono
+  simpa only [differentiabilitySetOn, sourceCubeDifferentiabilitySet,
+    firstOrderDifferentiabilitySet, frechetGradient_eq_gradient] using hmono
 
 /-- If the local Rockafellar theorem is available in the source cube space, then the cube-level
 cluster-density statement has exactly the quantifiers used by the Aleksandrov assembly. -/

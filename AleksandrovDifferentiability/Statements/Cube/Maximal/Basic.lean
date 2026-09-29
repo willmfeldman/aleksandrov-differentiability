@@ -564,8 +564,10 @@ theorem sourceCoordinateChartMap_measurePreserving {n : ℕ} (i : Fin n) :
         (volume : Measure (WithLp 2 (SourceTransverseSpace i × ℝ))) := by
     simpa [MeasureTheory.Measure.volume_eq_prod] using
       (WithLp.volume_preserving_toLp (SourceTransverseSpace i) ℝ)
-  simpa [sourceCoordinateChartMap, sourceCoordinateChartLinearIsometryEquiv,
-    sourceCoordinateChartLinearMap] using hlin.comp hto
+  convert hlin.comp hto using 1
+  funext p
+  simp [sourceCoordinateChartMap, sourceCoordinateChartLinearIsometryEquiv,
+    sourceCoordinateChartLinearMap]
 
 /-- Fixed-coordinate product-model Fubini estimate specialized to the canonical coordinate chart.
 The remaining hypotheses are exactly the measurable/product-measure facts about that chart. -/

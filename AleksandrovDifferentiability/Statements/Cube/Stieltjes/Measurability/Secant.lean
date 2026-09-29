@@ -33,13 +33,15 @@ theorem coordinateSliceConvexSourceSecantSlopeValue_measurable
   have hch : c + h ∈ Set.Ioo (-3 : ℝ) 3 := by
     simpa [c] using sourceDerivativeClamp_add_mem_Ioo_three (s := s) hpos hlt
   have hp0_cont : Continuous p0 := by
-    simpa [p0, coordinateLinePoint] using
-      (continuous_coordinateLineBase i).add (continuous_const :
-        Continuous fun _ : SourceCubeSpace n => c • sourceCoordinateVector i)
+    convert (continuous_coordinateLineBase i).add (continuous_const :
+      Continuous fun _ : SourceCubeSpace n => c • sourceCoordinateVector i) using 1
+    funext y
+    rfl
   have hp1_cont : Continuous p1 := by
-    simpa [p1, coordinateLinePoint] using
-      (continuous_coordinateLineBase i).add (continuous_const :
-        Continuous fun _ : SourceCubeSpace n => (c + h) • sourceCoordinateVector i)
+    convert (continuous_coordinateLineBase i).add (continuous_const :
+      Continuous fun _ : SourceCubeSpace n => (c + h) • sourceCoordinateVector i) using 1
+    funext y
+    rfl
   have hp0_maps : Set.MapsTo p0 (sourceOpenCube n 1) (sourceOpenCube n 3) := by
     intro y hy
     have hline :

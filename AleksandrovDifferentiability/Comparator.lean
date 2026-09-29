@@ -162,7 +162,7 @@ theorem challenge_exists_second_order_point :
     (ae_restrict_mem measurableSet_Ioi).and challenge_open_positive_square_headline_theorem
   have hne : ((volume : Measure ℝ).restrict (Set.Ioi (0 : ℝ))) ≠ 0 := by
     simp [Measure.restrict_eq_zero, Real.volume_Ioi]
-  haveI : (ae ((volume : Measure ℝ).restrict (Set.Ioi (0 : ℝ)))).NeBot :=
+  have : (ae ((volume : Measure ℝ).restrict (Set.Ioi (0 : ℝ)))).NeBot :=
     ae_neBot.mpr hne
   obtain ⟨x, hx, hdiff⟩ := hae.exists
   exact ⟨x, hx, hdiff⟩

@@ -23,21 +23,22 @@ that public names and elementary consequences remain usable; it is not a theorem
 
 ## Release gate
 
-The release workflow is `.github/workflows/release-comparator.yml`, dispatched manually
-(`workflow_dispatch`) on a standard GitHub-hosted Linux runner (`ubuntu-latest`). It frees runner
-disk, downloads the Mathlib cache and builds the trusted library, validates the challenge inventory
-against `formalization.yaml` (`scripts/check-comparator-inventory.rb`), installs the pinned tools
-(`scripts/release-comparator.sh install`), builds each trusted `Challenge` target outside the
-sandbox, and then runs Comparator on every `challenges/*/config.json`
+The release workflow is `.github/workflows/release-comparator.yml`. It runs on a standard
+GitHub-hosted Linux runner (`ubuntu-latest`) when dispatched manually (`workflow_dispatch`) and on
+pushes of `release/**` branches and `v*` tags. It frees runner disk, downloads the Mathlib cache
+and builds the trusted library, validates the challenge inventory against `formalization.yaml`
+(`scripts/check-formalization-manifest.rb --metadata-only`), installs the pinned tools
+(`scripts/release-comparator.sh install`), builds each trusted `Statement` and `Challenge` target
+outside the sandbox, and then runs Comparator on every `challenges/*/config.json`
 (`scripts/release-comparator.sh run`).
 
 Pinned release tools:
 
-- Lean and Mathlib: `v4.30.0`;
-- Comparator: `d03acab154d269c06e60e4de7e4cc85deebff94b`;
-- `lean4export`: `a3e35a584f59b390667db7269cd37fca8575e4bf`, built with this repository's
+- Lean and Mathlib: `v4.34.1`;
+- Comparator: `575674928e239f5bc452aab72d1dd7b0f1326494`;
+- `lean4export`: `076e8e57707e813375e8f9da8bf989799ace9680`, built with this repository's
   `lean-toolchain`; and
-- `landrun`: `5ed4a3db3a4ad930d577215c6b9abaa19df7f99f` (pinned from `main`).
+- `landrun`: `811cfff51ceaf3d9843708aa6d22e9b84ccac8b4` (pinned from `main`).
 
 Every workspace sets `packagesDir = "../../.lake/packages"` in its `lakefile.toml` (and records
 the same folder in its `lake-manifest.json`), so all workspaces share the root workspace's
@@ -70,7 +71,7 @@ Release theorem comparators:
 - `bounded-abs-headline`: a genuinely nonsmooth convex function, combining the a.e. theorem,
   failure at zero, and existence on a bounded positive-measure interval.
 
-Additional downstream/API checks:
+Additional API checks:
 
 - `norm-convex-headline`: a generic norm application;
 - `second-order-witness-interface`: the definitional witness shape; and

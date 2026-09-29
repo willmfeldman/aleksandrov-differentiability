@@ -129,7 +129,7 @@ theorem exposedSubgradient_mem_closure_convexHull_gradientClusterSet_of_tendsto_
       (convexHull ℝ
         (HasSubgradientLinearizationOnAt.GradientClusterSet
           (differentiabilitySetOn sample u) (gradient u) y)) := by
-  haveI : Filter.NeBot l := hne
+  have : Filter.NeBot l := hne
   have htend :
       Filter.Tendsto (fun a => gradient u (φ a)) l (𝓝 p) := by
     rw [Metric.tendsto_nhds]

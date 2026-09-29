@@ -100,7 +100,7 @@ theorem convexAleksandrovAEStatement_of_stdOrthonormalBasis_compatibleFullMeasur
     (hrecon : CompatiblePolarizedDirectionalSliceReconstructionStatement Finset.univ E Ω u
       (stdOrthonormalBasis ℝ E)) :
     ConvexAleksandrovAEStatement E Ω u := by
-  haveI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
   exact
     convexAleksandrovAEStatement_of_orthonormalBasis_compatibleFullMeasure
       E Ω u (stdOrthonormalBasis ℝ E) hslice hrecon
@@ -117,7 +117,7 @@ theorem convexAleksandrovAEStatement_of_stdOrthonormalBasis_compatibleQuotientFu
       CompatiblePolarizedDirectionalSliceQuotientReconstructionStatement Finset.univ E Ω u
         (stdOrthonormalBasis ℝ E)) :
     ConvexAleksandrovAEStatement E Ω u := by
-  haveI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
   exact
     convexAleksandrovAEStatement_of_orthonormalBasis_compatibleQuotientFullMeasure
       E Ω u (stdOrthonormalBasis ℝ E) hslice hrecon
@@ -134,7 +134,7 @@ theorem convexAleksandrovAEStatement_of_stdOrthonormalBasis_compatibleFullMeasur
       CompatiblePolarizedDirectionalSliceQuotientReconstructionStatement Finset.univ E Ω u
         (stdOrthonormalBasis ℝ E)) :
     ConvexAleksandrovAEStatement E Ω u := by
-  haveI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
   exact
     convexAleksandrovAEStatement_of_compatibleFullMeasure_and_quotientReconstruction
       Finset.univ E Ω u (stdOrthonormalBasis ℝ E)
@@ -152,7 +152,7 @@ theorem convexAleksandrovAEStatement_of_stdOrthonormalBasis_symmetricFullMeasure
       SymmetricCompatiblePolarizedDirectionalSliceReconstructionStatement Finset.univ E Ω u
         (stdOrthonormalBasis ℝ E)) :
     ConvexAleksandrovAEStatement E Ω u := by
-  haveI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
   exact
     convexAleksandrovAEStatement_of_basis_symmetricCompatibleFullMeasure
       E Ω u (stdOrthonormalBasis ℝ E) hslice hrecon
@@ -168,7 +168,7 @@ theorem convexAleksandrovAEStatement_of_stdOrthonormalBasis_symmetricQuotientFul
       SymmetricCompatiblePolarizedDirectionalSliceQuotientReconstructionStatement Finset.univ E Ω u
         (stdOrthonormalBasis ℝ E)) :
     ConvexAleksandrovAEStatement E Ω u := by
-  haveI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
   exact
     convexAleksandrovAEStatement_of_basis_symmetricCompatibleQuotientFullMeasure
       E Ω u (stdOrthonormalBasis ℝ E) hslice hrecon
@@ -185,7 +185,7 @@ theorem convexAleksandrovAEStatement_of_stdOrthonormalBasis_symmetricQuotientRec
       SymmetricCompatiblePolarizedDirectionalSliceQuotientReconstructionStatement Finset.univ E Ω u
         (stdOrthonormalBasis ℝ E)) :
     ConvexAleksandrovAEStatement E Ω u := by
-  haveI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
   exact
     convexAleksandrovAEStatement_of_basis_symmetricFullMeasure_quotientRecon
       E Ω u (stdOrthonormalBasis ℝ E) hslice hrecon

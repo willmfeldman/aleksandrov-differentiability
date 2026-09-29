@@ -61,8 +61,12 @@ theorem intervalIntegral_linear_deriv_model (x z q : ℝ) :
   have hderiv : ∀ t ∈ Set.uIcc x (x + z), HasDerivAt F (q * (t - x)) t := by
     intro t ht
     have hpow : HasDerivAt (fun t : ℝ => (t - x) ^ 2) (2 * (t - x)) t := by
-      simpa [pow_two, two_mul] using
-        ((hasDerivAt_id t).sub_const x).mul ((hasDerivAt_id t).sub_const x)
+      convert ((hasDerivAt_id t).sub_const x).mul
+        ((hasDerivAt_id t).sub_const x) using 1
+      · funext y
+        simp [Pi.mul_apply, pow_two]
+      · simp only [id_eq]
+        ring
     have hscaled := hpow.const_mul ((1 / 2 : ℝ) * q)
     simpa [F, mul_assoc, mul_left_comm, mul_comm] using hscaled
   have hint : IntervalIntegrable (fun t : ℝ => q * (t - x)) volume x (x + z) := by
@@ -272,7 +276,9 @@ theorem hasRightDerivIntegralLinearizationAt_of_hasDerivWithinAt_of_eventually_i
   let P : Set ℝ :=
     {t | ‖rightDeriv f t - rightDeriv f x - q * (t - x)‖ ≤ ε * ‖t - x‖}
   have hP_within : P ∈ nhdsWithin x (interior S) := by
-    simpa [P, mul_comm, Real.norm_eq_abs] using hderiv.isLittleO.def hε
+    change ∀ᶠ t in nhdsWithin x (interior S),
+      ‖rightDeriv f t - rightDeriv f x - q * (t - x)‖ ≤ ε * ‖t - x‖
+    simpa [Real.norm_eq_abs, mul_comm] using hderiv.isLittleO.def hε
   rcases mem_nhdsWithin_iff_exists_mem_nhds_inter.mp hP_within with ⟨U, hU, hUsub⟩
   have hinterior_mem : interior S ∈ nhds x :=
     isOpen_interior.mem_nhds hx

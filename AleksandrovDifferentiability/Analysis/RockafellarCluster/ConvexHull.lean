@@ -275,7 +275,7 @@ point of `convexHull ℝ s`. -/
 theorem convexCombinationTuple_mem_convexHull
     {s : Set E} {n : ℕ} {xw : (Fin n → E) × (Fin n → ℝ)}
     (hx : ∀ i : Fin n, xw.1 i ∈ s)
-    (hw : xw.2 ∈ stdSimplex ℝ (Fin n)) :
+    (hw : xw.2 ∈ {f : Fin n → ℝ | (∀ i, 0 ≤ f i) ∧ ∑ i, f i = 1}) :
     convexCombinationTuple n xw ∈ convexHull ℝ s :=
   mem_convexHull_of_exists_fintype xw.2 xw.1 hw.1 hw.2 hx rfl
 
@@ -284,7 +284,8 @@ set_option linter.unusedSectionVars false in
 theorem convexCombinationTuple_image_subset_convexHull
     {s : Set E} (n : ℕ) :
     convexCombinationTuple (E := E) n ''
-        ((Set.pi Set.univ fun _ : Fin n => s) ×ˢ stdSimplex ℝ (Fin n)) ⊆
+        ((Set.pi Set.univ fun _ : Fin n => s) ×ˢ
+          {f : Fin n → ℝ | (∀ i, 0 ≤ f i) ∧ ∑ i, f i = 1}) ⊆
       convexHull ℝ s := by
   rintro y ⟨xw, hxw, rfl⟩
   exact convexCombinationTuple_mem_convexHull
@@ -294,8 +295,23 @@ set_option linter.unusedSectionVars false in
 /-- The fixed compact domain `K^n × Δⁿ` for the weighted-tuple map. -/
 theorem isCompact_convexCombinationTuple_domain
     {s : Set E} (hcompact : IsCompact s) (n : ℕ) :
-    IsCompact ((Set.pi Set.univ fun _ : Fin n => s) ×ˢ stdSimplex ℝ (Fin n)) :=
-  (isCompact_univ_pi fun _ : Fin n => hcompact).prod (isCompact_stdSimplex ℝ (Fin n))
+    IsCompact ((Set.pi Set.univ fun _ : Fin n => s) ×ˢ
+      {f : Fin n → ℝ | (∀ i, 0 ≤ f i) ∧ ∑ i, f i = 1}) := by
+  refine (isCompact_univ_pi fun _ : Fin n => hcompact).prod ?_
+  have hclosed : IsClosed {f : Fin n → ℝ | (∀ i, 0 ≤ f i) ∧ ∑ i, f i = 1} := by
+    have h₁ : IsClosed (⋂ i : Fin n, {f : Fin n → ℝ | 0 ≤ f i}) :=
+      isClosed_iInter fun i => isClosed_le continuous_const (continuous_apply i)
+    have h₂ : IsClosed {f : Fin n → ℝ | ∑ i, f i = 1} :=
+      isClosed_eq (continuous_finsetSum _ fun i _ => continuous_apply i) continuous_const
+    convert h₁.inter h₂ using 1
+    ext f
+    simp
+  refine (isCompact_univ_pi fun _ : Fin n =>
+    isCompact_Icc (a := (0 : ℝ)) (b := 1)).of_isClosed_subset hclosed ?_
+  intro f hf i _
+  refine ⟨hf.1 i, ?_⟩
+  rw [← hf.2]
+  exact Finset.single_le_sum (fun j _ => hf.1 j) (Finset.mem_univ i)
 
 set_option linter.unusedSectionVars false in
 /-- The fixed-tuple weighted-sum image of a compact set and the standard simplex is compact. -/
@@ -303,7 +319,8 @@ theorem isCompact_convexCombinationTuple_image
     {s : Set E} (hcompact : IsCompact s) (n : ℕ) :
     IsCompact
       (convexCombinationTuple (E := E) n ''
-        ((Set.pi Set.univ fun _ : Fin n => s) ×ˢ stdSimplex ℝ (Fin n))) :=
+        ((Set.pi Set.univ fun _ : Fin n => s) ×ˢ
+          {f : Fin n → ℝ | (∀ i, 0 ≤ f i) ∧ ∑ i, f i = 1})) :=
   (isCompact_convexCombinationTuple_domain hcompact n).image
     (continuous_convexCombinationTuple (E := E) n)
 
@@ -319,7 +336,7 @@ theorem exists_embedding_finrank_succ_of_affineIndependent
     (hz : AffineIndependent ℝ z) :
     Nonempty (ι ↪ Fin (Module.finrank ℝ E + 1)) := by
   classical
-  letI := Fintype.ofFinite ι
+  let := Fintype.ofFinite ι
   refine Function.Embedding.nonempty_of_card_le ?_
   have hdim :
       Module.finrank ℝ (vectorSpan ℝ (Set.range z)) + 1 ≤
@@ -387,7 +404,7 @@ theorem extend_embedding_mem_stdSimplex
     {ι κ : Type*} [Fintype ι] [Fintype κ]
     (e : ι ↪ κ) {w : ι → ℝ}
     (hw_nonneg : ∀ i, 0 ≤ w i) (hw_sum : ∑ i, w i = 1) :
-    Function.extend e w (fun _ => 0) ∈ stdSimplex ℝ κ := by
+    Function.extend e w (fun _ => 0) ∈ {f : κ → ℝ | (∀ j, 0 ≤ f j) ∧ ∑ j, f j = 1} := by
   classical
   refine ⟨?_, ?_⟩
   · intro j
@@ -410,13 +427,13 @@ theorem convexHull_subset_convexCombinationTuple_image_finrank_succ
     convexHull ℝ s ⊆
       convexCombinationTuple (E := E) (Module.finrank ℝ E + 1) ''
         ((Set.pi Set.univ fun _ : Fin (Module.finrank ℝ E + 1) => s) ×ˢ
-          stdSimplex ℝ (Fin (Module.finrank ℝ E + 1))) := by
+          {f : Fin (Module.finrank ℝ E + 1) → ℝ | (∀ i, 0 ≤ f i) ∧ ∑ i, f i = 1}) := by
   classical
   intro x hx
   rcases eq_pos_convex_span_of_mem_convexHull hx with
     ⟨ι, hι, z, w, hzs, haff, hwpos, hwsum, hsum⟩
-  letI : Fintype ι := hι
-  letI : Finite ι := Fintype.finite hι
+  let : Fintype ι := hι
+  let : Finite ι := Fintype.finite hι
   rcases exists_embedding_finrank_succ_of_affineIndependent (E := E) haff with ⟨e⟩
   rcases hsne with ⟨base, hbase⟩
   let zPad : Fin (Module.finrank ℝ E + 1) → E :=
@@ -443,7 +460,7 @@ theorem convexHull_eq_convexCombinationTuple_image_finrank_succ
     convexHull ℝ s =
       convexCombinationTuple (E := E) (Module.finrank ℝ E + 1) ''
         ((Set.pi Set.univ fun _ : Fin (Module.finrank ℝ E + 1) => s) ×ˢ
-          stdSimplex ℝ (Fin (Module.finrank ℝ E + 1))) :=
+          {f : Fin (Module.finrank ℝ E + 1) → ℝ | (∀ i, 0 ≤ f i) ∧ ∑ i, f i = 1}) :=
   Set.Subset.antisymm (convexHull_subset_convexCombinationTuple_image_finrank_succ hsne)
     (convexCombinationTuple_image_subset_convexHull (E := E) (Module.finrank ℝ E + 1))
 

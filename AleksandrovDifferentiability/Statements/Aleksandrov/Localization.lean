@@ -5,7 +5,6 @@ public import AleksandrovDifferentiability.Statements.Cube.ClusterDensity
 public import Mathlib.Analysis.Convex.Continuous
 public import Mathlib.MeasureTheory.Group.MeasurableEquiv
 public import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
-public import Mathlib.MeasureTheory.Measure.MeasureSpace
 public import Mathlib.Topology.Compactness.Lindelof
 
 /-!
@@ -249,9 +248,8 @@ theorem SourceAffineCompactCubeCoverIndex.continuousOn_pullback_sourceClosedCube
     (hu : ConvexOn ℝ Ω u) :
     ContinuousOn (fun y : SourceCubeSpace n => u (i.1.1 + i.1.2 • y))
       (sourceClosedCube n 3) := by
-  exact (hu.continuousOn hΩ).comp'
-    (continuous_const.add (continuous_const.smul continuous_id)).continuousOn
-    i.mapsTo_closedCube_three
+  have hc : Continuous (fun y : SourceCubeSpace n => i.1.1 + i.1.2 • y) := by fun_prop
+  exact (hu.continuousOn hΩ).comp' hc.continuousOn i.mapsTo_closedCube_three
 
 /-- Boundedness on `Q_3` inherited from compact containment in an open convex domain. -/
 theorem SourceAffineCompactCubeCoverIndex.boundedOn_pullback_sourceOpenCube_three
@@ -306,6 +304,7 @@ theorem map_volume_add_smul
     _ = ENNReal.ofReal (abs (r ^ Module.finrank ℝ E)⁻¹) •
           Measure.map (fun y : E => a + y) (volume : Measure E) := by
       rw [Measure.map_smul]
+      exact (measurable_const_add a).aemeasurable
     _ = ENNReal.ofReal (abs (r ^ Module.finrank ℝ E)⁻¹) • (volume : Measure E) := by
       rw [Measure.IsAddLeftInvariant.map_add_left_eq_self]
 
@@ -459,7 +458,7 @@ theorem ae_volume_restrict_open_secondOrderDifferentiableAt_sourceCubeSpace
     ⟨I, hIcount, hcover⟩
   let U : I → Set (SourceCubeSpace n) :=
     fun i => sourceAffineCubeImage n i.1.1.1 i.1.1.2 1
-  haveI : Countable I := hIcount.to_subtype
+  have : Countable I := hIcount.to_subtype
   refine ae_restrict_of_subset_iUnion_of_ae_restrict
     (μ := (volume : Measure (SourceCubeSpace n))) (Ω := Ω) (U := U)
     (p := fun x => SecondOrderDifferentiableAt u x) ?_ ?_

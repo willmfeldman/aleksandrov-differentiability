@@ -2,7 +2,10 @@ import Lake
 open Lake DSL
 
 package "AleksandrovDifferentiability" where
-  version := v!"0.2.0"
+  version := v!"0.3.0"
+  -- Projects that require a release tag download the prebuilt build archive attached to the
+  -- GitHub release (see .github/workflows/release-build-archive.yml) instead of building.
+  preferReleaseBuild := true
   keywords := #["math"]
   leanOptions := #[
     ⟨`pp.unicode.fun, true⟩, -- pretty-prints `fun a ↦ b`
@@ -12,7 +15,7 @@ package "AleksandrovDifferentiability" where
     ⟨`linter.style.header, false⟩,
   ]
 
-require "leanprover-community" / "mathlib" @ git "v4.30.0"
+require "leanprover-community" / "mathlib" @ git "v4.34.1"
 
 @[default_target]
 lean_lib «AleksandrovDifferentiability» where

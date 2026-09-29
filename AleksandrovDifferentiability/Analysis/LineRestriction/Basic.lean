@@ -142,7 +142,8 @@ theorem isOpen_lineDomain {s : Set E} {x v : E} (hs : IsOpen s) :
     IsOpen (lineDomain s x v) := by
   have hcont : Continuous fun t : ℝ ↦ x + t • v := by
     fun_prop
-  simpa [lineDomain] using hs.preimage hcont
+  change IsOpen ((fun t : ℝ => x + t • v) ⁻¹' s)
+  exact hs.preimage hcont
 
 @[simp]
 theorem lineRestriction_zero (u : E → ℝ) (x v : E) :
@@ -163,7 +164,8 @@ theorem zero_mem_interior_lineDomain {s : Set E} {x v : E} (hx : x ∈ interior 
     simpa using hs
   have hcont : ContinuousAt (fun t : ℝ ↦ x + t • v) 0 :=
     continuousAt_const.add (continuousAt_id.smul continuousAt_const)
-  simpa [lineDomain] using hcont.preimage_mem_nhds hs0
+  change ((fun t : ℝ => x + t • v) ⁻¹' s) ∈ nhds 0
+  exact hcont.preimage_mem_nhds hs0
 
 /-- If a point on the line lies in the interior of the ambient domain, then the corresponding
 line parameter lies in the interior of the line domain. -/
@@ -174,7 +176,8 @@ theorem mem_interior_lineDomain_of_line_mem_interior
   have hs : s ∈ nhds (x + t • v) := mem_interior_iff_mem_nhds.mp ht
   have hcont : ContinuousAt (fun r : ℝ ↦ x + r • v) t :=
     continuousAt_const.add (continuousAt_id.smul continuousAt_const)
-  simpa [lineDomain] using hcont.preimage_mem_nhds hs
+  change ((fun r : ℝ => x + r • v) ⁻¹' s) ∈ nhds t
+  exact hcont.preimage_mem_nhds hs
 
 /-- An ambient subgradient gives the supporting inequality along every line through the base
 point. -/
@@ -243,7 +246,11 @@ theorem HasUpperContactWithSlopeOn.lineRestriction
     ring
   have hlin : inner ℝ p (t • v) = inner ℝ (inner ℝ p v) (t - 0) := by
     simp [real_inner_smul_right]
-  simpa [lineRestriction, lineDomain, hlin, hquad] using hline
+  simp only [lineRestriction_zero]
+  change u (x + t • v) ≤
+    u x + inner ℝ (inner ℝ p v) (t - 0) +
+      ((a * ‖v‖ ^ 2) / 2) * ‖t - 0‖ ^ 2
+  simpa [hlin, hquad] using hline
 
 /-- Shifted version of `HasUpperContactWithSlopeOn.lineRestriction`: an ambient contact at the
 point with line parameter `t` restricts to a one-dimensional contact at `t`. -/
@@ -498,7 +505,9 @@ theorem ConvexOn.lineRestriction
     funext t
     simp [g, AffineMap.lineMap_apply_module', add_comm]
   have h := hu.comp_affineMap g
-  simpa [lineDomain, lineRestriction, hg] using h
+  change ConvexOn ℝ ((fun t : ℝ => x + t • v) ⁻¹' s)
+    (u ∘ fun t : ℝ => x + t • v)
+  simpa only [hg] using h
 
 /-- Convex right-continuity of the line-restricted right derivative, restricted further to a
 positive line filter through an arbitrary set `D`.
@@ -590,7 +599,8 @@ theorem HasFDerivAt.lineRestriction_at
     HasDerivAt (AleksandrovDifferentiability.lineRestriction u x v) (ℓ v) t := by
   have hlineMap : HasDerivAt (fun s : ℝ => x + s • v) v t := by
     simpa using ((hasDerivAt_id t).smul_const v).const_add x
-  simpa [AleksandrovDifferentiability.lineRestriction] using h.comp_hasDerivAt t hlineMap
+  change HasDerivAt (u ∘ fun s : ℝ => x + s • v) (ℓ v) t
+  exact h.comp_hasDerivAt t hlineMap
 
 /-- At a Fréchet differentiability point on an affine line, the line-restricted right derivative
 is the Fréchet derivative applied to the line direction. -/
@@ -617,7 +627,8 @@ theorem ConvexOn.subgradientOn_of_hasFDerivAt_of_forall_eq_inner
   have hderLine :
       HasDerivAt (AleksandrovDifferentiability.lineRestriction u x v) (ℓ v) 0 := by
     have hline : HasLineDerivAt ℝ u (ℓ v) x v := hd.hasLineDerivAt v
-    simpa [HasLineDerivAt, AleksandrovDifferentiability.lineRestriction] using hline
+    change HasDerivAt (fun t : ℝ => u (x + t • v)) (ℓ v) 0
+    simpa only [HasLineDerivAt] using hline
   have hsubLine :
       SubgradientOn (lineDomain s x v) (AleksandrovDifferentiability.lineRestriction u x v) 0
         (ℓ v) :=

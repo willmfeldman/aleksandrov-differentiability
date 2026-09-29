@@ -26,8 +26,8 @@ theorem HasSecondOrderExpansionAt.lineRestriction_isLittleO
           (1 / 2 : ℝ) * inner ℝ v (B v) * t ^ 2)
       =o[nhds 0] (fun t : ℝ => ‖t • v‖ ^ 2) := by
   have htend : Filter.Tendsto (fun t : ℝ ↦ t • v) (nhds 0) (nhds 0) := by
-    simpa using (continuousAt_id.smul continuousAt_const :
-      ContinuousAt (fun t : ℝ ↦ t • v) 0).tendsto
+    have hc : ContinuousAt (fun t : ℝ => t • v) 0 := by fun_prop
+    simpa using hc.tendsto
   have hcomp := h.comp_tendsto htend
   refine hcomp.congr_left ?_
   intro t
@@ -108,8 +108,8 @@ theorem HasSecondOrderExpansionAtCLM.lineRestriction_isLittleO
           (1 / 2 : ℝ) * inner ℝ v (B v) * t ^ 2)
       =o[nhds 0] (fun t : ℝ => ‖t • v‖ ^ 2) := by
   have htend : Filter.Tendsto (fun t : ℝ ↦ t • v) (nhds 0) (nhds 0) := by
-    simpa using (continuousAt_id.smul continuousAt_const :
-      ContinuousAt (fun t : ℝ ↦ t • v) 0).tendsto
+    have hc : ContinuousAt (fun t : ℝ => t • v) 0 := by fun_prop
+    simpa using hc.tendsto
   have hcomp := h.comp_tendsto htend
   refine hcomp.congr_left ?_
   intro t

@@ -127,7 +127,8 @@ theorem isSymmetricOperator_symmetricPartCLM (B : H →L[ℝ] H) :
 theorem inner_symmetricPartCLM_self (B : H →L[ℝ] H) (z : H) :
     inner ℝ z ((symmetricPartCLM B) z) = inner ℝ z (B z) := by
   dsimp [symmetricPartCLM]
-  rw [inner_smul_right, inner_add_right, ContinuousLinearMap.adjoint_inner_right]
+  rw [smul_apply, add_apply,
+    inner_smul_right, inner_add_right, ContinuousLinearMap.adjoint_inner_right]
   rw [real_inner_comm (B z) z]
   ring
 
@@ -194,10 +195,10 @@ theorem IsSymmetricOperator.smul {B : E →L[ℝ] E} (hB : IsSymmetricOperator B
   intro x y
   calc
     inner ℝ ((c • B) x) y = c * inner ℝ (B x) y := by
-      rw [ContinuousLinearMap.smul_apply, real_inner_smul_left]
+      rw [smul_apply, real_inner_smul_left]
     _ = c * inner ℝ x (B y) := congrArg (fun r : ℝ => c * r) (hB x y)
     _ = inner ℝ x ((c • B) y) := by
-      rw [ContinuousLinearMap.smul_apply, real_inner_smul_right]
+      rw [smul_apply, real_inner_smul_right]
 
 /-- Pull a second-order expansion back across a nonzero scalar dilation and translation.
 
@@ -210,7 +211,9 @@ theorem HasSecondOrderExpansionAt.of_comp_add_smul
     HasSecondOrderExpansionAt u (a + r • z) (r⁻¹ • p) ((r⁻¹ ^ 2 : ℝ) • B) := by
   dsimp [HasSecondOrderExpansionAt] at h ⊢
   have htendsto : Filter.Tendsto (fun w : E => r⁻¹ • w) (𝓝 0) (𝓝 0) := by
-    simpa using (continuous_id.const_smul (r⁻¹ : ℝ)).tendsto (0 : E)
+    have hc : Continuous (fun w : E => (r⁻¹ : ℝ) • w) :=
+      (continuous_const : Continuous fun _ : E => (r⁻¹ : ℝ)).smul continuous_id
+    simpa using hc.tendsto (0 : E)
   have hcomp := h.comp_tendsto htendsto
   have hscaled :
       ((fun z₁ : E =>
@@ -232,7 +235,7 @@ theorem HasSecondOrderExpansionAt.of_comp_add_smul
         inner ℝ w ((r⁻¹ ^ 2 : ℝ) • B w) := by
     simp [map_smul, real_inner_smul_left, real_inner_smul_right, pow_two, mul_assoc]
   dsimp [Function.comp]
-  rw [hpoint, hslope, hquad]
+  rw [hpoint, hslope, hquad, smul_apply]
 
 /-- Second-order differentiability is transported back across a nonzero scalar dilation and
 translation. -/
@@ -266,7 +269,7 @@ theorem secondOrderDifferentiableAt_of_finrank_eq_zero [FiniteDimensional ℝ E]
     SecondOrderDifferentiableAt u x := by
   have hzero : ∀ y : E, y = 0 :=
     (finrank_zero_iff_forall_zero (K := ℝ) (V := E)).mp hE
-  haveI : Subsingleton E := (subsingleton_iff_forall_eq (0 : E)).mpr hzero
+  have : Subsingleton E := (subsingleton_iff_forall_eq (0 : E)).mpr hzero
   exact secondOrderDifferentiableAt_of_subsingleton u x
 
 /-- Convert a scalar first-order continuous-linear-map expansion into the project expansion

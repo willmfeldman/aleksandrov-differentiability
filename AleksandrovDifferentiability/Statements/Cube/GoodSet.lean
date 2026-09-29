@@ -36,7 +36,8 @@ theorem cubeGoodSet_hasSourceCubeAffineRemainderOpeningAtMost_frechetGradient
   have hp_eq : p = frechetGradient u x := by
     have hs : sourceOpenCube n 3 ∈ 𝓝 x :=
       (isOpen_sourceOpenCube (n := n) 3).mem_nhds (interior_subset hxInterior)
-    simpa [frechetGradient] using hp.eq_gradient_of_differentiableAt hs hdiff
+    change p = gradient u x
+    exact hp.eq_gradient_of_differentiableAt hs hdiff
   subst p
   intro η hη
   refine ⟨interior_subset hxInterior, ?_⟩
@@ -65,7 +66,8 @@ theorem cubeGoodSet_affineRemainder_trap_frechetGradient
     have hp_eq : p = frechetGradient u x := by
       have hs : sourceOpenCube n 3 ∈ 𝓝 x :=
         (isOpen_sourceOpenCube (n := n) 3).mem_nhds (interior_subset hxInterior)
-      simpa [frechetGradient] using hp.eq_gradient_of_differentiableAt hs hdiff
+      change p = gradient u x
+      exact hp.eq_gradient_of_differentiableAt hs hdiff
     simpa [hp_eq] using hp
   exact affineRemainder_nonneg_and_le_of_subgradient_of_upperContactOpening hsubgradient
     hopeningGradient.hasUpperContactWithSlopeOpeningAtMostOn hη hy
@@ -754,7 +756,7 @@ theorem ae_restrict_sourceOpenCube_exists_local_goodSet_frechetGradient_diffWith
         {x : SourceCubeSpace n | ¬ x ∈ G} ∩ sourceOpenCube n 1 =
           sourceOpenCube n 1 \ G := by
       ext x
-      simp [Set.diff_eq, and_comm]
+      simp [Set.sdiff_eq, and_comm]
     rwa [hset]
   have hlocal :=
     ae_exists_cubeGoodSet_nat_local_differentiableWithinAt_frechetGradient
@@ -808,7 +810,7 @@ theorem ae_restrict_sourceOpenCube_exists_goodSet_frechetGradient_diffWithin
         {x : SourceCubeSpace n | ¬ x ∈ G} ∩ sourceOpenCube n 1 =
           sourceOpenCube n 1 \ G := by
       ext x
-      simp [Set.diff_eq, and_comm]
+      simp [Set.sdiff_eq, and_comm]
     rwa [hset]
   have hlocal :=
     ae_exists_cubeGoodSet_nat_differentiableWithinAt_frechetGradient centers hconvex hcover

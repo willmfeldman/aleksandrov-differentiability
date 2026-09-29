@@ -148,7 +148,7 @@ theorem convexAleksandrovAEStatement_of_stdOrthonormalBasis_fubini_and_reconstru
     (hrecon : PolarizedDirectionalSliceReconstructionStatement Finset.univ E Ω u
       (stdOrthonormalBasis ℝ E)) :
     ConvexAleksandrovAEStatement E Ω u := by
-  haveI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
   exact
     convexAleksandrovAEStatement_of_orthonormalBasis_fubini_and_reconstruction E Ω u
       (stdOrthonormalBasis ℝ E) hfubini hrecon
@@ -163,7 +163,7 @@ theorem convexAleksandrovAEStatement_of_stdOrthonormalBasis_quotient_fubini_and_
     (hrecon : PolarizedDirectionalSliceQuotientReconstructionStatement Finset.univ E Ω u
       (stdOrthonormalBasis ℝ E)) :
     ConvexAleksandrovAEStatement E Ω u := by
-  haveI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
   exact
     convexAleksandrovAEStatement_of_orthonormalBasis_quotient_fubini_and_reconstruction E Ω u
       (stdOrthonormalBasis ℝ E) hfubini hrecon
@@ -178,7 +178,7 @@ theorem convexAleksandrovAEStatement_of_stdOrthonormalBasis_fubini_and_quotient_
     (hrecon : PolarizedDirectionalSliceQuotientReconstructionStatement Finset.univ E Ω u
       (stdOrthonormalBasis ℝ E)) :
     ConvexAleksandrovAEStatement E Ω u := by
-  haveI : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
   exact
     convexAleksandrovAEStatement_of_orthonormalBasis_fubini_and_quotient_reconstruction E Ω u
       (stdOrthonormalBasis ℝ E) hfubini hrecon

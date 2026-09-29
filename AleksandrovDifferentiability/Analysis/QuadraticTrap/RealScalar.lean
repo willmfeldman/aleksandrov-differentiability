@@ -235,8 +235,8 @@ theorem RealScalarQuadraticEstimateWithDataAt.comp_mul
         exact div_le_one_of_le₀ (by linarith) (by positivity)
       _ = ε := by ring
   have htend : Filter.Tendsto (fun t : ℝ => c * t) (nhds 0) (nhds 0) := by
-    simpa using (continuousAt_const.mul continuousAt_id :
-      ContinuousAt (fun t : ℝ => c * t) 0).tendsto
+    have hc : ContinuousAt (fun t : ℝ => c * t) 0 := by fun_prop
+    simpa using hc.tendsto
   filter_upwards [htend.eventually (h δ hδ)] with t ht
   have hnorm :
       ‖f (c * t) - f 0 - (c * p) * t - (1 / 2 : ℝ) * (c ^ 2 * q) * t ^ 2‖ =
@@ -286,9 +286,10 @@ theorem RealScalarQuadraticQuotientEstimateWithDataAt.comp_mul
           (nhdsWithin (0 : ℝ) {t : ℝ | t ≠ 0})
           (nhdsWithin (0 : ℝ) {t : ℝ | t ≠ 0}) := by
       refine tendsto_nhdsWithin_iff.mpr ⟨?_, ?_⟩
-      · simpa using (((continuousAt_const.mul continuousAt_id :
-          ContinuousAt (fun t : ℝ => c * t) 0).tendsto).mono_left
-          nhdsWithin_le_nhds)
+      · have hc : ContinuousAt (fun t : ℝ => c * t) 0 := by fun_prop
+        have hbase : Filter.Tendsto (fun t : ℝ => c * t) (nhds 0) (nhds 0) := by
+          simpa using hc.tendsto
+        exact hbase.mono_left nhdsWithin_le_nhds
       · filter_upwards [self_mem_nhdsWithin] with t ht_ne
         exact mul_ne_zero hc ht_ne
     filter_upwards [htend.eventually (h δ hδ), self_mem_nhdsWithin] with t ht ht_ne

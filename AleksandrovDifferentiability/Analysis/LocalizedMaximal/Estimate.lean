@@ -26,7 +26,7 @@ theorem SourceLocalizedMaximalBadPredicateMeasurable.of_measurable_parts
           t < localizedMaximalFunction (μparam p.1) sourceMaximalDomain p.2}) :
     SourceLocalizedMaximalBadPredicateMeasurable μparam t := by
   simpa [SourceLocalizedMaximalBadPredicateMeasurable, sourceLocalizedMaximalBadPredicate,
-    localizedMaximalBadPredicate, Set.setOf_or] using hunbdd.union hsuper
+    localizedMaximalBadPredicate, Set.ofPred_or] using hunbdd.union hsuper
 
 /-- The source-window maximal bad predicate is measurable as soon as the equivalent
 interval-average-exceeds set is measurable. -/

@@ -220,7 +220,7 @@ theorem volume_diff_vertical_directionalLineScalarEstimateSet_eq_zero_of_slicewi
     hΩ.measurableSet.preimage (WithLp.measurable_toLp 2 (F × ℝ))
   have hprebad : MeasurableSet (T ⁻¹' Ω \ T ⁻¹' G) := by
     have h := hbad.preimage (WithLp.measurable_toLp 2 (F × ℝ))
-    simpa [T, G, Set.preimage_diff] using h
+    simpa [T, G, Set.preimage_sdiff] using h
   have hprod :
       ((volume : Measure F).prod (volume : Measure ℝ)) (T ⁻¹' Ω \ T ⁻¹' G) = 0 := by
     simpa [T, G] using
@@ -228,7 +228,7 @@ theorem volume_diff_vertical_directionalLineScalarEstimateSet_eq_zero_of_slicewi
         (F := F) (Ω := Ω) (u := u) hΩpre hprebad hslice hΩ hu
   have hplain : (volume : Measure (F × ℝ)) (T ⁻¹' (Ω \ G)) = 0 := by
     rw [Measure.volume_eq_prod]
-    simpa [T, G, Set.preimage_diff] using hprod
+    simpa [T, G, Set.preimage_sdiff] using hprod
   have hmp : MeasurePreserving T := WithLp.volume_preserving_toLp F ℝ
   rw [← hmp.map_eq, Measure.map_apply (WithLp.measurable_toLp 2 (F × ℝ)) hbad]
   simpa [T, G] using hplain
@@ -255,7 +255,7 @@ theorem volume_diff_vertical_directionalLineScalarQuotientEstimateSet_eq_zero_of
     hΩ.measurableSet.preimage (WithLp.measurable_toLp 2 (F × ℝ))
   have hprebad : MeasurableSet (T ⁻¹' Ω \ T ⁻¹' G) := by
     have h := hbad.preimage (WithLp.measurable_toLp 2 (F × ℝ))
-    simpa [T, G, Set.preimage_diff] using h
+    simpa [T, G, Set.preimage_sdiff] using h
   have hprod :
       ((volume : Measure F).prod (volume : Measure ℝ)) (T ⁻¹' Ω \ T ⁻¹' G) = 0 := by
     simpa [T, G] using
@@ -263,7 +263,7 @@ theorem volume_diff_vertical_directionalLineScalarQuotientEstimateSet_eq_zero_of
         (F := F) (Ω := Ω) (u := u) hΩpre hprebad hslice hΩ hu
   have hplain : (volume : Measure (F × ℝ)) (T ⁻¹' (Ω \ G)) = 0 := by
     rw [Measure.volume_eq_prod]
-    simpa [T, G, Set.preimage_diff] using hprod
+    simpa [T, G, Set.preimage_sdiff] using hprod
   have hmp : MeasurePreserving T := WithLp.volume_preserving_toLp F ℝ
   rw [← hmp.map_eq, Measure.map_apply (WithLp.measurable_toLp 2 (F × ℝ)) hbad]
   simpa [T, G] using hplain
@@ -298,7 +298,7 @@ theorem volume_diff_vertical_directionalLineScalarEstimateSet_eq_zero_of_slicewi
         NullMeasurableSet (T ⁻¹' (Ω \ G))
           ((volume : Measure F).prod (volume : Measure ℝ)) := by
       simpa [Measure.volume_eq_prod] using hprebadPlain
-    simpa [Set.preimage_diff] using hprebadProd
+    simpa [Set.preimage_sdiff] using hprebadProd
   have hprod :
       ((volume : Measure F).prod (volume : Measure ℝ)) (T ⁻¹' Ω \ T ⁻¹' G) = 0 := by
     simpa [T, G] using
@@ -306,7 +306,7 @@ theorem volume_diff_vertical_directionalLineScalarEstimateSet_eq_zero_of_slicewi
         (F := F) (Ω := Ω) (u := u) hΩpre hprebad hslice hΩ hu
   have hplain : (volume : Measure (F × ℝ)) (T ⁻¹' (Ω \ G)) = 0 := by
     rw [Measure.volume_eq_prod]
-    simpa [T, G, Set.preimage_diff] using hprod
+    simpa [T, G, Set.preimage_sdiff] using hprod
   exact (hmp.measure_preimage hbad).symm.trans hplain
 
 /-- Null-measurable version of
@@ -340,7 +340,7 @@ theorem volume_diff_vertical_directionalLineScalarQuotientEstimateSet_eq_zero_of
         NullMeasurableSet (T ⁻¹' (Ω \ G))
           ((volume : Measure F).prod (volume : Measure ℝ)) := by
       simpa [Measure.volume_eq_prod] using hprebadPlain
-    simpa [Set.preimage_diff] using hprebadProd
+    simpa [Set.preimage_sdiff] using hprebadProd
   have hprod :
       ((volume : Measure F).prod (volume : Measure ℝ)) (T ⁻¹' Ω \ T ⁻¹' G) = 0 := by
     simpa [T, G] using
@@ -348,7 +348,7 @@ theorem volume_diff_vertical_directionalLineScalarQuotientEstimateSet_eq_zero_of
         (F := F) (Ω := Ω) (u := u) hΩpre hprebad hslice hΩ hu
   have hplain : (volume : Measure (F × ℝ)) (T ⁻¹' (Ω \ G)) = 0 := by
     rw [Measure.volume_eq_prod]
-    simpa [T, G, Set.preimage_diff] using hprod
+    simpa [T, G, Set.preimage_sdiff] using hprod
   exact (hmp.measure_preimage hbad).symm.trans hplain
 
 /-- Coordinate-model Fubini bridge for scalar directional-line estimates.

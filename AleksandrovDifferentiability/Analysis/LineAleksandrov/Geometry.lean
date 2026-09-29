@@ -51,9 +51,9 @@ theorem orthogonalDecomposition_orthogonal_span_singleton_apply_self (ξ : E) :
             ((ℝ ∙ ξ)ᗮ)ᗮ)) := by
   rw [Submodule.orthogonalDecomposition_apply]
   congr
-  · exact Submodule.orthogonalProjection_orthogonal_apply_eq_zero
+  · exact Submodule.orthogonalProjectionOnto_orthogonal_apply_eq_zero
       (K := ℝ ∙ ξ) (Submodule.mem_span_singleton_self ξ)
-  · exact Submodule.orthogonalProjection_mem_subspace_eq_self
+  · exact Submodule.orthogonalProjectionOnto_mem_subspace_eq_self
       (⟨ξ, (ℝ ∙ ξ).le_orthogonal_orthogonal (Submodule.mem_span_singleton_self ξ)⟩ :
         ((ℝ ∙ ξ)ᗮ)ᗮ)
 
@@ -80,14 +80,14 @@ theorem verticalizingLinearIsometryEquiv_apply_self (ξ : E) (hξ : ‖ξ‖ = 1
   let horth : Kᗮ = ℝ ∙ ξ := Submodule.orthogonal_orthogonal (ℝ ∙ ξ)
   have hfst : (((ℝ ∙ ξ)ᗮ).orthogonalDecomposition ξ).fst = (0 : (ℝ ∙ ξ)ᗮ) := by
     rw [Submodule.fst_orthogonalDecomposition_apply]
-    exact Submodule.orthogonalProjection_orthogonal_apply_eq_zero
+    exact Submodule.orthogonalProjectionOnto_orthogonal_apply_eq_zero
       (K := ℝ ∙ ξ) (Submodule.mem_span_singleton_self ξ)
   have hsnd :
       (((ℝ ∙ ξ)ᗮ).orthogonalDecomposition ξ).snd =
         (⟨ξ, (ℝ ∙ ξ).le_orthogonal_orthogonal (Submodule.mem_span_singleton_self ξ)⟩ :
           ((ℝ ∙ ξ)ᗮ)ᗮ) := by
     rw [Submodule.snd_orthogonalDecomposition_apply]
-    exact Submodule.orthogonalProjection_mem_subspace_eq_self
+    exact Submodule.orthogonalProjectionOnto_mem_subspace_eq_self
       (⟨ξ, (ℝ ∙ ξ).le_orthogonal_orthogonal (Submodule.mem_span_singleton_self ξ)⟩ :
         ((ℝ ∙ ξ)ᗮ)ᗮ)
   have hofEq :
@@ -100,7 +100,9 @@ theorem verticalizingLinearIsometryEquiv_apply_self (ξ : E) (hξ : ‖ξ‖ = 1
     exact LinearIsometryEquiv.coe_ofEq_apply (Submodule.orthogonal_orthogonal (ℝ ∙ ξ))
       (⟨ξ, (ℝ ∙ ξ).le_orthogonal_orthogonal (Submodule.mem_span_singleton_self ξ)⟩ :
         ((ℝ ∙ ξ)ᗮ)ᗮ)
-  rw [hfst, hsnd, hofEq]
+  simp only [LinearIsometryEquiv.withLpProdCongr_apply]
+  rw [hfst, hsnd]
+  simp only [LinearIsometryEquiv.trans_apply, hofEq]
   simp [unitSpanLinearIsometryEquivReal_apply_self]
 
 

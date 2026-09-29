@@ -57,7 +57,7 @@ Rockafellar/Straszewicz-style exposed-point and subgradient-cluster material und
 
 ## Build
 
-This project uses Lean `v4.30.0` and Mathlib `v4.30.0`, as recorded in `lean-toolchain`,
+This project uses Lean `v4.34.1` and Mathlib `v4.34.1`, as recorded in `lean-toolchain`,
 `lakefile.lean`, and `lake-manifest.json`.
 
 ```bash
@@ -71,7 +71,15 @@ lake env lean path/to/file.lean
 ```
 
 The GitHub Actions workflow `.github/workflows/ci.yml` runs the same build on pushes and pull
-requests using `leanprover/lean-action@v1`, including the Mathlib cache.
+requests with the Mathlib cache, treating warnings as errors (`lake build --wfail`). It also checks
+the library sources for `sorry`, `admit`, axioms and `native_decide`, validates
+`formalization.yaml` with `scripts/check-formalization-manifest.rb` (including the exact axioms of
+every target), and elaborates the challenge workspaces.
+
+Each GitHub release from `v0.3.0` on carries prebuilt build archives for Linux x86-64 and macOS
+arm64 (`.github/workflows/release-build-archive.yml`). The package sets `preferReleaseBuild`, so a
+project that requires a release tag of this repository downloads the compiled library instead of
+building it; `lake build --no-cache` builds it from source instead.
 
 ## Formalization Metadata
 

@@ -1,6 +1,5 @@
 name: Release build archive
 
-# DRAFT (standard v1.3 proposal, piloted on AD; see publication/proposals/release-build-archives.md).
 # Attach prebuilt Lake build archives (`<package>-<platform>.tar.gz`) to a published GitHub release.
 # Projects that `require` this tag and set nothing else then download compiled .olean files
 # instead of building this package from source (the lakefile sets `preferReleaseBuild`).

@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 noncomputable section
 
@@ -19,3 +23,5 @@ def Claim : Prop :=
               =o[𝓝 0] (fun z : E => ‖z‖ ^ 2)
 
 end AleksandrovDifferentiability.HeadlineMathlibVocabularyStatement
+
+end

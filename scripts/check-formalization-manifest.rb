@@ -7,8 +7,8 @@
 #   locked in lake-manifest.json, and every workspace manifest locks the root's git revisions;
 # * every target's lean_file exists and declares the target's lean_name;
 # * the challenge inventory (comparator.external_challenges.entries) equals
-#   challenges/*/config.json; each workspace is complete, its Statement.lean imports only Mathlib,
-#   its Challenge.lean only Statement, and its Solution.lean only Statement,
+#   challenges/*/config.json; each workspace is complete, its Vocabulary.lean and its
+#   self-contained Challenge.lean import only Mathlib, and its Solution.lean only Vocabulary,
 #   AleksandrovDifferentiability and Mathlib modules; config theorem names and permitted axioms agree;
 # * the pinned Comparator tool revisions agree with scripts/release-comparator.sh.
 #
@@ -90,14 +90,14 @@ targets.each do |t|
     unless listed.include?(t['challenge'])
 end
 
-imports = ->(f) { File.file?(f) ? File.read(f).scan(/^\s*import\s+(\S+)/).flatten : [] }
+imports = ->(f) { File.file?(f) ? File.read(f).scan(/^\s*(?:public\s+)?(?:meta\s+)?import\s+(\S+)/).flatten : [] }
 mathlib = ->(m) { m == 'Mathlib' || m.start_with?('Mathlib.') }
 library = ->(m) { m == 'AleksandrovDifferentiability' || m.start_with?('AleksandrovDifferentiability.') }
 
 entries.each do |entry|
   path = entry.fetch('path')
   next unless File.directory?(path)
-  %w[Statement.lean Challenge.lean Solution.lean config.json lakefile.toml lake-manifest.json lean-toolchain].each do |f|
+  %w[Vocabulary.lean Challenge.lean Solution.lean config.json lakefile.toml lake-manifest.json lean-toolchain].each do |f|
     failures << "#{path}: missing #{f}" unless File.file?(File.join(path, f))
   end
   toolchain = File.join(path, 'lean-toolchain')
@@ -106,12 +106,12 @@ entries.each do |entry|
   workspace_manifest = File.join(path, 'lake-manifest.json')
   failures << "#{path}: lake-manifest.json locks different git revisions from the root" \
     if File.file?(workspace_manifest) && git_packages.call(workspace_manifest) != locked
-  bad = imports.call(File.join(path, 'Statement.lean')).reject(&mathlib)
-  failures << "#{path}/Statement.lean: imports outside Mathlib: #{bad.inspect}" unless bad.empty?
-  bad = imports.call(File.join(path, 'Challenge.lean')) - ['Statement']
-  failures << "#{path}/Challenge.lean: imports other than Statement: #{bad.inspect}" unless bad.empty?
-  bad = imports.call(File.join(path, 'Solution.lean')).reject { |m| m == 'Statement' || library.call(m) || mathlib.call(m) }
-  failures << "#{path}/Solution.lean: imports outside Statement, the library and Mathlib: #{bad.inspect}" unless bad.empty?
+  bad = imports.call(File.join(path, 'Vocabulary.lean')).reject(&mathlib)
+  failures << "#{path}/Vocabulary.lean: imports outside Mathlib: #{bad.inspect}" unless bad.empty?
+  bad = imports.call(File.join(path, 'Challenge.lean')).reject(&mathlib)
+  failures << "#{path}/Challenge.lean: imports outside Mathlib: #{bad.inspect}" unless bad.empty?
+  bad = imports.call(File.join(path, 'Solution.lean')).reject { |m| m == 'Vocabulary' || library.call(m) || mathlib.call(m) }
+  failures << "#{path}/Solution.lean: imports outside Vocabulary, the library and Mathlib: #{bad.inspect}" unless bad.empty?
   lakefile = File.join(path, 'lakefile.toml')
   if File.file?(lakefile)
     defaults = File.read(lakefile)[/^defaultTargets\s*=\s*\[([^\]]*)\]/, 1].to_s

@@ -57,7 +57,7 @@ Rockafellar/Straszewicz-style exposed-point and subgradient-cluster material und
 
 ## Build
 
-This project uses Lean `v4.34.1` and Mathlib `v4.34.1`, as recorded in `lean-toolchain`,
+This project uses Lean `v4.35.0-rc3` and Mathlib `v4.35.0-rc3`, as recorded in `lean-toolchain`,
 `lakefile.lean`, and `lake-manifest.json`.
 
 ```bash
@@ -88,9 +88,10 @@ the root import, the expected build commands, and the comparator challenge set. 
 readers and tooling that want a compact index of the formalization without reverse-engineering the
 Lake project.
 
-The directory `challenges/` contains standalone comparator challenge workspaces. Each trusted
-Mathlib-only claim lives in `Statement.lean`; both `Challenge.lean` and `Solution.lean` import that
-single claim surface, while only the solution wrapper imports `AleksandrovDifferentiability`.
+The directory `challenges/` contains the standalone comparator challenge workspace
+`headline-mathlib-vocabulary`. Its trusted Mathlib-only claim lives in `Vocabulary.lean`;
+`Challenge.lean` is self-contained (its vocabulary block is generated from `Vocabulary.lean`), and
+only `Solution.lean` imports `AleksandrovDifferentiability`.
 Ordinary CI elaborates these sources, but exact statement equality and permitted axioms are gated
 by `.github/workflows/release-comparator.yml` on a GitHub-hosted Linux runner.
 
@@ -131,10 +132,14 @@ notes specialized that source from rank-one convex functions on matrix spaces to
 on finite-dimensional real vector spaces; those notes were significantly modified with assistance
 from AI coding agents under human supervision and are not part of the public release.
 
-The formalization depends on Lean and Mathlib. The Lean code was developed primarily with
-AI coding agents under human supervision. Public attribution and citation metadata are kept at
-the repository level in `CITATION.cff` and `formalization.yaml`; Lean source headers intentionally
-omit per-file author lines.
+The formalization depends on Lean and Mathlib. Public attribution and citation metadata are kept
+at the repository level in `CITATION.cff` and `formalization.yaml`; Lean source headers
+intentionally omit per-file author lines.
+
+The Lean proofs were written by AI coding agents (Claude, by Anthropic) under the author's
+mathematical direction and review. The theorem statements and proof routes were reviewed by the
+author. Correctness rests on Lean's kernel check, together with the comparator challenges in
+`challenges/`.
 
 ## License
 

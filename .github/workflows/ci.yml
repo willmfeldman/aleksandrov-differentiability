@@ -45,25 +45,30 @@ jobs:
         run: python3 scripts/check_integrity.py
       - name: Validate manifest, library Lean names, and exact target axioms
         run: ruby scripts/check-formalization-manifest.rb
-      # Challenge.lean states the challenges with `sorry` by design; the trusted statements and
-      # the solutions must contain none.
-      - name: Check challenge statements and solutions for sorry, axioms, and native_decide
+      # Challenge.lean states the challenges with `sorry` by design; the vocabulary and the
+      # solutions must contain none.
+      - name: Check challenge vocabulary and solutions for sorry, axioms, and native_decide
         run: |
-          ! grep -nE '\bsorry\b|^axiom |\badmit\b|native_decide' challenges/*/Statement.lean challenges/*/Solution.lean
+          ! grep -nE '\bsorry\b|^axiom |\badmit\b|native_decide' challenges/*/Vocabulary.lean challenges/*/Solution.lean
       # Elaboration shows each Challenge and Solution compiles against this commit's library. It is
-      # not a statement comparison; that is the release Comparator workflow's job.
-      - name: Elaborate challenge workspaces (Statement, Challenge and Solution)
+      # not a statement comparison; that is the release Comparator workflow's job. Challenge.lean is
+      # self-contained; Solution.lean imports the workspace's Vocabulary module.
+      - name: Elaborate challenge workspaces (Vocabulary, Challenge and Solution)
         run: |
           for config in challenges/*/config.json; do
             dir="${config%/config.json}"
             name="${dir#challenges/}"
-            statement_dir="$RUNNER_TEMP/challenge-statements/$name"
-            mkdir -p "$statement_dir"
+            vocabulary_dir="$RUNNER_TEMP/challenge-vocabulary/$name"
+            mkdir -p "$vocabulary_dir"
             echo "== $dir"
-            lake env lean -o "$statement_dir/Statement.olean" "$dir/Statement.lean"
-            LEAN_PATH="$statement_dir" lake env lean "$dir/Challenge.lean"
-            LEAN_PATH="$statement_dir" lake env lean "$dir/Solution.lean"
+            lake env lean -o "$vocabulary_dir/Vocabulary.olean" "$dir/Vocabulary.lean"
+            lake env lean "$dir/Challenge.lean"
+            LEAN_PATH="$vocabulary_dir" lake env lean "$dir/Solution.lean"
           done
+      # Module headers repo-wide, vocabulary blocks in sync, Mathlib-only Challenge imports and
+      # Challenge size.
+      - name: Check challenge layout
+        run: python3 scripts/challenge-prep.py check
       - name: Save Lake artifacts
         uses: actions/cache/save@v6
         if: always()

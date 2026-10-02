@@ -1,7 +1,7 @@
 name = "headline_mathlib_vocabulary"
 version = "0.1.0"
 # Keep `lake build` safe for the comparator workflow: it elaborates only the
-# trusted statement surface.  CI elaborates `Solution` explicitly in a trusted
+# trusted challenge surface.  CI elaborates `Solution` explicitly in a trusted
 # checkout.
 defaultTargets = ["Challenge"]
 # Share the root workspace's dependency checkouts and builds; the manifests
@@ -13,7 +13,7 @@ name = "AleksandrovDifferentiability"
 path = "../.."
 
 [[lean_lib]]
-name = "Statement"
+name = "Vocabulary"
 
 [[lean_lib]]
 name = "Challenge"

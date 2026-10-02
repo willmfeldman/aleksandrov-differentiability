@@ -1,17 +1,21 @@
 # Comparator challenges
 
-This directory contains isolated Comparator workspaces for the public
-`AleksandrovDifferentiability` API. Every workspace has:
+This directory contains an isolated Comparator workspace for the public
+`AleksandrovDifferentiability` API, `headline-mathlib-vocabulary`. Every file in it is a Lean
+module. The workspace has:
 
-- `Statement.lean`: the trusted mathematical claim, importing Mathlib only;
-- `Challenge.lean`: the trusted wrapper with a `sorry`, importing `Statement`;
-- `Solution.lean`: the proof wrapper, importing both `Statement` and the project;
+- `Vocabulary.lean`: the trusted mathematical claim, importing Mathlib only;
+- `Challenge.lean`: the trusted, self-contained challenge with a `sorry`. Its vocabulary block,
+  between `-- BEGIN GENERATED VOCABULARY` and `-- END GENERATED VOCABULARY`, is generated from
+  `Vocabulary.lean` by `python3 scripts/challenge-prep.py sync`, so it imports Mathlib only;
+- `Solution.lean`: the proof wrapper, importing both `Vocabulary` and the project;
 - `config.json`: theorem names and the exact permitted-axiom set; and
 - `lakefile.toml`: a standalone Lake workspace whose default target is only `Challenge`.
 
-Keeping the claim in `Statement.lean` gives both wrappers one statement surface. Comparator is
-still authoritative: a shared source file reduces accidental drift but does not replace the
-kernel, dependency, and permitted-axiom checks.
+Edit only `Vocabulary.lean`, then run `sync`. `python3 scripts/challenge-prep.py check` (run in CI)
+fails if the generated block and `Vocabulary.lean` disagree. Comparator is still authoritative: it
+compares every declaration reached from the compared statement by name and by value, and checks
+the kernel, dependencies, and permitted axioms.
 
 ## What ordinary CI establishes
 
@@ -28,15 +32,15 @@ GitHub-hosted Linux runner (`ubuntu-latest`) when dispatched manually (`workflow
 pushes of `release/**` branches and `v*` tags. It frees runner disk, downloads the Mathlib cache
 and builds the trusted library, validates the challenge inventory against `formalization.yaml`
 (`scripts/check-formalization-manifest.rb --metadata-only`), installs the pinned tools
-(`scripts/release-comparator.sh install`), builds each trusted `Statement` and `Challenge` target
+(`scripts/release-comparator.sh install`), builds each trusted `Vocabulary` and `Challenge` target
 outside the sandbox, and then runs Comparator on every `challenges/*/config.json`
 (`scripts/release-comparator.sh run`).
 
 Pinned release tools:
 
-- Lean and Mathlib: `v4.34.1`;
-- Comparator: `575674928e239f5bc452aab72d1dd7b0f1326494`;
-- `lean4export`: `076e8e57707e813375e8f9da8bf989799ace9680`, built with this repository's
+- Lean and Mathlib: `v4.35.0-rc3`;
+- Comparator: `fd5d5bcf14177b187f66d4502071268d877887c3`;
+- `lean4export`: `66f1fb4bc256072069767fce52d39480e4524869`, built with this repository's
   `lean-toolchain`; and
 - `landrun`: `811cfff51ceaf3d9843708aa6d22e9b84ccac8b4` (pinned from `main`).
 
@@ -64,21 +68,15 @@ solver-controlled sources in the release workspace before comparison. This order
 
 ## Classification
 
-Release theorem comparators:
+Release theorem comparator:
 
-- `headline-mathlib-vocabulary`: the full theorem in Mathlib vocabulary;
-- `statement-predicate`: the named statement layer; and
-- `bounded-abs-headline`: a genuinely nonsmooth convex function, combining the a.e. theorem,
-  failure at zero, and existence on a bounded positive-measure interval.
+- `headline-mathlib-vocabulary`: the full theorem, stated in Mathlib vocabulary only.
 
-Additional API checks:
-
-- `norm-convex-headline`: a generic norm application;
-- `second-order-witness-interface`: the definitional witness shape; and
-- `affine-model-case`: an elementary model case.
-
-The root API-smoke target additionally checks constant functions, export/import surfaces, the
-gradient bridge, and other named interfaces.
+Because the headline uses only Mathlib definitions, no separate model-case or interface
+workspaces are needed. The root API-smoke target (`AleksandrovDifferentiability.Comparator`) checks
+the named statement layer, the second-order witness interface, constant and affine model cases,
+the norm and absolute-value examples, export/import surfaces, the gradient bridge, and other named
+interfaces.
 
 ## Evidence and publication
 

@@ -2,7 +2,7 @@ import Lake
 open Lake DSL
 
 package "AleksandrovDifferentiability" where
-  version := v!"0.3.0"
+  version := v!"0.4.0"
   -- Projects that require a release tag download the prebuilt build archive attached to the
   -- GitHub release (see .github/workflows/release-build-archive.yml) instead of building.
   preferReleaseBuild := true
@@ -15,7 +15,7 @@ package "AleksandrovDifferentiability" where
     ⟨`linter.style.header, false⟩,
   ]
 
-require "leanprover-community" / "mathlib" @ git "v4.34.1"
+require "leanprover-community" / "mathlib" @ git "v4.35.0-rc3"
 
 @[default_target]
 lean_lib «AleksandrovDifferentiability» where

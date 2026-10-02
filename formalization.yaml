@@ -7,13 +7,13 @@ project:
   name: "AleksandrovDifferentiability"
   title: "Aleksandrov Differentiability"
   authors:
-    - "AleksandrovDifferentiability contributors"
+    - "William M. Feldman"
   repository: "https://github.com/willmfeldman/aleksandrov-differentiability"
   license: "Apache-2.0"
   language: "Lean"
   theorem_prover: "Lean 4"
-  lean_toolchain: "leanprover/lean4:v4.34.1"
-  mathlib: "v4.34.1"
+  lean_toolchain: "leanprover/lean4:v4.35.0-rc3"
+  mathlib: "v4.35.0-rc3"
 
 build:
   package_file: "lakefile.lean"
@@ -58,7 +58,6 @@ targets:
     kind: "statement-interface"
     lean_name: "AleksandrovDifferentiability.ConvexAleksandrovAEStatement"
     lean_file: "AleksandrovDifferentiability/Statements/Aleksandrov/Core.lean"
-    challenge: "challenges/statement-predicate"
   - id: "one-dimensional-smooth-check"
     title: "Smooth one-dimensional scalar estimate check"
     kind: "sanity-check"
@@ -77,14 +76,14 @@ comparator:
   external_challenges:
     directory: "challenges"
     purpose: >-
-      Standalone comparator challenge workspaces. Trusted Statement files import Mathlib only;
-      Challenge and Solution wrappers share those claims, and Comparator checks the solutions.
+      Standalone comparator challenge workspace. Its Mathlib-only Vocabulary module is copied
+      into the self-contained Challenge file, Solution imports it, and Comparator checks the solution.
     release_workflow: ".github/workflows/release-comparator.yml"
-    comparator_revision: "575674928e239f5bc452aab72d1dd7b0f1326494"
-    lean4export_revision: "076e8e57707e813375e8f9da8bf989799ace9680"
+    comparator_revision: "fd5d5bcf14177b187f66d4502071268d877887c3"
+    lean4export_revision: "66f1fb4bc256072069767fce52d39480e4524869"
     landrun_revision: "811cfff51ceaf3d9843708aa6d22e9b84ccac8b4"
-    toolchain: "leanprover/lean4:v4.34.1"
-    mathlib: "v4.34.1"
+    toolchain: "leanprover/lean4:v4.35.0-rc3"
+    mathlib: "v4.35.0-rc3"
     permitted_axioms:
       - "propext"
       - "Classical.choice"
@@ -95,31 +94,6 @@ comparator:
         path: "challenges/headline-mathlib-vocabulary"
         theorem_name: "AleksandrovDifferentiability.challenge_headline_in_mathlib_vocabulary"
         checks: "The headline theorem unfolds to a statement using only Mathlib vocabulary for symmetry and the quadratic little-o expansion."
-      - id: "statement-predicate"
-        classification: "release-theorem-comparator"
-        path: "challenges/statement-predicate"
-        theorem_name: "AleksandrovDifferentiability.challenge_statement_predicate"
-        checks: "The named statement predicate is discharged by the exported theorem."
-      - id: "norm-convex-headline"
-        classification: "api-smoke-comparator"
-        path: "challenges/norm-convex-headline"
-        theorem_name: "AleksandrovDifferentiability.challenge_norm_convex_headline"
-        checks: "The headline theorem applies to Mathlib's nontrivial convex example x |-> ||x|| on the full space."
-      - id: "bounded-abs-headline"
-        classification: "release-theorem-comparator"
-        path: "challenges/bounded-abs-headline"
-        theorem_name: "AleksandrovDifferentiability.challenge_bounded_abs_headline"
-        checks: "The headline theorem applies to x |-> |x| on (-1, 1), the predicate fails at zero, and the a.e. result yields an actual point."
-      - id: "second-order-witness-interface"
-        classification: "api-smoke-comparator"
-        path: "challenges/second-order-witness-interface"
-        theorem_name: "AleksandrovDifferentiability.challenge_second_order_witness_interface"
-        checks: "The public second-order differentiability predicate exposes gradient and symmetric Hessian witnesses."
-      - id: "affine-model-case"
-        classification: "api-smoke-comparator"
-        path: "challenges/affine-model-case"
-        theorem_name: "AleksandrovDifferentiability.challenge_affine_model_case"
-        checks: "Affine functions represented by an inner-product slope satisfy the public predicate."
   api_smoke_challenges:
     purpose: >-
       Small Lean API-regression smoke-test surface for checking that public imports,

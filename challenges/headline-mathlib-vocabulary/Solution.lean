@@ -1,7 +1,9 @@
-import Statement
-import AleksandrovDifferentiability
+module
 
-noncomputable section
+public import Vocabulary
+public import AleksandrovDifferentiability
+
+@[expose] public noncomputable section
 
 open Asymptotics
 open MeasureTheory

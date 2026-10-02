@@ -1,12 +1,14 @@
 cff-version: 1.2.0
 message: "If you use this Lean formalization, please cite it using this metadata."
 title: "Aleksandrov Differentiability"
-version: "0.3.0"
+version: "0.4.0"
 date-released: 2026-09-29
 license: "Apache-2.0"
 repository-code: "https://github.com/willmfeldman/aleksandrov-differentiability"
 authors:
-  - name: "AleksandrovDifferentiability contributors"
+  - family-names: Feldman
+    given-names: "William M."
+    orcid: "https://orcid.org/0000-0001-6038-4569"
 abstract: >-
   Lean formalization of the finite-dimensional convex Aleksandrov second-order
   differentiability theorem.

@@ -393,32 +393,6 @@ theorem RealScalarQuadraticQuotientEstimateWithDataAt.lineRestriction_smul
     simp [AleksandrovDifferentiability.lineRestriction, smul_smul, mul_comm]
   simpa [hfun] using h.comp_mul (c := c)
 
-/-- Diagonal pair-direction version of line-restriction rescaling: the direction `v + v` carries
-the first-order coefficient from the ambient slope and the quadratic coefficient `4 * q`. -/
-theorem RealScalarQuadraticEstimateWithDataAt.lineRestriction_add_self
-    {u : E → ℝ} {x p v : E} {q : ℝ}
-    (h : RealScalarQuadraticEstimateWithDataAt
-      (AleksandrovDifferentiability.lineRestriction u x v) 0 (inner ℝ p v) q) :
-    RealScalarQuadraticEstimateWithDataAt
-      (AleksandrovDifferentiability.lineRestriction u x (v + v)) 0
-        (inner ℝ p (v + v)) (4 * q) := by
-  have hs := h.lineRestriction_smul (c := (2 : ℝ))
-  simpa [two_smul, inner_add_right, two_mul, pow_two, mul_assoc,
-    show (2 + 2 : ℝ) = 4 by norm_num] using hs
-
-/-- Quotient-estimate version of
-`RealScalarQuadraticEstimateWithDataAt.lineRestriction_add_self`. -/
-theorem RealScalarQuadraticQuotientEstimateWithDataAt.lineRestriction_add_self
-    {u : E → ℝ} {x p v : E} {q : ℝ}
-    (h : RealScalarQuadraticQuotientEstimateWithDataAt
-      (AleksandrovDifferentiability.lineRestriction u x v) 0 (inner ℝ p v) q) :
-    RealScalarQuadraticQuotientEstimateWithDataAt
-      (AleksandrovDifferentiability.lineRestriction u x (v + v)) 0
-        (inner ℝ p (v + v)) (4 * q) := by
-  have hs := h.lineRestriction_smul (c := (2 : ℝ))
-  simpa [two_smul, inner_add_right, two_mul, pow_two, mul_assoc,
-    show (2 + 2 : ℝ) = 4 by norm_num] using hs
-
 /-- Existential scalar estimate version of line-restriction rescaling. -/
 theorem RealScalarQuadraticEstimateAt.lineRestriction_smul
     {u : E → ℝ} {x v : E} {c : ℝ}
@@ -477,24 +451,6 @@ theorem RealScalarQuadraticQuotientEstimateAt.lineRestriction_smul_iff
   · intro h
     exact h.lineRestriction_smul (u := u) (x := x) (v := v) (c := c)
 
-/-- Existential scalar estimate version for the diagonal pair direction `v + v`. -/
-theorem RealScalarQuadraticEstimateAt.lineRestriction_add_self
-    {u : E → ℝ} {x v : E}
-    (h : RealScalarQuadraticEstimateAt
-      (AleksandrovDifferentiability.lineRestriction u x v) 0) :
-    RealScalarQuadraticEstimateAt
-      (AleksandrovDifferentiability.lineRestriction u x (v + v)) 0 := by
-  simpa [two_smul] using h.lineRestriction_smul (u := u) (x := x) (v := v) (c := (2 : ℝ))
-
-/-- Existential scalar quotient-estimate version for the diagonal pair direction `v + v`. -/
-theorem RealScalarQuadraticQuotientEstimateAt.lineRestriction_add_self
-    {u : E → ℝ} {x v : E}
-    (h : RealScalarQuadraticQuotientEstimateAt
-      (AleksandrovDifferentiability.lineRestriction u x v) 0) :
-    RealScalarQuadraticQuotientEstimateAt
-      (AleksandrovDifferentiability.lineRestriction u x (v + v)) 0 := by
-  simpa [two_smul] using h.lineRestriction_smul (u := u) (x := x) (v := v) (c := (2 : ℝ))
-
 /-- Constant real-line functions have scalar quadratic estimate data with zero coefficients. -/
 theorem realScalarQuadraticEstimateWithDataAt_const (c x : ℝ) :
     RealScalarQuadraticEstimateWithDataAt (fun _ : ℝ => c) x 0 0 := by
@@ -517,39 +473,6 @@ theorem realScalarQuadraticEstimateAt_const (c x : ℝ) :
 theorem realScalarQuadraticQuotientEstimateAt_const (c x : ℝ) :
     RealScalarQuadraticQuotientEstimateAt (fun _ : ℝ => c) x :=
   (realScalarQuadraticQuotientEstimateWithDataAt_const c x).realScalarQuadraticQuotientEstimateAt
-
-/-- Real affine functions have scalar quadratic estimate data with zero quadratic coefficient. -/
-theorem realScalarQuadraticEstimateWithDataAt_affine (a b x : ℝ) :
-    RealScalarQuadraticEstimateWithDataAt (fun t : ℝ => a * t + b) x a 0 := by
-  intro ε hε
-  filter_upwards with z
-  have hinside :
-      (a * (x + z) + b) - (a * x + b) - a * z -
-          (1 / 2 : ℝ) * 0 * z ^ 2 = 0 := by
-    ring
-  have hzero :
-      ‖(a * (x + z) + b) - (a * x + b) - a * z -
-          (1 / 2 : ℝ) * 0 * z ^ 2‖ = 0 := by
-    rw [hinside, norm_zero]
-  rw [hzero]
-  exact mul_nonneg hε.le (sq_nonneg ‖z‖)
-
-/-- Punctured normalized quotient-estimate version of
-`realScalarQuadraticEstimateWithDataAt_affine`. -/
-theorem realScalarQuadraticQuotientEstimateWithDataAt_affine (a b x : ℝ) :
-    RealScalarQuadraticQuotientEstimateWithDataAt (fun t : ℝ => a * t + b) x a 0 :=
-  (realScalarQuadraticEstimateWithDataAt_affine a b x).quadraticQuotientEstimateWithDataAt
-
-/-- Existential scalar estimate form for real affine functions. -/
-theorem realScalarQuadraticEstimateAt_affine (a b x : ℝ) :
-    RealScalarQuadraticEstimateAt (fun t : ℝ => a * t + b) x :=
-  (realScalarQuadraticEstimateWithDataAt_affine a b x).realScalarQuadraticEstimateAt
-
-/-- Existential quotient-estimate form for real affine functions. -/
-theorem realScalarQuadraticQuotientEstimateAt_affine (a b x : ℝ) :
-    RealScalarQuadraticQuotientEstimateAt (fun t : ℝ => a * t + b) x :=
-  RealScalarQuadraticQuotientEstimateWithDataAt.realScalarQuadraticQuotientEstimateAt
-    (realScalarQuadraticQuotientEstimateWithDataAt_affine a b x)
 
 /-- A zero-direction line restriction has scalar quadratic estimate data at the base parameter. -/
 theorem realScalarQuadraticEstimateAt_lineRestriction_zero_direction
@@ -575,105 +498,6 @@ theorem realScalarQuadraticQuotientEstimateAt_lineRestriction_zero_direction
     simp [AleksandrovDifferentiability.lineRestriction]
   simpa [hfun] using
     (realScalarQuadraticQuotientEstimateAt_const (u x) 0)
-
-/-- Rebase scalar estimate data from a parameter `t` on the line through `x` to parameter `0`
-on the same geometric line based at `x + t • v`. -/
-theorem RealScalarQuadraticEstimateWithDataAt.lineRestriction_rebase
-    {u : E → ℝ} {x v : E} {t p q : ℝ}
-    (h : RealScalarQuadraticEstimateWithDataAt
-      (AleksandrovDifferentiability.lineRestriction u x v) t p q) :
-    RealScalarQuadraticEstimateWithDataAt
-      (AleksandrovDifferentiability.lineRestriction u (x + t • v) v) 0 p q := by
-  intro ε hε
-  filter_upwards [h ε hε] with z hz
-  have harg : x + t • v + z • v = x + (t + z) • v := by
-    rw [add_smul]
-    abel
-  simpa [AleksandrovDifferentiability.lineRestriction, harg, add_assoc] using hz
-
-/-- Quotient-estimate version of
-`RealScalarQuadraticEstimateWithDataAt.lineRestriction_rebase`. -/
-theorem RealScalarQuadraticQuotientEstimateWithDataAt.lineRestriction_rebase
-    {u : E → ℝ} {x v : E} {t p q : ℝ}
-    (h : RealScalarQuadraticQuotientEstimateWithDataAt
-      (AleksandrovDifferentiability.lineRestriction u x v) t p q) :
-    RealScalarQuadraticQuotientEstimateWithDataAt
-      (AleksandrovDifferentiability.lineRestriction u (x + t • v) v) 0 p q := by
-  intro ε hε
-  filter_upwards [h ε hε] with z hz
-  have harg : x + t • v + z • v = x + (t + z) • v := by
-    rw [add_smul]
-    abel
-  simpa [AleksandrovDifferentiability.lineRestriction, harg, add_assoc] using hz
-
-/-- Existential scalar estimate rebase from a line parameter to the corresponding ambient base
-point on the same line. -/
-theorem RealScalarQuadraticEstimateAt.lineRestriction_rebase
-    {u : E → ℝ} {x v : E} {t : ℝ}
-    (h : RealScalarQuadraticEstimateAt
-      (AleksandrovDifferentiability.lineRestriction u x v) t) :
-    RealScalarQuadraticEstimateAt
-      (AleksandrovDifferentiability.lineRestriction u (x + t • v) v) 0 := by
-  rcases h with ⟨p, q, hest⟩
-  have hwith :
-      RealScalarQuadraticEstimateWithDataAt
-        (AleksandrovDifferentiability.lineRestriction u x v) t p q := hest
-  exact (hwith.lineRestriction_rebase (u := u) (x := x) (v := v)).realScalarQuadraticEstimateAt
-
-/-- Quotient-estimate existential rebase from a line parameter to the corresponding ambient base
-point on the same line. -/
-theorem RealScalarQuadraticQuotientEstimateAt.lineRestriction_rebase
-    {u : E → ℝ} {x v : E} {t : ℝ}
-    (h : RealScalarQuadraticQuotientEstimateAt
-      (AleksandrovDifferentiability.lineRestriction u x v) t) :
-    RealScalarQuadraticQuotientEstimateAt
-      (AleksandrovDifferentiability.lineRestriction u (x + t • v) v) 0 := by
-  rcases h with ⟨p, q, hest⟩
-  have hwith :
-      RealScalarQuadraticQuotientEstimateWithDataAt
-        (AleksandrovDifferentiability.lineRestriction u x v) t p q := hest
-  exact
-    (hwith.lineRestriction_rebase (u := u) (x := x) (v := v)).realScalarQuadraticQuotientEstimateAt
-
-/-- On the real line, a project-level second-order expansion gives the scalar quadratic estimate
-shape used by the one-dimensional assembly interface. -/
-theorem realScalarQuadraticEstimateWithDataAt_of_hasSecondOrderExpansionAt
-    {f : ℝ → ℝ} {x p : ℝ} {B : ℝ →L[ℝ] ℝ}
-    (h : HasSecondOrderExpansionAt f x p B) :
-    RealScalarQuadraticEstimateWithDataAt f x p (B 1) := by
-  intro ε hε
-  filter_upwards [h.def hε] with z hz
-  have hBz : B z = z * B 1 := by
-    calc
-      B z = B (z • (1 : ℝ)) := by simp
-      _ = z • B 1 := by rw [map_smul]
-      _ = z * B 1 := by rfl
-  have hnorm :
-      ‖f (x + z) - f x - p * z - (1 / 2 : ℝ) * B 1 * z ^ 2‖ =
-        ‖f (x + z) - f x - inner ℝ p z - (1 / 2 : ℝ) * inner ℝ z (B z)‖ := by
-    congr 1
-    simp [hBz, pow_two, mul_assoc, mul_left_comm, mul_comm]
-  have hsq_norm : ‖(‖z‖ ^ 2 : ℝ)‖ = ‖z‖ ^ 2 :=
-    Real.norm_of_nonneg (sq_nonneg _)
-  rw [hnorm]
-  simpa [hsq_norm] using hz
-
-/-- On the real line, a project-level second-order expansion gives the scalar quadratic estimate
-shape used by the one-dimensional assembly interface. -/
-theorem realScalarQuadraticEstimateAt_of_hasSecondOrderExpansionAt
-    {f : ℝ → ℝ} {x p : ℝ} {B : ℝ →L[ℝ] ℝ}
-    (h : HasSecondOrderExpansionAt f x p B) :
-    RealScalarQuadraticEstimateAt f x :=
-  RealScalarQuadraticEstimateWithDataAt.realScalarQuadraticEstimateAt
-    (realScalarQuadraticEstimateWithDataAt_of_hasSecondOrderExpansionAt h)
-
-/-- On the real line, project-level second-order differentiability gives the scalar quadratic
-estimate shape used by the one-dimensional assembly interface. -/
-theorem realScalarQuadraticEstimateAt_of_secondOrderDifferentiableAt
-    {f : ℝ → ℝ} {x : ℝ} (h : SecondOrderDifferentiableAt f x) :
-    RealScalarQuadraticEstimateAt f x := by
-  rcases h with ⟨p, B, _hB, hExp⟩
-  exact realScalarQuadraticEstimateAt_of_hasSecondOrderExpansionAt hExp
 
 /-- The averaged right-derivative remainder estimate, together with differentiability of the
 right derivative, gives the project's scalar quadratic estimate.
@@ -806,17 +630,6 @@ def realScalarQuadraticEstimateSet (f : ℝ → ℝ) : Set ℝ :=
 /-- Points carrying punctured normalized real-line scalar quadratic estimate data. -/
 def realScalarQuadraticQuotientEstimateSet (f : ℝ → ℝ) : Set ℝ :=
   {x | RealScalarQuadraticQuotientEstimateAt f x}
-
-@[simp]
-theorem mem_realScalarQuadraticEstimateSet {f : ℝ → ℝ} {x : ℝ} :
-    x ∈ realScalarQuadraticEstimateSet f ↔ RealScalarQuadraticEstimateAt f x :=
-  Iff.rfl
-
-@[simp]
-theorem mem_realScalarQuadraticQuotientEstimateSet {f : ℝ → ℝ} {x : ℝ} :
-    x ∈ realScalarQuadraticQuotientEstimateSet f ↔
-      RealScalarQuadraticQuotientEstimateAt f x :=
-  Iff.rfl
 
 /-- Scalar quadratic estimate data implies project second-order differentiability on `ℝ`. -/
 theorem RealScalarQuadraticEstimateAt.secondOrderDifferentiableAt

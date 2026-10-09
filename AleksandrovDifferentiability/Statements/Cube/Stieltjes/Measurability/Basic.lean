@@ -436,18 +436,4 @@ theorem CoordinateSliceConvexSourceRightDerivStieltjesEndpointLeftLimitMeasurabl
   intro i k
   exact h i k
 
-/-- Fixed-interval endpoint-average measurability for each enumerated interval gives the packaged
-endpoint-average measurability obligation. -/
-theorem CoordinateSliceConvexSourceRightDerivStieltjesEndpointAverageMeasurable.of_at
-    {n : ℕ} {u : SourceCubeSpace n → ℝ} {hu : ConvexOn ℝ (sourceOpenCube n 3) u}
-    {a b : ℕ → ℝ}
-    (h :
-      ∀ i : Fin n, ∀ k : ℕ,
-        CoordinateSliceConvexSourceRightDerivStieltjesEndpointAverageAtMeasurable
-          u hu i (a k) (b k)) :
-    CoordinateSliceConvexSourceRightDerivStieltjesEndpointAverageMeasurable u hu a b := by
-  intro i k
-  exact h i k
-
-
 end AleksandrovDifferentiability

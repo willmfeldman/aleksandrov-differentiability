@@ -75,18 +75,6 @@ theorem mem_leftDerivDifferentiabilitySet :
       DifferentiableWithinAt ℝ (leftDeriv f) (interior S) x :=
   Iff.rfl
 
-@[simp]
-theorem mem_oneSidedDerivDifferentiabilitySet :
-    x ∈ oneSidedDerivDifferentiabilitySet S f ↔
-      DifferentiableWithinAt ℝ (rightDeriv f) (interior S) x ∧
-        DifferentiableWithinAt ℝ (leftDeriv f) (interior S) x :=
-  Iff.rfl
-
-@[simp]
-theorem mem_rightDerivAverageRemainderSet :
-    x ∈ rightDerivAverageRemainderSet f ↔ HasRightDerivAverageRemainderAt f x :=
-  Iff.rfl
-
 /-- A convex function has the project-local right derivative at interior points. -/
 theorem ConvexOn.hasDerivWithinAt_rightDeriv
     (hf : ConvexOn ℝ S f) (hx : x ∈ interior S) :
@@ -129,24 +117,6 @@ theorem ConvexOn.ae_differentiableWithinAt_projectLeftDeriv_of_mem
   (AleksandrovDifferentiability.ConvexOn.monotoneOn_projectLeftDeriv
     (S := S) (f := f) hf).ae_differentiableWithinAt_of_mem
 
-/-- Restricted-measure version of
-`ConvexOn.ae_differentiableWithinAt_projectRightDeriv_of_mem`. -/
-theorem ConvexOn.ae_differentiableWithinAt_projectRightDeriv
-    (hf : ConvexOn ℝ S f) (hS : MeasurableSet (interior S)) :
-    ∀ᵐ x ∂volume.restrict (interior S),
-      DifferentiableWithinAt ℝ (rightDeriv f) (interior S) x :=
-  (AleksandrovDifferentiability.ConvexOn.monotoneOn_projectRightDeriv
-    (S := S) (f := f) hf).ae_differentiableWithinAt hS
-
-/-- Restricted-measure version of
-`ConvexOn.ae_differentiableWithinAt_projectLeftDeriv_of_mem`. -/
-theorem ConvexOn.ae_differentiableWithinAt_projectLeftDeriv
-    (hf : ConvexOn ℝ S f) (hS : MeasurableSet (interior S)) :
-    ∀ᵐ x ∂volume.restrict (interior S),
-      DifferentiableWithinAt ℝ (leftDeriv f) (interior S) x :=
-  (AleksandrovDifferentiability.ConvexOn.monotoneOn_projectLeftDeriv
-    (S := S) (f := f) hf).ae_differentiableWithinAt hS
-
 /-- Both project-local one-sided derivative functions are differentiable within the interior
 almost everywhere, in implication form. -/
 theorem ConvexOn.ae_mem_oneSidedDerivDifferentiabilitySet_of_mem
@@ -158,54 +128,6 @@ theorem ConvexOn.ae_mem_oneSidedDerivDifferentiabilitySet_of_mem
     AleksandrovDifferentiability.ConvexOn.ae_differentiableWithinAt_projectLeftDeriv_of_mem
       (S := S) (f := f) hf] with x hright hleft hx
   exact ⟨hright hx, hleft hx⟩
-
-/-- Restricted-measure version of
-`ConvexOn.ae_mem_oneSidedDerivDifferentiabilitySet_of_mem`. -/
-theorem ConvexOn.ae_mem_oneSidedDerivDifferentiabilitySet
-    (hf : ConvexOn ℝ S f) (hS : MeasurableSet (interior S)) :
-    ∀ᵐ x ∂volume.restrict (interior S), x ∈ oneSidedDerivDifferentiabilitySet S f := by
-  filter_upwards [
-    AleksandrovDifferentiability.ConvexOn.ae_differentiableWithinAt_projectRightDeriv
-      (S := S) (f := f) hf hS,
-    AleksandrovDifferentiability.ConvexOn.ae_differentiableWithinAt_projectLeftDeriv
-      (S := S) (f := f) hf hS] with x hright hleft
-  exact ⟨hright, hleft⟩
-
-/-- The exceptional set inside the interior where the project-local right derivative is not
-differentiable has zero Lebesgue measure. -/
-theorem ConvexOn.measure_interior_diff_rightDerivDifferentiabilitySet_eq_zero
-    (hf : ConvexOn ℝ S f) :
-    volume (interior S \ rightDerivDifferentiabilitySet S f) = 0 := by
-  have hae :=
-    AleksandrovDifferentiability.ConvexOn.ae_differentiableWithinAt_projectRightDeriv_of_mem
-      (S := S) (f := f) hf
-  rw [ae_iff] at hae
-  have hset :
-      {x | ¬(x ∈ interior S →
-        DifferentiableWithinAt ℝ (rightDeriv f) (interior S) x)} =
-        interior S \ rightDerivDifferentiabilitySet S f := by
-    ext x
-    simp [rightDerivDifferentiabilitySet]
-  rw [hset] at hae
-  exact hae
-
-/-- The exceptional set inside the interior where the project-local left derivative is not
-differentiable has zero Lebesgue measure. -/
-theorem ConvexOn.measure_interior_diff_leftDerivDifferentiabilitySet_eq_zero
-    (hf : ConvexOn ℝ S f) :
-    volume (interior S \ leftDerivDifferentiabilitySet S f) = 0 := by
-  have hae :=
-    AleksandrovDifferentiability.ConvexOn.ae_differentiableWithinAt_projectLeftDeriv_of_mem
-      (S := S) (f := f) hf
-  rw [ae_iff] at hae
-  have hset :
-      {x | ¬(x ∈ interior S →
-        DifferentiableWithinAt ℝ (leftDeriv f) (interior S) x)} =
-        interior S \ leftDerivDifferentiabilitySet S f := by
-    ext x
-    simp [leftDerivDifferentiabilitySet]
-  rw [hset] at hae
-  exact hae
 
 /-- The exceptional set inside the interior where one of the one-sided derivative functions is
 not differentiable has zero Lebesgue measure. -/
@@ -222,14 +144,6 @@ theorem ConvexOn.measure_interior_diff_oneSidedDerivDifferentiabilitySet_eq_zero
     ext x
     simp [oneSidedDerivDifferentiabilitySet]
   simpa only [hset] using hae
-
-/-- Short-name alias for the null exceptional set where one of the one-sided derivative
-functions is not differentiable. -/
-theorem ConvexOn.measure_interior_diff_oneSided_eq_zero
-    (hf : ConvexOn ℝ S f) :
-    volume (interior S \ oneSidedDerivDifferentiabilitySet S f) = 0 :=
-  ConvexOn.measure_interior_diff_oneSidedDerivDifferentiabilitySet_eq_zero
-    (S := S) (f := f) hf
 
 /-- The left derivative is bounded by the right derivative at an interior point of a convex
 function. -/
@@ -369,210 +283,6 @@ theorem ConvexOn.tendsto_rightDeriv_nhdsLT_leftDeriv
       AleksandrovDifferentiability.ConvexOn.slope_le_leftDeriv
         (S := S) (f := f) (x := y) (y := x) hf (interior_subset hyS) hx hyx
     exact (hright_le_slope.trans hslope_le_left).trans_lt hm
-
-/-- Convex secant control by the variation of the project-local right derivative.
-
-This is a pointwise estimate for the affine remainder with slope `rightDeriv f x`.  It is weaker
-than the final scalar quadratic Taylor estimate, but it is the basic convex inequality used to
-turn differentiability of `rightDeriv f` into local quadratic control of the original function. -/
-theorem ConvexOn.norm_sub_linear_rightDeriv_le_norm_mul_rightDeriv_sub
-    (hf : ConvexOn ℝ S f) (hx : x ∈ interior S) (hy : y ∈ interior S) :
-    ‖f y - f x - rightDeriv f x * (y - x)‖ ≤
-      ‖y - x‖ * ‖rightDeriv f y - rightDeriv f x‖ := by
-  rcases lt_trichotomy x y with hxy | rfl | hyx
-  · have hden : 0 < y - x := sub_pos.mpr hxy
-    have hp_le_slope :
-        rightDeriv f x ≤ slope f x y :=
-      AleksandrovDifferentiability.ConvexOn.rightDeriv_le_slope
-        (S := S) (f := f) (x := x) (y := y) hf hx (interior_subset hy) hxy
-    have hslope_le :
-        slope f x y ≤ rightDeriv f y :=
-      (AleksandrovDifferentiability.ConvexOn.slope_le_leftDeriv
-        (S := S) (f := f) (x := x) (y := y) hf (interior_subset hx) hy hxy).trans
-        (AleksandrovDifferentiability.ConvexOn.leftDeriv_le_rightDeriv
-          (S := S) (f := f) (x := y) hf hy)
-    have hslope_abs :
-        |slope f x y - rightDeriv f x| ≤
-          |rightDeriv f y - rightDeriv f x| := by
-      rw [abs_of_nonneg (sub_nonneg.mpr hp_le_slope)]
-      rw [abs_of_nonneg (sub_nonneg.mpr (hp_le_slope.trans hslope_le))]
-      exact sub_le_sub_right hslope_le (rightDeriv f x)
-    have hrem :
-        f y - f x - rightDeriv f x * (y - x) =
-          (y - x) * (slope f x y - rightDeriv f x) := by
-      rw [slope_def_field]
-      field_simp [hden.ne']
-    rw [hrem, Real.norm_eq_abs, Real.norm_eq_abs, abs_mul,
-      abs_of_pos hden, Real.norm_eq_abs]
-    exact mul_le_mul_of_nonneg_left hslope_abs hden.le
-  · simp
-  · have hden : 0 < x - y := sub_pos.mpr hyx
-    have hy_right_le_slope :
-        rightDeriv f y ≤ slope f y x :=
-      AleksandrovDifferentiability.ConvexOn.rightDeriv_le_slope
-        (S := S) (f := f) (x := y) (y := x) hf hy (interior_subset hx) hyx
-    have hslope_le_left :
-        slope f y x ≤ leftDeriv f x :=
-      AleksandrovDifferentiability.ConvexOn.slope_le_leftDeriv
-        (S := S) (f := f) (x := y) (y := x) hf (interior_subset hy) hx hyx
-    have hslope_le_right :
-        slope f y x ≤ rightDeriv f x :=
-      hslope_le_left.trans
-        (AleksandrovDifferentiability.ConvexOn.leftDeriv_le_rightDeriv
-          (S := S) (f := f) (x := x) hf hx)
-    have hslope_abs :
-        |slope f x y - rightDeriv f x| ≤
-          |rightDeriv f y - rightDeriv f x| := by
-      rw [slope_comm f x y]
-      rw [abs_of_nonpos (sub_nonpos.mpr hslope_le_right)]
-      rw [abs_of_nonpos (sub_nonpos.mpr (hy_right_le_slope.trans hslope_le_right))]
-      simpa using sub_le_sub_left hy_right_le_slope (rightDeriv f x)
-    have hrem :
-        f y - f x - rightDeriv f x * (y - x) =
-          (y - x) * (slope f x y - rightDeriv f x) := by
-      rw [slope_def_field]
-      have hyx_ne : y - x ≠ 0 := sub_ne_zero.mpr hyx.ne
-      field_simp [hyx_ne]
-    rw [hrem, Real.norm_eq_abs, Real.norm_eq_abs, abs_mul, Real.norm_eq_abs]
-    exact mul_le_mul_of_nonneg_left hslope_abs (abs_nonneg (y - x))
-
-/-- If the right derivative of a one-dimensional convex function is continuous within the
-interior at `x`, then the usual convex gap between the left and right derivatives closes from the
-opposite direction. -/
-theorem ConvexOn.rightDeriv_le_leftDeriv_of_continuousWithinAt_rightDeriv
-    (hf : ConvexOn ℝ S f) (hx : x ∈ interior S)
-    (hcont : ContinuousWithinAt (rightDeriv f) (interior S) x) :
-    rightDeriv f x ≤ leftDeriv f x := by
-  have htend :
-      Tendsto (rightDeriv f) (nhdsWithin x (interior S ∩ Iio x))
-        (nhds (rightDeriv f x)) :=
-    hcont.mono_left (nhdsWithin_mono x inter_subset_left)
-  have hconst :
-      Tendsto (fun _ : ℝ => leftDeriv f x) (nhdsWithin x (interior S ∩ Iio x))
-        (nhds (leftDeriv f x)) :=
-    tendsto_const_nhds
-  have hfilter :
-      nhdsWithin x (interior S ∩ Iio x) = nhdsWithin x (Iio x) := by
-    rw [inter_comm]
-    exact nhdsWithin_inter_of_mem'
-      (nhdsWithin_le_nhds (isOpen_interior.mem_nhds hx))
-  have : NeBot (nhdsWithin x (interior S ∩ Iio x)) := by
-    rw [hfilter]
-    infer_instance
-  have hevent :
-      ∀ᶠ y in nhdsWithin x (interior S ∩ Iio x),
-        rightDeriv f y ≤ leftDeriv f x := by
-    filter_upwards [self_mem_nhdsWithin] with y hy
-    exact (AleksandrovDifferentiability.ConvexOn.rightDeriv_le_slope
-      (S := S) (f := f) (x := y) (y := x) hf hy.1 (interior_subset hx) hy.2).trans
-        (AleksandrovDifferentiability.ConvexOn.slope_le_leftDeriv
-          (S := S) (f := f) (x := y) (y := x) hf (interior_subset hy.1) hx hy.2)
-  exact le_of_tendsto_of_tendsto htend hconst hevent
-
-/-- Continuity within the interior of the right derivative identifies the two one-sided
-derivatives of a one-dimensional convex function. -/
-theorem ConvexOn.leftDeriv_eq_rightDeriv_of_continuousWithinAt_rightDeriv
-    (hf : ConvexOn ℝ S f) (hx : x ∈ interior S)
-    (hcont : ContinuousWithinAt (rightDeriv f) (interior S) x) :
-    leftDeriv f x = rightDeriv f x := by
-  exact le_antisymm
-    (AleksandrovDifferentiability.ConvexOn.leftDeriv_le_rightDeriv
-      (S := S) (f := f) (x := x) hf hx)
-    (AleksandrovDifferentiability.ConvexOn.rightDeriv_le_leftDeriv_of_continuousWithinAt_rightDeriv
-      (S := S) (f := f) (x := x) hf hx hcont)
-
-/-- At an interior point of a one-dimensional convex function, continuity within the interior of
-the right derivative upgrades the two one-sided derivative statements to an ordinary derivative. -/
-theorem ConvexOn.hasDerivAt_rightDeriv_of_continuousWithinAt_rightDeriv
-    (hf : ConvexOn ℝ S f) (hx : x ∈ interior S)
-    (hcont : ContinuousWithinAt (rightDeriv f) (interior S) x) :
-    HasDerivAt f (rightDeriv f x) x := by
-  have hright :
-      Tendsto (slope f x) (nhdsWithin x (Ioi x)) (nhds (rightDeriv f x)) :=
-    (hasDerivWithinAt_iff_tendsto_slope' self_notMem_Ioi).mp
-      (AleksandrovDifferentiability.ConvexOn.hasDerivWithinAt_rightDeriv
-        (S := S) (f := f) (x := x) hf hx)
-  have hleft :
-      Tendsto (slope f x) (nhdsWithin x (Iio x)) (nhds (leftDeriv f x)) :=
-    (hasDerivWithinAt_iff_tendsto_slope' self_notMem_Iio).mp
-      (AleksandrovDifferentiability.ConvexOn.hasDerivWithinAt_leftDeriv
-        (S := S) (f := f) (x := x) hf hx)
-  have heq :
-      leftDeriv f x = rightDeriv f x :=
-    AleksandrovDifferentiability.ConvexOn.leftDeriv_eq_rightDeriv_of_continuousWithinAt_rightDeriv
-      (S := S) (f := f) (x := x) hf hx hcont
-  exact (hasDerivAt_iff_tendsto_slope_left_right (f := f) (f' := rightDeriv f x)
-    (x := x)).mpr ⟨by simpa [heq] using hleft, hright⟩
-
-/-- Points where the project-local one-sided derivatives are differentiable within the interior
-are ordinary differentiability points of the original convex function. -/
-theorem ConvexOn.hasDerivAt_rightDeriv_of_mem_oneSidedDerivDifferentiabilitySet
-    (hf : ConvexOn ℝ S f) (hx : x ∈ interior S)
-    (hgood : x ∈ oneSidedDerivDifferentiabilitySet S f) :
-    HasDerivAt f (rightDeriv f x) x :=
-  AleksandrovDifferentiability.ConvexOn.hasDerivAt_rightDeriv_of_continuousWithinAt_rightDeriv
-    (S := S) (f := f) (x := x) hf hx hgood.1.continuousWithinAt
-
-/-- Set-level differentiability consequence of belonging to the one-sided derivative-good set. -/
-theorem ConvexOn.differentiableAt_of_mem_oneSidedDerivDifferentiabilitySet
-    (hf : ConvexOn ℝ S f) (hx : x ∈ interior S)
-    (hgood : x ∈ oneSidedDerivDifferentiabilitySet S f) :
-    DifferentiableAt ℝ f x :=
-  (ConvexOn.hasDerivAt_rightDeriv_of_mem_oneSidedDerivDifferentiabilitySet
-    (S := S) (f := f) (x := x) hf hx hgood).differentiableAt
-
-/-- Set-level version of the differentiability consequence for the one-sided derivative-good set. -/
-theorem ConvexOn.interior_inter_oneSidedDerivDifferentiabilitySet_subset_differentiabilitySet
-    (hf : ConvexOn ℝ S f) :
-    interior S ∩ oneSidedDerivDifferentiabilitySet S f ⊆ {x | DifferentiableAt ℝ f x} := by
-  rintro x ⟨hx, hgood⟩
-  exact ConvexOn.differentiableAt_of_mem_oneSidedDerivDifferentiabilitySet
-    (S := S) (f := f) (x := x) hf hx hgood
-
-/-- At a derivative-good interior point of a one-dimensional convex function, subtracting the
-tangent line with slope `rightDeriv f x` leaves a locally quadratically bounded remainder.
-
-This is a Big-O type consequence of differentiability of the one-sided derivative.  The final
-scalar Aleksandrov estimate still needs the sharper averaged statement with the coefficient
-`(1 / 2) * q`. -/
-theorem ConvexOn.exists_eventually_norm_sub_linear_rightDeriv_le_const_mul_norm_sq
-    (hf : ConvexOn ℝ S f) (hx : x ∈ interior S)
-    (hgood : x ∈ oneSidedDerivDifferentiabilitySet S f) :
-    ∃ C : ℝ, 0 ≤ C ∧
-      ∀ᶠ z in nhds 0,
-        ‖f (x + z) - f x - rightDeriv f x * z‖ ≤ C * ‖z‖ ^ 2 := by
-  have hto_nhds :
-      Tendsto (fun z : ℝ => x + z) (nhds 0) (nhds x) := by
-    simpa using (tendsto_const_nhds.add tendsto_id :
-      Tendsto (fun z : ℝ => x + z) (nhds 0) (nhds (x + 0)))
-  have hmem :
-      ∀ᶠ z in nhds 0, x + z ∈ interior S :=
-    hto_nhds (isOpen_interior.mem_nhds hx)
-  have hto_within :
-      Tendsto (fun z : ℝ => x + z) (nhds 0) (nhdsWithin x (interior S)) :=
-    tendsto_nhdsWithin_iff.mpr ⟨hto_nhds, hmem⟩
-  rcases hgood.1.isBigO_sub.exists_nonneg with ⟨C, hCnonneg, hC⟩
-  have hCevent :
-      ∀ᶠ z in nhds 0,
-        ‖rightDeriv f (x + z) - rightDeriv f x‖ ≤ C * ‖z‖ := by
-    simpa [Function.comp_def] using (hC.comp_tendsto hto_within).bound
-  refine ⟨C, hCnonneg, ?_⟩
-  filter_upwards [hmem, hCevent] with z hzS hCz
-  have hpoint :=
-    ConvexOn.norm_sub_linear_rightDeriv_le_norm_mul_rightDeriv_sub
-      (S := S) (f := f) (x := x) (y := x + z) hf hx hzS
-  have hzsub : x + z - x = z := by ring
-  have hmul :
-      ‖x + z - x‖ * ‖rightDeriv f (x + z) - rightDeriv f x‖ ≤
-        C * ‖z‖ ^ 2 := by
-    have hmul' :=
-      mul_le_mul_of_nonneg_left hCz (norm_nonneg (x + z - x))
-    simpa [hzsub, pow_two, mul_assoc, mul_left_comm, mul_comm] using hmul'
-  have hpoint' :
-      ‖f (x + z) - f x - rightDeriv f x * z‖ ≤
-        ‖x + z - x‖ * ‖rightDeriv f (x + z) - rightDeriv f x‖ := by
-    simpa [hzsub] using hpoint
-  exact hpoint'.trans hmul
 
 /-- A one-dimensional subgradient at an interior point is bounded above by the right derivative. -/
 theorem SubgradientOn.le_rightDeriv_of_convex

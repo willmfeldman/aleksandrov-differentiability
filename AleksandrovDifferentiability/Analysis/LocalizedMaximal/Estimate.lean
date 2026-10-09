@@ -14,20 +14,6 @@ open scoped MeasureTheory
 
 namespace AleksandrovDifferentiability
 
-theorem SourceLocalizedMaximalBadPredicateMeasurable.of_measurable_parts
-    {α : Type*} [MeasurableSpace α] {μparam : α → Measure ℝ} {t : ℝ}
-    (hunbdd :
-      MeasurableSet
-        {p : α × ℝ |
-          ¬ BddAbove (localizedIntervalAverageSet (μparam p.1) sourceMaximalDomain p.2)})
-    (hsuper :
-      MeasurableSet
-        {p : α × ℝ |
-          t < localizedMaximalFunction (μparam p.1) sourceMaximalDomain p.2}) :
-    SourceLocalizedMaximalBadPredicateMeasurable μparam t := by
-  simpa [SourceLocalizedMaximalBadPredicateMeasurable, sourceLocalizedMaximalBadPredicate,
-    localizedMaximalBadPredicate, Set.ofPred_or] using hunbdd.union hsuper
-
 /-- The source-window maximal bad predicate is measurable as soon as the equivalent
 interval-average-exceeds set is measurable. -/
 theorem SourceLocalizedMaximalBadPredicateMeasurableOnWindow.of_averageExceeds
@@ -59,18 +45,6 @@ theorem not_lt_localizedMaximalFunction_of_not_localizedMaximalBadPredicate
     (hnot : ¬ localizedMaximalBadPredicate μ domain s t) :
     ¬ t < localizedMaximalFunction μ domain s := by
   exact fun hlt => hnot (Or.inr hlt)
-
-theorem bddAbove_of_not_sourceLocalizedMaximalBadPredicate
-    {μ : Measure ℝ} {s t : ℝ}
-    (hnot : ¬ sourceLocalizedMaximalBadPredicate μ s t) :
-    BddAbove (localizedIntervalAverageSet μ sourceMaximalDomain s) :=
-  bddAbove_of_not_localizedMaximalBadPredicate hnot
-
-theorem not_lt_localizedMaximalFunction_of_not_sourceLocalizedMaximalBadPredicate
-    {μ : Measure ℝ} {s t : ℝ}
-    (hnot : ¬ sourceLocalizedMaximalBadPredicate μ s t) :
-    ¬ t < localizedMaximalFunction μ sourceMaximalDomain s :=
-  not_lt_localizedMaximalFunction_of_not_localizedMaximalBadPredicate hnot
 
 /-- Every admissible interval average is bounded by the localized maximal function, provided the
 defining set of averages is bounded above.  The boundedness hypothesis is intentionally explicit:

@@ -1,3 +1,6 @@
 module
 
-public import AleksandrovDifferentiability.Analysis.Directional.Transport.DirectionalMeasure
+public import AleksandrovDifferentiability.Analysis.Directional.EstimateDefs
+public import AleksandrovDifferentiability.Analysis.DirectionalQuadratic.Polarization
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.AmbientEstimate
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.Basic

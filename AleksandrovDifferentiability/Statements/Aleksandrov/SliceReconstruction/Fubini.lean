@@ -56,48 +56,6 @@ theorem convexAleksandrovAEStatement_of_fubini_and_quotient_polarized_reconstruc
   convexAleksandrovAEStatement_of_directionalLineScalarFubini_quotient_polarized_recon
     D E Ω u v hfubini (hrecon hframe)
 
-/-- Off-diagonal bookkeeping version of
-`convexAleksandrovAEStatement_of_fubini_and_polarized_reconstruction`. -/
-theorem convexAleksandrovAEStatement_of_fubini_and_polarized_recon_offDiagonal
-    {ι : Type*} [DecidableEq ι] (D : Finset ι)
-    (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E]
-    [MeasurableSpace E] [BorelSpace E] [FiniteDimensional ℝ E]
-    (Ω : Set E) (u : E → ℝ) (v : ι → E)
-    (hframe : FiniteOrthonormalSpanningOn D v)
-    (hfubini : DirectionalLineScalarEstimateFubiniStatement E Ω u)
-    (hrecon : PolarizedDirectionalSliceReconstructionStatement D E Ω u v) :
-    ConvexAleksandrovAEStatement E Ω u :=
-  convexAleksandrovAEStatement_of_directionalLineScalarFubini_polarized_recon_offDiagonal
-    D E Ω u v hfubini (hrecon hframe)
-
-/-- Quotient-estimate version of
-`convexAleksandrovAEStatement_of_fubini_and_polarized_recon_offDiagonal`. -/
-theorem convexAleksandrovAEStatement_of_quotient_fubini_and_polarized_recon_offDiagonal
-    {ι : Type*} [DecidableEq ι] (D : Finset ι)
-    (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E]
-    [MeasurableSpace E] [BorelSpace E] [FiniteDimensional ℝ E]
-    (Ω : Set E) (u : E → ℝ) (v : ι → E)
-    (hframe : FiniteOrthonormalSpanningOn D v)
-    (hfubini : DirectionalLineScalarQuotientFubiniStatement E Ω u)
-    (hrecon : PolarizedDirectionalSliceQuotientReconstructionStatement D E Ω u v) :
-    ConvexAleksandrovAEStatement E Ω u :=
-  convexAleksandrovAEStatement_of_directionalLineQuotientFubini_polarized_recon_offDiagonal
-    D E Ω u v hfubini (hrecon hframe)
-
-/-- Off-diagonal mixed-strength final reduction: non-quotient directional-line Fubini may be
-paired with quotient polarized reconstruction. -/
-theorem convexAleksandrovAEStatement_of_fubini_and_quotient_polarized_recon_offDiagonal
-    {ι : Type*} [DecidableEq ι] (D : Finset ι)
-    (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E]
-    [MeasurableSpace E] [BorelSpace E] [FiniteDimensional ℝ E]
-    (Ω : Set E) (u : E → ℝ) (v : ι → E)
-    (hframe : FiniteOrthonormalSpanningOn D v)
-    (hfubini : DirectionalLineScalarEstimateFubiniStatement E Ω u)
-    (hrecon : PolarizedDirectionalSliceQuotientReconstructionStatement D E Ω u v) :
-    ConvexAleksandrovAEStatement E Ω u :=
-  convexAleksandrovAEStatement_of_directionalLineScalarFubini_quotient_recon_offDiagonal
-    D E Ω u v hfubini (hrecon hframe)
-
 /-- Final theorem-boundary reduction phrased with a standard finite-indexed orthonormal basis. -/
 theorem convexAleksandrovAEStatement_of_orthonormalBasis_fubini_and_reconstruction
     {ι : Type*} [Fintype ι] [DecidableEq ι]
@@ -182,6 +140,5 @@ theorem convexAleksandrovAEStatement_of_stdOrthonormalBasis_fubini_and_quotient_
   exact
     convexAleksandrovAEStatement_of_orthonormalBasis_fubini_and_quotient_reconstruction E Ω u
       (stdOrthonormalBasis ℝ E) hfubini hrecon
-
 
 end AleksandrovDifferentiability

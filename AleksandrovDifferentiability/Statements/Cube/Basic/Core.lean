@@ -87,28 +87,6 @@ theorem ConvexOn.sourceCube_subgradientOn_frechetGradient {n : ℕ}
     hu hx hd.hasFDerivAt
     (fun z => fderiv_apply_eq_inner_frechetGradient u x z)
 
-/-- Convexity makes the source affine remainder with the Fréchet-gradient slope nonnegative on
-`Q_3` at every interior differentiability point. -/
-theorem affineRemainder_nonneg_of_convex_of_differentiableAt_sourceCube {n : ℕ}
-    {u : SourceCubeSpace n → ℝ} {x y : SourceCubeSpace n}
-    (hu : ConvexOn ℝ (sourceOpenCube n 3) u)
-    (hx : x ∈ interior (sourceOpenCube n 3)) (hd : DifferentiableAt ℝ u x)
-    (hy : y ∈ sourceOpenCube n 3) :
-    0 ≤ affineRemainder u x (frechetGradient u x) y :=
-  (AleksandrovDifferentiability.ConvexOn.sourceCube_subgradientOn_frechetGradient
-    hu hx hd).affineRemainder_nonneg hy
-
-/-- Increment-coordinate version of
-`affineRemainder_nonneg_of_convex_of_differentiableAt_sourceCube`, matching the source proof's
-`\tilde u(z) ≥ 0` normalization. -/
-theorem affineRemainder_nonneg_increment_of_convex_of_differentiableAt_sourceCube {n : ℕ}
-    {u : SourceCubeSpace n → ℝ} {x z : SourceCubeSpace n}
-    (hu : ConvexOn ℝ (sourceOpenCube n 3) u)
-    (hx : x ∈ interior (sourceOpenCube n 3)) (hd : DifferentiableAt ℝ u x)
-    (hz : x + z ∈ sourceOpenCube n 3) :
-    0 ≤ affineRemainder u x (frechetGradient u x) (x + z) :=
-  affineRemainder_nonneg_of_convex_of_differentiableAt_sourceCube hu hx hd hz
-
 /-- The source-normalized affine remainder
 `z ↦ u(x+z) - u(x) - grad u(x)·z` is convex on the increment domain inside `Q_3`. -/
 theorem ConvexOn.sourceCube_affineRemainderIncrement_frechetGradient {n : ℕ}
@@ -300,28 +278,6 @@ theorem source_sum_abs_le_sqrt_card_mul_norm {n : ℕ} (z : SourceCubeSpace n) :
       (fun i : Fin n => |z i|) (fun _ : Fin n => (1 : ℝ))
   simpa [EuclideanSpace.norm_eq, Real.norm_eq_abs, sq_abs, Finset.sum_const,
     Fintype.card_fin, mul_comm, mul_left_comm, mul_assoc] using hcs
-
-/-- Euclidean radius form of the source inclusion `B_{h / sqrt n} ⊆ K_h`. -/
-theorem mem_sourceCrossPolytope_of_norm_lt {n : ℕ} {h : ℝ} (hn : 1 ≤ n) (hh : 0 < h)
-    {z : SourceCubeSpace n} (hz : ‖z‖ < h / Real.sqrt (n : ℝ)) :
-    z ∈ sourceCrossPolytope n h := by
-  have hsqrt_pos : 0 < Real.sqrt (n : ℝ) := by
-    exact Real.sqrt_pos.2 (by exact_mod_cast hn)
-  have hsum_lt : (∑ i : Fin n, |z i|) < h := by
-    calc
-      (∑ i : Fin n, |z i|) ≤ Real.sqrt (n : ℝ) * ‖z‖ :=
-        source_sum_abs_le_sqrt_card_mul_norm z
-      _ < Real.sqrt (n : ℝ) * (h / Real.sqrt (n : ℝ)) :=
-        mul_lt_mul_of_pos_left hz hsqrt_pos
-      _ = h := by
-        field_simp [hsqrt_pos.ne']
-  exact mem_sourceCrossPolytope_of_sum_abs_le hn hh hsum_lt.le
-
-/-- Metric-ball form of the source inclusion `B_{h / sqrt n} ⊆ K_h`. -/
-theorem ball_subset_sourceCrossPolytope {n : ℕ} {h : ℝ} (hn : 1 ≤ n) (hh : 0 < h) :
-    Metric.ball (0 : SourceCubeSpace n) (h / Real.sqrt (n : ℝ)) ⊆ sourceCrossPolytope n h := by
-  intro z hz
-  exact mem_sourceCrossPolytope_of_norm_lt hn hh (by simpa [dist_eq_norm] using hz)
 
 /-- Transfer the coordinate endpoint estimates from the one-dimensional slice language to the
 ambient normalized source remainder. -/

@@ -1,7 +1,6 @@
 module
 
 public import AleksandrovDifferentiability.Analysis.Directional.Assembly
-public import AleksandrovDifferentiability.Analysis.Directional.CountableNull
 public import AleksandrovDifferentiability.Analysis.Directional.EstimateDefs
 public import AleksandrovDifferentiability.Analysis.Directional.FullMeasure
 public import AleksandrovDifferentiability.Analysis.Directional.LineScalar

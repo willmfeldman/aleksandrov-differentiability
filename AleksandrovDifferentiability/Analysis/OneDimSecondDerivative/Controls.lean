@@ -98,37 +98,6 @@ theorem HasOneDimSecondDerivativeOpenIntervalDerivativeGapBound.symmetricRemaind
     mul_le_mul_of_nonneg_left hgap' hh_pos.le
   exact ⟨hright.trans hscaled, hleft.trans hscaled⟩
 
-namespace HasOneDimSecondDerivativeOpenIntervalDerivativeGapBound
-
-/-- Endpoint comparisons for the source-local Stieltjes representative imply the open-interval
-derivative-gap bound.
-
-The remaining convex-analysis endpoint work is now isolated in the hypothesis `hendpoints`: inside
-the source window, the left derivative at the right endpoint must be bounded by the left limit of
-the Stieltjes representative, while the representative at the left endpoint must be bounded by the
-right derivative there. -/
-theorem of_sourceRightDerivStieltjes_endpointBounds
-    {v : ℝ → ℝ} {hmono : MonotoneOn (rightDeriv v) (Set.Icc (-2 : ℝ) 2)} {ρ : ℝ}
-    (hendpoints :
-      ∀ ⦃x h : ℝ⦄,
-        x ∈ sourceMaximalWindow →
-          0 < h →
-            h < ρ →
-              leftDeriv v (x + h) ≤
-                  Function.leftLim (sourceRightDerivStieltjesSecondDerivativeFunction v hmono)
-                    (x + h) ∧
-                sourceRightDerivStieltjesSecondDerivativeFunction v hmono (x - h) ≤
-                  rightDeriv v (x - h)) :
-    HasOneDimSecondDerivativeOpenIntervalDerivativeGapBound v
-      (sourceRightDerivStieltjesSecondDerivativeMeasure v hmono) ρ := by
-  intro x h hx hh_pos hhρ
-  rcases hendpoints hx hh_pos hhρ with ⟨hleft, hright⟩
-  have hlt : x - h < x + h := by linarith
-  rw [sourceRightDerivStieltjesSecondDerivativeMeasure_real_Ioo hmono hlt]
-  linarith
-
-end HasOneDimSecondDerivativeOpenIntervalDerivativeGapBound
-
 /-- Symmetric interval-mass control plus maximal non-badness gives the source endpoint-control
 estimate, with the explicit constant `2`. -/
 theorem HasOneDimSecondDerivativeSymmetricRemainderBound.endpointControl
@@ -158,21 +127,6 @@ theorem HasOneDimSecondDerivativeSymmetricRemainderBound.endpointControl
       _ ≤ h * (t * (2 * h)) := hmass_scaled
       _ = 2 * t * h ^ 2 := by ring
 
-/-- Source mass estimate specialized to the Stieltjes measure of a globally monotone right
-derivative.  This is a target interface: the source proof later supplies the estimate from
-boundedness/oscillation of the underlying convex function on `(-3,3)`. -/
-def HasRightDerivStieltjesSourceMassBound
-    (v : ℝ → ℝ) (hmono : Monotone (rightDeriv v)) (osc : ℝ) : Prop :=
-  HasOneDimSecondDerivativeSourceMassBound
-    (rightDerivStieltjesSecondDerivativeMeasure v hmono) osc
-
-/-- Source endpoint estimate specialized to the Stieltjes measure of a globally monotone right
-derivative. -/
-def HasRightDerivStieltjesEndpointControl
-    (v : ℝ → ℝ) (hmono : Monotone (rightDeriv v)) (ρ K : ℝ) : Prop :=
-  HasOneDimSecondDerivativeEndpointControl v
-    (rightDerivStieltjesSecondDerivativeMeasure v hmono) ρ K
-
 /-- Source mass estimate specialized to the clamped source-local right-derivative Stieltjes
 measure. -/
 def HasSourceRightDerivStieltjesSourceMassBound
@@ -190,31 +144,6 @@ theorem HasSourceRightDerivStieltjesSourceMassBound.of_sourceJump_le
   constructor
   · exact sourceRightDerivStieltjesSecondDerivativeMeasure_sourceMaximalDomain_lt_top hmono
   · rwa [sourceRightDerivStieltjesSecondDerivativeMeasure_real_sourceMaximalDomain]
-
-theorem HasSourceRightDerivStieltjesSourceMassBound.of_function_bounds
-    {v : ℝ → ℝ} {hmono : MonotoneOn (rightDeriv v) (Set.Icc (-2 : ℝ) 2)}
-    {lower upper osc : ℝ}
-    (hlower :
-      lower ≤ sourceRightDerivStieltjesSecondDerivativeFunction v hmono (-2 : ℝ))
-    (hupper :
-      Function.leftLim (sourceRightDerivStieltjesSecondDerivativeFunction v hmono) (2 : ℝ) ≤
-        upper)
-    (hwidth : upper - lower ≤ 2 * osc) :
-    HasSourceRightDerivStieltjesSourceMassBound v hmono osc :=
-  HasSourceRightDerivStieltjesSourceMassBound.of_sourceJump_le
-    (sourceRightDerivStieltjesSourceJump_le_of_function_bounds hlower hupper hwidth)
-
-theorem HasSourceRightDerivStieltjesSourceMassBound.of_abs_function_bound
-    {v : ℝ → ℝ} {hmono : MonotoneOn (rightDeriv v) (Set.Icc (-2 : ℝ) 2)}
-    {osc : ℝ}
-    (hlower :
-      -osc ≤ sourceRightDerivStieltjesSecondDerivativeFunction v hmono (-2 : ℝ))
-    (hupper :
-      Function.leftLim (sourceRightDerivStieltjesSecondDerivativeFunction v hmono) (2 : ℝ) ≤
-        osc) :
-    HasSourceRightDerivStieltjesSourceMassBound v hmono osc :=
-  HasSourceRightDerivStieltjesSourceMassBound.of_sourceJump_le
-    (sourceRightDerivStieltjesSourceJump_le_of_abs_function_bound hlower hupper)
 
 theorem HasSourceRightDerivStieltjesSourceMassBound.of_rightDeriv_bounds
     {v : ℝ → ℝ} {hmono : MonotoneOn (rightDeriv v) (Set.Icc (-2 : ℝ) 2)}
@@ -498,41 +427,6 @@ theorem HasSourceRightDerivStieltjesEndpointControl.of_convex
     (HasSourceRightDerivStieltjesEndpointIdentities.endpointBounds
       (HasSourceRightDerivStieltjesEndpointIdentities.of_convex hρ_le_one hv))
     hv hρ_le_one
-
-/-- At a source non-bad point, the clamped Stieltjes measure of a symmetric short interval is
-controlled by the maximal threshold.  This is the measure input for the future
-one-dimensional endpoint-control estimate. -/
-theorem sourceRightDerivStieltjes_measureReal_Ioo_symm_le_two_mul_of_not_bad
-    {v : ℝ → ℝ} {hmono : MonotoneOn (rightDeriv v) (Set.Icc (-2 : ℝ) 2)}
-    {x t h : ℝ}
-    (hnot :
-      ¬ sourceLocalizedMaximalBadPredicate
-        (sourceRightDerivStieltjesSecondDerivativeMeasure v hmono) x t)
-    (hx : x ∈ sourceMaximalWindow) (hh_pos : 0 < h) (hh : h < 1) :
-    (sourceRightDerivStieltjesSecondDerivativeMeasure v hmono).real
-        (Set.Ioo (x - h) (x + h)) ≤
-      t * (2 * h) :=
-  measureReal_Ioo_symm_le_two_mul_of_not_sourceLocalizedMaximalBadPredicate
-    hnot hx hh_pos hh
-
-theorem HasRightDerivStieltjesSourceMassBound.sourceBadSet_measure_le
-    {C osc : ℝ} {v : ℝ → ℝ} {hmono : Monotone (rightDeriv v)} {t : ℝ}
-    (hmass : HasRightDerivStieltjesSourceMassBound v hmono osc)
-    (hmax : LocalizedMaximalEstimateStatement C) (ht : 0 < t) :
-    volume (sourceLocalizedMaximalBadSet
-      (rightDerivStieltjesSecondDerivativeMeasure v hmono) t) ≤
-        ENNReal.ofReal (2 * C * osc / t) :=
-  hmax.sourceBadSet_measure_le_of_two_mul_osc ht hmass.1 hmass.2
-
-theorem HasSourceRightDerivStieltjesSourceMassBound.sourceBadSet_measure_le
-    {C osc : ℝ} {v : ℝ → ℝ}
-    {hmono : MonotoneOn (rightDeriv v) (Set.Icc (-2 : ℝ) 2)} {t : ℝ}
-    (hmass : HasSourceRightDerivStieltjesSourceMassBound v hmono osc)
-    (hmax : LocalizedMaximalEstimateStatement C) (ht : 0 < t) :
-    volume (sourceLocalizedMaximalBadSet
-      (sourceRightDerivStieltjesSecondDerivativeMeasure v hmono) t) ≤
-        ENNReal.ofReal (2 * C * osc / t) :=
-  hmax.sourceBadSet_measure_le_of_two_mul_osc ht hmass.1 hmass.2
 
 /-- The source bad set estimate obtained by combining the localized maximal weak-type theorem
 with the one-dimensional convex mass bound. -/

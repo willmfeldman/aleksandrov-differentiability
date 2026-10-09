@@ -18,58 +18,6 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
 
 variable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]
 
-/-- Mapping all directions and the increment through a linear isometry equivalence preserves the
-mixed quadratic form. -/
-theorem inner_mixedDirectionalQuadraticSum_self_linearIsometryEquiv
-    {ι : Type*} (s : Finset ι) (v : ι → E) (a : ι → ι → ℝ)
-    (e : E ≃ₗᵢ[ℝ] F) (z : E) :
-    inner ℝ (e z)
-        (mixedDirectionalQuadraticSum s (fun i ↦ e (v i)) a (e z)) =
-      inner ℝ z (mixedDirectionalQuadraticSum s v a z) := by
-  rw [inner_mixedDirectionalQuadraticSum_self, inner_mixedDirectionalQuadraticSum_self]
-  refine Finset.sum_congr rfl fun i _hi ↦ ?_
-  refine Finset.sum_congr rfl fun j _hj ↦ ?_
-  rw [LinearIsometryEquiv.inner_map_map, LinearIsometryEquiv.inner_map_map]
-
-/-- Mapping all directions and the increment through a linear isometry equivalence preserves the
-polarized mixed quadratic form. -/
-theorem inner_polarizedMixedQuadraticSum_self_linearIsometryEquiv
-    {ι : Type*} [DecidableEq ι] (s : Finset ι) (v : ι → E)
-    (q : ι → ℝ) (r : ι → ι → ℝ) (e : E ≃ₗᵢ[ℝ] F) (z : E) :
-    inner ℝ (e z)
-        (polarizedMixedQuadraticSum s (fun i ↦ e (v i)) q r (e z)) =
-      inner ℝ z (polarizedMixedQuadraticSum s v q r z) := by
-  exact inner_mixedDirectionalQuadraticSum_self_linearIsometryEquiv
-    s v (polarizedMixedCoefficient q r) e z
-
-/-- Bound for the polarized mixed-directional quadratic form in terms of the sum of absolute
-polarized coefficients. -/
-theorem abs_inner_polarizedMixedQuadraticSum_self_le
-    {ι : Type*} [DecidableEq ι] {s : Finset ι} {v : ι → E}
-    (hv : FiniteOrthonormalSpanningOn s v) (q : ι → ℝ) (r : ι → ι → ℝ) (z : E) :
-    |inner ℝ z (polarizedMixedQuadraticSum s v q r z)| ≤
-      (∑ i ∈ s, ∑ j ∈ s, |polarizedMixedCoefficient q r i j|) * ‖z‖ ^ 2 :=
-  abs_inner_mixedDirectionalQuadraticSum_self_le hv (polarizedMixedCoefficient q r) z
-
-/-- Constant-bound form of `abs_inner_polarizedMixedQuadraticSum_self_le`. -/
-theorem exists_const_abs_inner_polarizedMixedQuadraticSum_self_le
-    {ι : Type*} [DecidableEq ι] {s : Finset ι} {v : ι → E}
-    (hv : FiniteOrthonormalSpanningOn s v) (q : ι → ℝ) (r : ι → ι → ℝ) :
-    ∃ C : ℝ, 0 ≤ C ∧
-      ∀ z : E, |inner ℝ z (polarizedMixedQuadraticSum s v q r z)| ≤ C * ‖z‖ ^ 2 := by
-  exact exists_const_abs_inner_mixedDirectionalQuadraticSum_self_le hv
-    (polarizedMixedCoefficient q r)
-
-/-- Constant-bound form for the polarized half-quadratic term used in second-order expansions. -/
-theorem exists_const_norm_half_inner_polarizedMixedQuadraticSum_le
-    {ι : Type*} [DecidableEq ι] {s : Finset ι} {v : ι → E}
-    (hv : FiniteOrthonormalSpanningOn s v) (q : ι → ℝ) (r : ι → ι → ℝ) :
-    ∃ C : ℝ, 0 ≤ C ∧
-      ∀ z : E, ‖(1 / 2 : ℝ) * inner ℝ z (polarizedMixedQuadraticSum s v q r z)‖ ≤
-        C * ‖z‖ ^ 2 := by
-  exact exists_const_norm_half_inner_mixedDirectionalQuadraticSum_le hv
-    (polarizedMixedCoefficient q r)
-
 /-- A finite orthonormal coordinate family collapses the quadratic form of a mixed-directional
 sum on one of its coordinate directions to the corresponding diagonal coefficient.  The
 orthonormality hypothesis is written only on the finite set `s`, which is the form needed for
@@ -99,16 +47,6 @@ theorem inner_mixedDirectionalQuadraticSum_self_apply_of_finite_orthonormal
   · intro hk_not
     exact (hk_not hk).elim
 
-/-- Predicate-wrapper form of
-`inner_mixedDirectionalQuadraticSum_self_apply_of_finite_orthonormal`. -/
-theorem FiniteOrthonormalOn.inner_mixedDirectionalQuadraticSum_self_apply
-    {ι : Type*} [DecidableEq ι] {s : Finset ι} {v : ι → E}
-    (hv : FiniteOrthonormalOn s v) (a : ι → ι → ℝ)
-    {k : ι} (hk : k ∈ s) :
-    inner ℝ (v k) (mixedDirectionalQuadraticSum s v a (v k)) = a k k :=
-  AleksandrovDifferentiability.inner_mixedDirectionalQuadraticSum_self_apply_of_finite_orthonormal
-    a hv hk
-
 /-- The polarized coefficient matrix has the prescribed pure directional quadratic coefficient on
 each selected orthonormal direction. -/
 theorem inner_mixedDirectionalQuadraticSum_polarized_self_apply
@@ -133,18 +71,6 @@ theorem inner_polarizedMixedQuadraticSum_self_apply
     {k : ι} (hk : k ∈ s) :
     inner ℝ (v k) (polarizedMixedQuadraticSum s v q r (v k)) = q k :=
   inner_mixedDirectionalQuadraticSum_polarized_self_apply q r hinner hk
-
-/-- Predicate-wrapper form of
-`inner_mixedDirectionalQuadraticSum_polarized_self_apply`. -/
-theorem FiniteOrthonormalOn.inner_mixedDirectionalQuadraticSum_polarized_self_apply
-    {ι : Type*} [DecidableEq ι] {s : Finset ι} {v : ι → E}
-    (hv : FiniteOrthonormalOn s v) (q : ι → ℝ) (r : ι → ι → ℝ)
-    {k : ι} (hk : k ∈ s) :
-    inner ℝ (v k)
-        (mixedDirectionalQuadraticSum s v (polarizedMixedCoefficient q r) (v k)) =
-      q k :=
-  AleksandrovDifferentiability.inner_mixedDirectionalQuadraticSum_polarized_self_apply
-    q r hv hk
 
 /-- Predicate-wrapper form of `inner_polarizedMixedQuadraticSum_self_apply`. -/
 theorem FiniteOrthonormalOn.inner_polarizedMixedQuadraticSum_self_apply
@@ -187,14 +113,6 @@ theorem inner_add_pair_of_finite_orthonormal
       simp [hij.symm]
     · simp [hki, hkj]
 
-/-- Predicate-wrapper form of `inner_add_pair_of_finite_orthonormal`. -/
-theorem FiniteOrthonormalOn.inner_add_pair
-    {ι : Type*} [DecidableEq ι] {s : Finset ι} {v : ι → E}
-    (hv : FiniteOrthonormalOn s v)
-    {i j k : ι} (hi : i ∈ s) (hj : j ∈ s) (hk : k ∈ s) (hij : i ≠ j) :
-    inner ℝ (v k) (v i + v j) = if k = i then 1 else if k = j then 1 else 0 :=
-  AleksandrovDifferentiability.inner_add_pair_of_finite_orthonormal hv hi hj hk hij
-
 /-- On the sum of two selected orthonormal directions, the quadratic form of a mixed-directional
 sum is the four-entry combination expected from polarization. -/
 theorem inner_mixedDirectionalQuadraticSum_self_add_of_finite_orthonormal
@@ -236,17 +154,6 @@ theorem inner_mixedDirectionalQuadraticSum_self_add_of_finite_orthonormal
           simp [hij.symm]
           ring
 
-/-- Predicate-wrapper form of
-`inner_mixedDirectionalQuadraticSum_self_add_of_finite_orthonormal`. -/
-theorem FiniteOrthonormalOn.inner_mixedDirectionalQuadraticSum_self_add
-    {ι : Type*} [DecidableEq ι] {s : Finset ι} {v : ι → E}
-    (hv : FiniteOrthonormalOn s v) (a : ι → ι → ℝ)
-    {i j : ι} (hi : i ∈ s) (hj : j ∈ s) (hij : i ≠ j) :
-    inner ℝ (v i + v j) (mixedDirectionalQuadraticSum s v a (v i + v j)) =
-      a i i + a i j + a j i + a j j :=
-  AleksandrovDifferentiability.inner_mixedDirectionalQuadraticSum_self_add_of_finite_orthonormal
-    a hv hi hj hij
-
 /-- The polarized coefficient matrix has the prescribed pairwise-sum quadratic coefficient on
 selected orthonormal directions, provided the supplied pairwise coefficients are symmetric. -/
 theorem inner_mixedDirectionalQuadraticSum_polarized_self_add
@@ -278,18 +185,6 @@ theorem inner_polarizedMixedQuadraticSum_self_add
       r i j :=
   inner_mixedDirectionalQuadraticSum_polarized_self_add q r hinner hr hi hj hij
 
-/-- Predicate-wrapper form of `inner_mixedDirectionalQuadraticSum_polarized_self_add`. -/
-theorem FiniteOrthonormalOn.inner_mixedDirectionalQuadraticSum_polarized_self_add
-    {ι : Type*} [DecidableEq ι] {s : Finset ι} {v : ι → E}
-    (hv : FiniteOrthonormalOn s v) (q : ι → ℝ) (r : ι → ι → ℝ)
-    (hr : ∀ ⦃i : ι⦄, i ∈ s → ∀ ⦃j : ι⦄, j ∈ s → r j i = r i j)
-    {i j : ι} (hi : i ∈ s) (hj : j ∈ s) (hij : i ≠ j) :
-    inner ℝ (v i + v j)
-        (mixedDirectionalQuadraticSum s v (polarizedMixedCoefficient q r) (v i + v j)) =
-      r i j :=
-  AleksandrovDifferentiability.inner_mixedDirectionalQuadraticSum_polarized_self_add
-    q r hv hr hi hj hij
-
 /-- Predicate-wrapper form of `inner_polarizedMixedQuadraticSum_self_add`. -/
 theorem FiniteOrthonormalOn.inner_polarizedMixedQuadraticSum_self_add
     {ι : Type*} [DecidableEq ι] {s : Finset ι} {v : ι → E}
@@ -303,16 +198,6 @@ theorem FiniteOrthonormalOn.inner_polarizedMixedQuadraticSum_self_add
 
 namespace FiniteOrthonormalSpanningOn
 
-/-- Spanning-frame wrapper for the pure-direction polarized quadratic coefficient identity. -/
-theorem inner_mixedDirectionalQuadraticSum_polarized_self_apply
-    {ι : Type*} [DecidableEq ι] {s : Finset ι} {v : ι → E}
-    (hv : FiniteOrthonormalSpanningOn s v) (q : ι → ℝ) (r : ι → ι → ℝ)
-    {k : ι} (hk : k ∈ s) :
-    inner ℝ (v k)
-        (mixedDirectionalQuadraticSum s v (polarizedMixedCoefficient q r) (v k)) =
-      q k :=
-  hv.1.inner_mixedDirectionalQuadraticSum_polarized_self_apply q r hk
-
 /-- Spanning-frame wrapper for the pure-direction named polarized quadratic coefficient
 identity. -/
 theorem inner_polarizedMixedQuadraticSum_self_apply
@@ -321,17 +206,6 @@ theorem inner_polarizedMixedQuadraticSum_self_apply
     {k : ι} (hk : k ∈ s) :
     inner ℝ (v k) (polarizedMixedQuadraticSum s v q r (v k)) = q k :=
   hv.1.inner_polarizedMixedQuadraticSum_self_apply q r hk
-
-/-- Spanning-frame wrapper for the pairwise-sum polarized quadratic coefficient identity. -/
-theorem inner_mixedDirectionalQuadraticSum_polarized_self_add
-    {ι : Type*} [DecidableEq ι] {s : Finset ι} {v : ι → E}
-    (hv : FiniteOrthonormalSpanningOn s v) (q : ι → ℝ) (r : ι → ι → ℝ)
-    (hr : ∀ ⦃i : ι⦄, i ∈ s → ∀ ⦃j : ι⦄, j ∈ s → r j i = r i j)
-    {i j : ι} (hi : i ∈ s) (hj : j ∈ s) (hij : i ≠ j) :
-    inner ℝ (v i + v j)
-        (mixedDirectionalQuadraticSum s v (polarizedMixedCoefficient q r) (v i + v j)) =
-      r i j :=
-  hv.1.inner_mixedDirectionalQuadraticSum_polarized_self_add q r hr hi hj hij
 
 /-- Spanning-frame wrapper for the pairwise-sum named polarized quadratic coefficient
 identity. -/

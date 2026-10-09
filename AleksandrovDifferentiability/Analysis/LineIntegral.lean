@@ -217,60 +217,6 @@ theorem HasSubgradientLinearizationOnAt.eventually_quadraticBound_of_lineSubgrad
       hlin hu hsegment hsegmentInterior hrepr hint
       (eventually_lineSubgradientLiftsToAmbient_of_functional hsegmentDomain hlift)
 
-/-- Expansion form of
-`HasSubgradientLinearizationOnAt.eventually_quadraticBound_of_lineRightDeriv`.
-
-This is the local Taylor conclusion before the separate symmetry requirement needed by
-`SecondOrderDifferentiableAt`. -/
-theorem HasSubgradientLinearizationOnAt.hasSecondOrderExpansionAt_of_lineRightDeriv
-    {domain approach : Set E} {u : E → ℝ} {x p₀ : E} {B : E →L[ℝ] E}
-    (hlin : HasSubgradientLinearizationOnAt domain approach u x p₀ B)
-    (hsegment : ∀ᶠ z in 𝓝 (0 : E),
-      ∀ t : ℝ, t ∈ Set.Icc (0 : ℝ) 1 → x + t • z ∈ approach)
-    (hrepr : ∀ᶠ z in 𝓝 (0 : E),
-      lineRestriction u x z 1 - lineRestriction u x z 0 =
-        ∫ t in (0 : ℝ)..1, rightDeriv (lineRestriction u x z) t)
-    (hint : ∀ᶠ z in 𝓝 (0 : E),
-      IntervalIntegrable (rightDeriv (lineRestriction u x z)) volume (0 : ℝ) 1)
-    (hrightSubgradient : ∀ᶠ z in 𝓝 (0 : E),
-      ∀ t ∈ Set.uIoc (0 : ℝ) 1,
-        ∃ p : E,
-          SubgradientOn domain u (x + t • z) p ∧
-            rightDeriv (lineRestriction u x z) t = inner ℝ p z) :
-    HasSecondOrderExpansionAt u x p₀ B :=
-by
-  refine hasSecondOrderExpansionAt_of_eventually_norm_affineRemainder_sub_quadratic_le_mul ?_
-  intro ε hε
-  exact
-    HasSubgradientLinearizationOnAt.eventually_quadraticBound_of_lineRightDeriv
-      hlin hsegment hrepr hint hrightSubgradient ε hε
-
-/-- Expansion form using the line-subgradient lift interface. -/
-theorem HasSubgradientLinearizationOnAt.hasSecondOrderExpansionAt_of_lineSubgradientLift
-    {domain approach : Set E} {u : E → ℝ} {x p₀ : E} {B : E →L[ℝ] E}
-    (hlin : HasSubgradientLinearizationOnAt domain approach u x p₀ B)
-    (hu : ConvexOn ℝ domain u)
-    (hsegment : ∀ᶠ z in 𝓝 (0 : E),
-      ∀ t : ℝ, t ∈ Set.Icc (0 : ℝ) 1 → x + t • z ∈ approach)
-    (hsegmentInterior : ∀ᶠ z in 𝓝 (0 : E),
-      ∀ t ∈ Set.uIoc (0 : ℝ) 1, x + t • z ∈ interior domain)
-    (hrepr : ∀ᶠ z in 𝓝 (0 : E),
-      lineRestriction u x z 1 - lineRestriction u x z 0 =
-        ∫ t in (0 : ℝ)..1, rightDeriv (lineRestriction u x z) t)
-    (hint : ∀ᶠ z in 𝓝 (0 : E),
-      IntervalIntegrable (rightDeriv (lineRestriction u x z)) volume (0 : ℝ) 1)
-    (hlift : ∀ᶠ z in 𝓝 (0 : E),
-      ∀ t ∈ Set.uIoc (0 : ℝ) 1, ∀ q : ℝ,
-        SubgradientOn (lineDomain domain x z) (lineRestriction u x z) t q →
-          LineSubgradientLiftsToAmbient domain u x z t q) :
-    HasSecondOrderExpansionAt u x p₀ B :=
-by
-  refine hasSecondOrderExpansionAt_of_eventually_norm_affineRemainder_sub_quadratic_le_mul ?_
-  intro ε hε
-  exact
-    HasSubgradientLinearizationOnAt.eventually_quadraticBound_of_lineSubgradientLift
-      hlin hu hsegment hsegmentInterior hrepr hint hlift ε hε
-
 /-- Expansion form using the functional line-subgradient lift interface. -/
 theorem HasSubgradientLinearizationOnAt.hasSecondOrderExpansionAt_of_lineSubgradientFunctional
     {domain approach : Set E} {u : E → ℝ} {x p₀ : E} {B : E →L[ℝ] E}
@@ -297,60 +243,6 @@ by
   exact
     HasSubgradientLinearizationOnAt.eventually_quadraticBound_of_lineSubgradientFunctional
       hlin hu hsegment hsegmentInterior hrepr hint hlift ε hε
-
-/-- Second-order differentiability form of
-`HasSubgradientLinearizationOnAt.hasSecondOrderExpansionAt_of_lineRightDeriv`.
-
-The operator produced by gradient linearization need not be separately shown symmetric here:
-`SecondOrderDifferentiableAt` is obtained using its symmetric part, which has the same quadratic
-form. -/
-theorem HasSubgradientLinearizationOnAt.secondOrderDifferentiableAt_of_lineRightDeriv
-    {domain approach : Set E} {u : E → ℝ} {x p₀ : E} {B : E →L[ℝ] E}
-    [CompleteSpace E]
-    (hlin : HasSubgradientLinearizationOnAt domain approach u x p₀ B)
-    (hsegment : ∀ᶠ z in 𝓝 (0 : E),
-      ∀ t : ℝ, t ∈ Set.Icc (0 : ℝ) 1 → x + t • z ∈ approach)
-    (hrepr : ∀ᶠ z in 𝓝 (0 : E),
-      lineRestriction u x z 1 - lineRestriction u x z 0 =
-        ∫ t in (0 : ℝ)..1, rightDeriv (lineRestriction u x z) t)
-    (hint : ∀ᶠ z in 𝓝 (0 : E),
-      IntervalIntegrable (rightDeriv (lineRestriction u x z)) volume (0 : ℝ) 1)
-    (hrightSubgradient : ∀ᶠ z in 𝓝 (0 : E),
-      ∀ t ∈ Set.uIoc (0 : ℝ) 1,
-        ∃ p : E,
-          SubgradientOn domain u (x + t • z) p ∧
-            rightDeriv (lineRestriction u x z) t = inner ℝ p z) :
-    SecondOrderDifferentiableAt u x :=
-  secondOrderDifferentiableAt_of_hasSecondOrderExpansionAt_symmetricPart
-    (HasSubgradientLinearizationOnAt.hasSecondOrderExpansionAt_of_lineRightDeriv
-      hlin hsegment hrepr hint hrightSubgradient)
-
-/-- Second-order differentiability form using the line-subgradient lift interface.
-
-As in the right-derivative version, the symmetric part of the linearized operator is used for the
-final Hessian witness. -/
-theorem HasSubgradientLinearizationOnAt.secondOrderDifferentiableAt_of_lineSubgradientLift
-    {domain approach : Set E} {u : E → ℝ} {x p₀ : E} {B : E →L[ℝ] E}
-    [CompleteSpace E]
-    (hlin : HasSubgradientLinearizationOnAt domain approach u x p₀ B)
-    (hu : ConvexOn ℝ domain u)
-    (hsegment : ∀ᶠ z in 𝓝 (0 : E),
-      ∀ t : ℝ, t ∈ Set.Icc (0 : ℝ) 1 → x + t • z ∈ approach)
-    (hsegmentInterior : ∀ᶠ z in 𝓝 (0 : E),
-      ∀ t ∈ Set.uIoc (0 : ℝ) 1, x + t • z ∈ interior domain)
-    (hrepr : ∀ᶠ z in 𝓝 (0 : E),
-      lineRestriction u x z 1 - lineRestriction u x z 0 =
-        ∫ t in (0 : ℝ)..1, rightDeriv (lineRestriction u x z) t)
-    (hint : ∀ᶠ z in 𝓝 (0 : E),
-      IntervalIntegrable (rightDeriv (lineRestriction u x z)) volume (0 : ℝ) 1)
-    (hlift : ∀ᶠ z in 𝓝 (0 : E),
-      ∀ t ∈ Set.uIoc (0 : ℝ) 1, ∀ q : ℝ,
-        SubgradientOn (lineDomain domain x z) (lineRestriction u x z) t q →
-          LineSubgradientLiftsToAmbient domain u x z t q) :
-    SecondOrderDifferentiableAt u x :=
-  secondOrderDifferentiableAt_of_hasSecondOrderExpansionAt_symmetricPart
-    (HasSubgradientLinearizationOnAt.hasSecondOrderExpansionAt_of_lineSubgradientLift
-      hlin hu hsegment hsegmentInterior hrepr hint hlift)
 
 /-- Second-order differentiability form using the functional line-subgradient lift interface. -/
 theorem HasSubgradientLinearizationOnAt.secondOrderDifferentiableAt_of_lineSubgradientFunctional

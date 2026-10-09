@@ -177,15 +177,4 @@ theorem SourceCubeSubgradientClusterDensity.of_straszewiczCompactConvex
               (by norm_num) hy)))
         convex_setOf_subgradientOn)
 
-set_option linter.unusedSectionVars false in
-/-- Inner-cube source-cube cluster density from the proved compact-convex Straszewicz theorem. -/
-theorem SourceCubeSubgradientClusterDensity.of_compactStraszewicz
-    {n : ℕ} (hn : 0 < n) {u : SourceCubeSpace n → ℝ}
-    (hbounded : BoundedOn (sourceOpenCube n 3) u)
-    (hconvex : ConvexOn ℝ (sourceOpenCube n 3) u) :
-    SourceCubeSubgradientClusterDensity n u :=
-  SourceCubeSubgradientClusterDensity.of_straszewiczCompactConvex
-    hn hbounded hconvex
-    (straszewiczCompactConvexStatement (E := SourceCubeSpace n))
-
 end AleksandrovDifferentiability

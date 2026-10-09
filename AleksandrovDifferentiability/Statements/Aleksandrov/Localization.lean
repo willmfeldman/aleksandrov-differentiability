@@ -34,10 +34,6 @@ theorem sourceAffineCubeImage_subset_of_le
     sourceAffineCubeImage n a r R ⊆ sourceAffineCubeImage n a r S :=
   Set.image_mono (sourceOpenCube_subset_of_le hRS)
 
-/-- Parameters for affine source cubes whose enlarged `Q_3` image stays inside `Ω`. -/
-def SourceAffineCubeCoverIndex (n : ℕ) (Ω : Set (SourceCubeSpace n)) :=
-  {p : SourceCubeSpace n × ℝ // 0 < p.2 ∧ sourceAffineCubeImage n p.1 p.2 3 ⊆ Ω}
-
 /-- Parameters for affine source cubes with enough extra room to bound the `Q_3` pullback.
 
 The normalized theorem assumes boundedness on `Q_3`.  For an arbitrary finite convex function on
@@ -84,13 +80,6 @@ theorem affine_image_sourceOpenCube_subset_ball
     lt_of_le_of_lt hnorm (by simpa [mul_comm] using hsmall)
   simpa using hlt
 
-/-- A scaled source `Q_3` sits in a metric ball when the scale is small enough. -/
-theorem affine_image_sourceOpenCube_three_subset_ball
-    {n : ℕ} (c : SourceCubeSpace n) {r ε : ℝ}
-    (hr : 0 ≤ r) (hsmall : (Real.sqrt (n : ℝ) * 3) * r < ε) :
-    sourceAffineCubeImage n c r 3 ⊆ Metric.ball c ε := by
-  exact affine_image_sourceOpenCube_subset_ball c hr (by norm_num) hsmall
-
 /-- Pointwise source-cube localization inside an open set, with an arbitrary outer radius.
 
 For every point of an open set and every nonnegative outer source radius `R`, there is a positive
@@ -108,16 +97,6 @@ theorem exists_affine_sourceOpenCube_one_mem_and_outer_subset_of_isOpen
   · exact ⟨0, zero_mem_sourceOpenCube (n := n) (by norm_num), by simp⟩
   · exact (affine_image_sourceOpenCube_subset_ball
       (n := n) x hrpos.le hR hrsmall).trans hball
-
-/-- Pointwise source-cube localization with outer radius `3`. -/
-theorem exists_affine_sourceOpenCube_one_mem_and_three_subset_of_isOpen
-    {n : ℕ} {Ω : Set (SourceCubeSpace n)} (hΩ : IsOpen Ω)
-    {x : SourceCubeSpace n} (hx : x ∈ Ω) :
-    ∃ r : ℝ, 0 < r ∧
-      x ∈ sourceAffineCubeImage n x r 1 ∧
-      sourceAffineCubeImage n x r 3 ⊆ Ω := by
-  exact exists_affine_sourceOpenCube_one_mem_and_outer_subset_of_isOpen
-    hΩ hx (R := 3) (by norm_num)
 
 /-- Pointwise source-cube localization with outer radius `4`.
 
@@ -145,31 +124,6 @@ theorem isOpen_sourceAffineCubeImage
         ((fun z : SourceCubeSpace n => r • z) '' sourceOpenCube n R)) :=
     isOpenMap_add_left a _ hsmul
   simpa [sourceAffineCubeImage, Set.image_image, Function.comp_def] using hadd
-
-/-- Countable Lindelöf subcover by affine source cubes whose enlarged cubes stay in an open set.
-
-The index type still records the actual centers and scales.  This is the countability refinement
-of `exists_affine_sourceOpenCube_one_mem_and_three_subset_of_isOpen`; a later theorem can apply
-the one-cube a.e. result on each selected index and assemble them with
-`secondOrderDifferentiableAEOn_of_subset_iUnion`. -/
-theorem exists_countable_sourceAffineCubeCoverIndex_of_isOpen
-    {n : ℕ} {Ω : Set (SourceCubeSpace n)} (hΩ : IsOpen Ω) :
-    ∃ I : Set (SourceAffineCubeCoverIndex n Ω), I.Countable ∧
-      Ω ⊆ ⋃ i ∈ I, sourceAffineCubeImage n i.1.1 i.1.2 1 := by
-  let U : SourceAffineCubeCoverIndex n Ω → Set (SourceCubeSpace n) :=
-    fun i => sourceAffineCubeImage n i.1.1 i.1.2 1
-  have hUopen : ∀ i, IsOpen (U i) := by
-    intro i
-    exact isOpen_sourceAffineCubeImage i.1.1 (ne_of_gt i.2.1)
-  have hcover : Ω ⊆ ⋃ i, U i := by
-    intro x hx
-    rcases exists_affine_sourceOpenCube_one_mem_and_three_subset_of_isOpen hΩ hx with
-      ⟨r, hrpos, hxone, hthree⟩
-    exact Set.mem_iUnion.2 ⟨⟨(x, r), hrpos, hthree⟩, hxone⟩
-  rcases (HereditarilyLindelofSpace.isLindelof Ω).elim_countable_subcover
-      U hUopen hcover with
-    ⟨I, hIcount, hIcover⟩
-  exact ⟨I, hIcount, hIcover⟩
 
 /-- Countable Lindelöf subcover by compactly contained affine source cubes.
 
@@ -263,25 +217,6 @@ theorem SourceAffineCompactCubeCoverIndex.boundedOn_pullback_sourceOpenCube_thre
 
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   [MeasurableSpace E]
-
-/-- Countable-cover assembly specialized to second-order differentiability. -/
-theorem secondOrderDifferentiableAEOn_of_subset_iUnion
-    {ι : Type*} [Countable ι] {μ : Measure E}
-    {Ω : Set E} {U : ι → Set E} {u : E → ℝ}
-    (hcover : Ω ⊆ ⋃ i, U i)
-    (hU : ∀ i, SecondOrderDifferentiableAEOn μ (U i) u) :
-    SecondOrderDifferentiableAEOn μ Ω u :=
-  ae_restrict_of_subset_iUnion_of_ae_restrict hcover hU
-
-/-- Null-bad-set version of `secondOrderDifferentiableAEOn_of_subset_iUnion`. -/
-theorem measure_secondOrderBadSetOn_eq_zero_of_subset_iUnion
-    {ι : Type*} [Countable ι] {μ : Measure E}
-    {Ω : Set E} {U : ι → Set E} {u : E → ℝ}
-    (hΩ : MeasurableSet Ω) (hcover : Ω ⊆ ⋃ i, U i)
-    (hU : ∀ i, SecondOrderDifferentiableAEOn μ (U i) u) :
-    μ (secondOrderBadSetOn Ω u) = 0 :=
-  (secondOrderDifferentiableAEOn_iff_measure_secondOrderBadSetOn_eq_zero hΩ).mp
-    (secondOrderDifferentiableAEOn_of_subset_iUnion hcover hU)
 
 variable [BorelSpace E]
 

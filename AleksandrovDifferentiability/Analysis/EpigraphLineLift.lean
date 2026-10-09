@@ -21,17 +21,6 @@ namespace AleksandrovDifferentiability
 
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
 
-/-- On an open finite-dimensional convex domain, epigraph separation gives a functional line lift
-at the directional value of the supporting functional. -/
-theorem ConvexOn.exists_lineSubgradientLiftsToAmbientFunctional_supportingValue_of_isOpen
-    [FiniteDimensional ℝ E] {s : Set E} {u : E → ℝ} {x z : E} {t : ℝ}
-    (hu : ConvexOn ℝ s u) (hs : IsOpen s) (hpoint : x + t • z ∈ s) :
-    ∃ q : ℝ, LineSubgradientLiftsToAmbientFunctional s u x z t q := by
-  rcases ConvexOn.exists_supportingFunctionalAt_of_isOpen
-      (s := s) (u := u) (x := x + t • z) hu hs hpoint with
-    ⟨φ, hsupport⟩
-  exact ⟨φ z, φ, hsupport, rfl⟩
-
 /-- A scalar affine function is zero if it is bounded below on the whole real line. -/
 private theorem linear_eq_zero_of_forall_le_add_mul {c A m : ℝ}
     (h : ∀ r : ℝ, c ≤ A + r * m) :
@@ -177,18 +166,5 @@ theorem ConvexOn.subgradient_set_nonempty_of_isOpen
   refine ⟨p, hx, ?_⟩
   intro y hy
   simpa [p] using hsupport y hy
-
-/-- Eventual subgradient nonemptiness along a family of short segments contained in an open
-finite-dimensional convex domain. -/
-theorem ConvexOn.eventually_subgradient_set_nonempty_of_isOpen
-    [CompleteSpace E] [FiniteDimensional ℝ E] {s : Set E} {u : E → ℝ} {x : E}
-    (hu : ConvexOn ℝ s u) (hs : IsOpen s)
-    (hsegment : ∀ᶠ z in 𝓝 (0 : E),
-      ∀ t ∈ Set.uIoc (0 : ℝ) 1, x + t • z ∈ s) :
-    ∀ᶠ z in 𝓝 (0 : E),
-      ∀ t ∈ Set.uIoc (0 : ℝ) 1,
-        {p : E | SubgradientOn s u (x + t • z) p}.Nonempty := by
-  filter_upwards [hsegment] with z hz t ht
-  exact ConvexOn.subgradient_set_nonempty_of_isOpen hu hs (hz t ht)
 
 end AleksandrovDifferentiability

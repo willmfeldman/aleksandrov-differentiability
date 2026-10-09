@@ -42,45 +42,11 @@ derivative. -/
 def monotoneStieltjesSecondDerivativeMeasure (g : ℝ → ℝ) (hg : Monotone g) : Measure ℝ :=
   (monotoneStieltjesSecondDerivativeFunction g hg).measure
 
-/-- The Stieltjes function associated to the project-local right derivative, assuming that right
-derivative has already been extended or localized as a globally monotone function. -/
-def rightDerivStieltjesSecondDerivativeFunction (v : ℝ → ℝ)
-    (hmono : Monotone (rightDeriv v)) : StieltjesFunction ℝ :=
-  monotoneStieltjesSecondDerivativeFunction (rightDeriv v) hmono
-
-/-- The Stieltjes second-derivative measure associated to the project-local right derivative,
-under a global monotonicity hypothesis.
-
-The convex source proof will eventually supply this by applying the construction to a monotone
-extension of the right derivative from `(-3,3)`. -/
-def rightDerivStieltjesSecondDerivativeMeasure (v : ℝ → ℝ)
-    (hmono : Monotone (rightDeriv v)) : Measure ℝ :=
-  monotoneStieltjesSecondDerivativeMeasure (rightDeriv v) hmono
-
 @[simp]
 theorem monotoneStieltjesSecondDerivativeFunction_apply
     {g : ℝ → ℝ} (hg : Monotone g) (x : ℝ) :
     monotoneStieltjesSecondDerivativeFunction g hg x = Function.rightLim g x := by
   simpa [monotoneStieltjesSecondDerivativeFunction] using hg.stieltjesFunction_eq x
-
-@[simp]
-theorem monotoneStieltjesSecondDerivativeMeasure_Ioc
-    {g : ℝ → ℝ} (hg : Monotone g) (a b : ℝ) :
-    monotoneStieltjesSecondDerivativeMeasure g hg (Set.Ioc a b) =
-      ENNReal.ofReal
-        (monotoneStieltjesSecondDerivativeFunction g hg b -
-          monotoneStieltjesSecondDerivativeFunction g hg a) := by
-  simp [monotoneStieltjesSecondDerivativeMeasure]
-
-@[simp]
-theorem rightDerivStieltjesSecondDerivativeMeasure_Ioc
-    {v : ℝ → ℝ} (hmono : Monotone (rightDeriv v)) (a b : ℝ) :
-    rightDerivStieltjesSecondDerivativeMeasure v hmono (Set.Ioc a b) =
-      ENNReal.ofReal
-        (rightDerivStieltjesSecondDerivativeFunction v hmono b -
-          rightDerivStieltjesSecondDerivativeFunction v hmono a) := by
-  simp [rightDerivStieltjesSecondDerivativeMeasure,
-    rightDerivStieltjesSecondDerivativeFunction]
 
 @[simp]
 theorem monotoneStieltjesSecondDerivativeMeasure_sourceMaximalDomain
@@ -91,16 +57,6 @@ theorem monotoneStieltjesSecondDerivativeMeasure_sourceMaximalDomain
           monotoneStieltjesSecondDerivativeFunction g hg (-2 : ℝ)) := by
   rw [monotoneStieltjesSecondDerivativeMeasure, sourceMaximalDomain]
   exact (monotoneStieltjesSecondDerivativeFunction g hg).measure_Ioo (a := (-2 : ℝ)) (b := 2)
-
-@[simp]
-theorem rightDerivStieltjesSecondDerivativeMeasure_sourceMaximalDomain
-    {v : ℝ → ℝ} (hmono : Monotone (rightDeriv v)) :
-    rightDerivStieltjesSecondDerivativeMeasure v hmono sourceMaximalDomain =
-      ENNReal.ofReal
-        (Function.leftLim (rightDerivStieltjesSecondDerivativeFunction v hmono) (2 : ℝ) -
-          rightDerivStieltjesSecondDerivativeFunction v hmono (-2 : ℝ)) := by
-  rw [rightDerivStieltjesSecondDerivativeMeasure, rightDerivStieltjesSecondDerivativeFunction]
-  exact monotoneStieltjesSecondDerivativeMeasure_sourceMaximalDomain (g := rightDeriv v) hmono
 
 /-! ## Source-local right-derivative extension -/
 
@@ -131,11 +87,6 @@ theorem sourceDerivativeClamp_eq_of_mem_sourceMaximalDomain {s : ℝ}
 `[-2,2]`. -/
 def sourceRightDerivExtension (v : ℝ → ℝ) (s : ℝ) : ℝ :=
   rightDeriv v (sourceDerivativeClamp s)
-
-theorem sourceRightDerivExtension_eq_of_mem_sourceMaximalDomain {v : ℝ → ℝ} {s : ℝ}
-    (hs : s ∈ sourceMaximalDomain) :
-    sourceRightDerivExtension v s = rightDeriv v s := by
-  simp [sourceRightDerivExtension, sourceDerivativeClamp_eq_of_mem_sourceMaximalDomain hs]
 
 /-- To the left of a point strictly inside the source interval, the clamp is eventually the
 identity. -/
@@ -248,17 +199,6 @@ theorem sourceRightDerivStieltjesSecondDerivativeFunction_leftLim_eq_extension_l
     Function.leftLim (Function.rightLim (sourceRightDerivExtension v)) s =
       Function.leftLim (sourceRightDerivExtension v) s
   exact leftLim_rightLim ((monotone_sourceRightDerivExtension hmono).tendsto_leftLim s)
-
-@[simp]
-theorem sourceRightDerivStieltjesSecondDerivativeMeasure_Ioc
-    {v : ℝ → ℝ} (hmono : MonotoneOn (rightDeriv v) (Set.Icc (-2 : ℝ) 2))
-    (a b : ℝ) :
-    sourceRightDerivStieltjesSecondDerivativeMeasure v hmono (Set.Ioc a b) =
-      ENNReal.ofReal
-        (sourceRightDerivStieltjesSecondDerivativeFunction v hmono b -
-          sourceRightDerivStieltjesSecondDerivativeFunction v hmono a) := by
-  simp [sourceRightDerivStieltjesSecondDerivativeMeasure,
-    sourceRightDerivStieltjesSecondDerivativeFunction]
 
 @[simp]
 theorem sourceRightDerivStieltjesSecondDerivativeMeasure_sourceMaximalDomain
@@ -553,33 +493,6 @@ theorem ConvexOn.neg_osc_le_rightDeriv_neg_two_of_forall_exists_secant_add_le
   linarith
 
 /-- Forward affine remainders of a one-dimensional convex function are controlled by the gap
-between the right derivative at the endpoint and the chosen subgradient. -/
-theorem SubgradientOn.affineRemainder_add_le_mul_rightDeriv_sub
-    {S : Set ℝ} {v : ℝ → ℝ} {x p h : ℝ}
-    (_hp : SubgradientOn S v x p) (hv : ConvexOn ℝ S v)
-    (hx : x ∈ interior S) (hxh : x + h ∈ interior S) (hh : 0 ≤ h) :
-    affineRemainder v x p (x + h) ≤ h * (rightDeriv v (x + h) - p) := by
-  by_cases hzero : h = 0
-  · simp [hzero]
-  have hh_pos : 0 < h := lt_of_le_of_ne hh (Ne.symm hzero)
-  have hslope_le :
-      slope v x (x + h) ≤ rightDeriv v (x + h) :=
-    (ConvexOn.slope_le_leftDeriv
-      (S := S) (f := v) (x := x) (y := x + h)
-      hv (interior_subset hx) hxh (by linarith)).trans
-      (ConvexOn.leftDeriv_le_rightDeriv
-        (S := S) (f := v) (x := x + h) hv hxh)
-  have hrem_eq :
-      affineRemainder v x p (x + h) = h * (slope v x (x + h) - p) := by
-    rw [affineRemainder, slope_def_field]
-    rw [Real.inner_apply]
-    have hden : x + h - x = h := by ring
-    field_simp [hden, hh_pos.ne']
-    ring_nf
-  rw [hrem_eq]
-  exact mul_le_mul_of_nonneg_left (sub_le_sub_right hslope_le p) hh
-
-/-- Forward affine remainders of a one-dimensional convex function are controlled by the gap
 between the left derivative at the endpoint and the chosen subgradient.
 
 This variant is better suited to open-interval Stieltjes masses, which see the left limit at the
@@ -631,46 +544,6 @@ theorem SubgradientOn.affineRemainder_sub_le_mul_sub_rightDeriv
     ring_nf
   rw [hrem_eq]
   exact mul_le_mul_of_nonneg_left (sub_le_sub_left hright_le_slope p) hh
-
-/-- Two-sided affine remainders of a one-dimensional convex function are controlled by the
-right-derivative variation across the symmetric interval. -/
-theorem SubgradientOn.affineRemainder_pm_le_mul_rightDeriv_sub
-    {S : Set ℝ} {v : ℝ → ℝ} {x p h : ℝ}
-    (hp : SubgradientOn S v x p) (hv : ConvexOn ℝ S v)
-    (hx : x ∈ interior S) (hxmh : x - h ∈ interior S) (hxph : x + h ∈ interior S)
-    (hh : 0 ≤ h) :
-    affineRemainder v x p (x + h) ≤
-        h * (rightDeriv v (x + h) - rightDeriv v (x - h)) ∧
-      affineRemainder v x p (x - h) ≤
-        h * (rightDeriv v (x + h) - rightDeriv v (x - h)) := by
-  by_cases hzero : h = 0
-  · simp [hzero]
-  have hh_pos : 0 < h := lt_of_le_of_ne hh (Ne.symm hzero)
-  have hmono : MonotoneOn (rightDeriv v) (interior S) :=
-    ConvexOn.monotoneOn_projectRightDeriv (S := S) (f := v) hv
-  have hleft_le_p : rightDeriv v (x - h) ≤ p := by
-    have hrd_le_slope :
-        rightDeriv v (x - h) ≤ slope v (x - h) x :=
-      ConvexOn.rightDeriv_le_slope
-        (S := S) (f := v) (x := x - h) (y := x)
-        hv hxmh (interior_subset hx) (by linarith)
-    have hslope_le_left :
-        slope v (x - h) x ≤ leftDeriv v x :=
-      ConvexOn.slope_le_leftDeriv
-        (S := S) (f := v) (x := x - h) (y := x)
-        hv (interior_subset hxmh) hx (by linarith)
-    exact (hrd_le_slope.trans hslope_le_left).trans
-      (SubgradientOn.leftDeriv_le_of_convex
-        (S := S) (f := v) (x := x) hp hv hx)
-  have hp_le_right : p ≤ rightDeriv v (x + h) := by
-    exact (SubgradientOn.le_rightDeriv_of_convex
-      (S := S) (f := v) (x := x) hp hv hx).trans
-      (hmono hx hxph (by linarith))
-  constructor
-  · exact (hp.affineRemainder_add_le_mul_rightDeriv_sub hv hx hxph hh).trans
-      (mul_le_mul_of_nonneg_left (sub_le_sub_left hleft_le_p (rightDeriv v (x + h))) hh)
-  · exact (hp.affineRemainder_sub_le_mul_sub_rightDeriv hv hx hxmh hh).trans
-      (mul_le_mul_of_nonneg_left (sub_le_sub_right hp_le_right (rightDeriv v (x - h))) hh)
 
 /-- Two-sided affine remainders of a one-dimensional convex function are controlled by the
 open-interval derivative variation from the right derivative at the left endpoint to the left

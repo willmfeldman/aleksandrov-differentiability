@@ -81,26 +81,6 @@ theorem sourceOpenCube_one_subset_closure_sourceCubeDifferentiabilitySet_three_h
     closure_mono hsubset
       (sourceOpenCube_one_subset_closure_sourceCubeDifferentiabilitySet_one_of_convex hu hx)
 
-/-- The density theorem gives a nontrivial differentiability-point sampling filter at each point
-of `Q_1`, with sampling still inside `Q_1`. -/
-theorem sourceOpenCube_one_nhdsWithin_sourceCubeDifferentiabilitySet_one_neBot_of_convex
-    {n : ℕ} {u : SourceCubeSpace n → ℝ}
-    (hu : ConvexOn ℝ (sourceOpenCube n 3) u)
-    {x : SourceCubeSpace n} (hx : x ∈ sourceOpenCube n 1) :
-    (𝓝[sourceCubeDifferentiabilitySet n 1 u] x).NeBot :=
-  mem_closure_iff_nhdsWithin_neBot.mp
-    (sourceOpenCube_one_subset_closure_sourceCubeDifferentiabilitySet_one_of_convex hu hx)
-
-/-- The density theorem gives a nontrivial differentiability-point sampling filter at each point
-of `Q_1`. -/
-theorem sourceOpenCube_one_nhdsWithin_sourceCubeDifferentiabilitySet_three_halves_neBot_of_convex
-    {n : ℕ} {u : SourceCubeSpace n → ℝ}
-    (hu : ConvexOn ℝ (sourceOpenCube n 3) u)
-    {x : SourceCubeSpace n} (hx : x ∈ sourceOpenCube n 1) :
-    (𝓝[sourceCubeDifferentiabilitySet n (3 / 2 : ℝ) u] x).NeBot :=
-  mem_closure_iff_nhdsWithin_neBot.mp
-    (sourceOpenCube_one_subset_closure_sourceCubeDifferentiabilitySet_three_halves_of_convex hu hx)
-
 /-- The good set `Omega_m` lies in the differentiability set `D_{3/2}` used for envelopes. -/
 theorem cubeGoodSet_subset_sourceCubeDifferentiabilitySet_three_halves
     {n m : ℕ} {u : SourceCubeSpace n → ℝ} :
@@ -528,39 +508,6 @@ theorem lipschitzEnvelope_touching_squeeze_expansion
     simpa [ell, hL.symm] using hdplus
   exact lipschitzEnvelope_squeeze_expansion hlower hupper hdminus' hdplus'
 
-/-- A.e. envelope bridge for a fixed coordinate-gradient function.
-
-Once the lower and upper envelopes are globally Lipschitz, Rademacher gives differentiability of
-both envelopes almost everywhere.  At points of the touching set `F`, the touching/squeeze lemma
-then gives the first-order expansion of the squeezed function along `E`.
--/
-theorem lipschitzEnvelope_ae_touching_squeeze_expansion_of_mem
-    {n : ℕ} {E F : Set (SourceCubeSpace n)}
-    {g gminus gplus : SourceCubeSpace n → ℝ} {Kminus Kplus : ℝ≥0}
-    (hminusLip : LipschitzWith Kminus gminus)
-    (hplusLip : LipschitzWith Kplus gplus)
-    (horder : ∀ x : SourceCubeSpace n, gminus x ≤ gplus x)
-    (htouch : ∀ x ∈ F, gminus x = gplus x)
-    (hlower :
-      ∀ x ∈ F, ∀ᶠ y in 𝓝[E] x, gminus y - gminus x ≤ g y - g x)
-    (hupper :
-      ∀ x ∈ F, ∀ᶠ y in 𝓝[E] x, g y - g x ≤ gplus y - gplus x) :
-    ∀ᵐ x ∂(volume : Measure (SourceCubeSpace n)), x ∈ F →
-      ∃ ell : SourceCubeSpace n,
-        (fun y : SourceCubeSpace n => g y - g x - inner ℝ ell (y - x))
-          =o[𝓝[E] x] fun y => ‖y - x‖ := by
-  have hminusAE :
-      ∀ᵐ x ∂(volume : Measure (SourceCubeSpace n)), DifferentiableAt ℝ gminus x :=
-    hminusLip.ae_differentiableAt
-  have hplusAE :
-      ∀ᵐ x ∂(volume : Measure (SourceCubeSpace n)), DifferentiableAt ℝ gplus x :=
-    hplusLip.ae_differentiableAt
-  filter_upwards [hminusAE, hplusAE] with x hminusDiff hplusDiff hxF
-  exact
-    lipschitzEnvelope_touching_squeeze_expansion
-      (Filter.Eventually.of_forall horder) (htouch x hxF) (hlower x hxF) (hupper x hxF)
-      hminusDiff.hasFDerivAt hplusDiff.hasFDerivAt
-
 /-- A.e. envelope bridge with only local order near points of `F`.
 
 This is the form used by the source proof: the envelopes are ordered on the working open cube,
@@ -592,143 +539,8 @@ theorem lipschitzEnvelope_ae_touching_squeeze_expansion_of_mem_localOrder
       (horder x hxF) (htouch x hxF) (hlower x hxF) (hupper x hxF)
       hminusDiff.hasFDerivAt hplusDiff.hasFDerivAt
 
-/-- Restricted-measure form of `lipschitzEnvelope_ae_touching_squeeze_expansion_of_mem`. -/
-theorem lipschitzEnvelope_ae_touching_squeeze_expansion
-    {n : ℕ} {E F : Set (SourceCubeSpace n)}
-    {g gminus gplus : SourceCubeSpace n → ℝ} {Kminus Kplus : ℝ≥0}
-    (hminusLip : LipschitzWith Kminus gminus)
-    (hplusLip : LipschitzWith Kplus gplus)
-    (horder : ∀ x : SourceCubeSpace n, gminus x ≤ gplus x)
-    (htouch : ∀ x ∈ F, gminus x = gplus x)
-    (hlower :
-      ∀ x ∈ F, ∀ᶠ y in 𝓝[E] x, gminus y - gminus x ≤ g y - g x)
-    (hupper :
-      ∀ x ∈ F, ∀ᶠ y in 𝓝[E] x, g y - g x ≤ gplus y - gplus x)
-    (hF : MeasurableSet F) :
-    ∀ᵐ x ∂(volume.restrict F : Measure (SourceCubeSpace n)),
-      ∃ ell : SourceCubeSpace n,
-        (fun y : SourceCubeSpace n => g y - g x - inner ℝ ell (y - x))
-          =o[𝓝[E] x] fun y => ‖y - x‖ := by
-  have hambient :
-      ∀ᵐ x ∂(volume : Measure (SourceCubeSpace n)), x ∈ F →
-        ∃ ell : SourceCubeSpace n,
-          (fun y : SourceCubeSpace n => g y - g x - inner ℝ ell (y - x))
-            =o[𝓝[E] x] fun y => ‖y - x‖ :=
-    lipschitzEnvelope_ae_touching_squeeze_expansion_of_mem
-      hminusLip hplusLip horder htouch hlower hupper
-  filter_upwards [ae_restrict_of_ae hambient, ae_restrict_mem (μ := volume) hF] with x hx hxF
-  exact hx hxF
-
-/-- Restricted-measure local-order form of
-`lipschitzEnvelope_ae_touching_squeeze_expansion_of_mem_localOrder`. -/
-theorem lipschitzEnvelope_ae_touching_squeeze_expansion_localOrder
-    {n : ℕ} {E F : Set (SourceCubeSpace n)}
-    {g gminus gplus : SourceCubeSpace n → ℝ} {Kminus Kplus : ℝ≥0}
-    (hminusLip : LipschitzWith Kminus gminus)
-    (hplusLip : LipschitzWith Kplus gplus)
-    (horder : ∀ x ∈ F, ∀ᶠ y in 𝓝 x, gminus y ≤ gplus y)
-    (htouch : ∀ x ∈ F, gminus x = gplus x)
-    (hlower :
-      ∀ x ∈ F, ∀ᶠ y in 𝓝[E] x, gminus y - gminus x ≤ g y - g x)
-    (hupper :
-      ∀ x ∈ F, ∀ᶠ y in 𝓝[E] x, g y - g x ≤ gplus y - gplus x)
-    (hF : MeasurableSet F) :
-    ∀ᵐ x ∂(volume.restrict F : Measure (SourceCubeSpace n)),
-      ∃ ell : SourceCubeSpace n,
-        (fun y : SourceCubeSpace n => g y - g x - inner ℝ ell (y - x))
-          =o[𝓝[E] x] fun y => ‖y - x‖ := by
-  have hambient :
-      ∀ᵐ x ∂(volume : Measure (SourceCubeSpace n)), x ∈ F →
-        ∃ ell : SourceCubeSpace n,
-          (fun y : SourceCubeSpace n => g y - g x - inner ℝ ell (y - x))
-            =o[𝓝[E] x] fun y => ‖y - x‖ :=
-    lipschitzEnvelope_ae_touching_squeeze_expansion_of_mem_localOrder
-      hminusLip hplusLip horder htouch hlower hupper
-  filter_upwards [ae_restrict_of_ae hambient, ae_restrict_mem (μ := volume) hF] with x hx hxF
-  exact hx hxF
-
-/-- Concrete McShane-envelope a.e. squeeze wrapper.
-
-After the source proof establishes the remaining order fact `g^- <= g^+` for the concrete
-envelopes, the boundedness and cross-estimate hypotheses give all other inputs needed by the
-abstract a.e. envelope bridge.
--/
-theorem lowerUpperMcShaneEnvelope_ae_squeeze_of_cross_bound
-    {n : ℕ} {K : ℝ≥0} {E F : Set (SourceCubeSpace n)} {g : SourceCubeSpace n → ℝ}
-    [Nonempty E]
-    (hLowerBound : ∃ M : ℝ, ∀ y ∈ E, -M ≤ g y)
-    (hUpperBound : ∃ M : ℝ, ∀ y ∈ E, g y ≤ M)
-    (hFE : F ⊆ E)
-    (hcross : ∀ x ∈ F, ∀ y ∈ E, |g y - g x| ≤ (K : ℝ) * dist y x)
-    (horder :
-      ∀ x : SourceCubeSpace n,
-        lowerMcShaneEnvelope K E g x ≤ upperMcShaneEnvelope K E g x)
-    (hF : MeasurableSet F) :
-    ∀ᵐ x ∂(volume.restrict F : Measure (SourceCubeSpace n)),
-      ∃ ell : SourceCubeSpace n,
-        (fun y : SourceCubeSpace n => g y - g x - inner ℝ ell (y - x))
-          =o[𝓝[E] x] fun y => ‖y - x‖ := by
-  refine
-    lipschitzEnvelope_ae_touching_squeeze_expansion
-      (E := E) (F := F) (g := g)
-      (gminus := lowerMcShaneEnvelope K E g)
-      (gplus := upperMcShaneEnvelope K E g)
-      (Kminus := K) (Kplus := K)
-      (lowerMcShaneEnvelope_lipschitzWith (K := K) (E := E) (g := g) hLowerBound)
-      (upperMcShaneEnvelope_lipschitzWith (K := K) (E := E) (g := g) hUpperBound)
-      horder ?_ ?_ ?_ hF
-  · intro x hx
-    rw [lowerMcShaneEnvelope_eq_on_of_cross_bound hLowerBound hFE hcross hx,
-      upperMcShaneEnvelope_eq_on_of_cross_bound hUpperBound hFE hcross hx]
-  · intro x hx
-    exact lowerMcShaneEnvelope_increment_le_of_cross_bound hLowerBound hFE hcross hx
-  · intro x hx
-    exact le_upperMcShaneEnvelope_increment_of_cross_bound hUpperBound hFE hcross hx
-
-/-- Concrete McShane-envelope a.e. squeeze wrapper on an open working set.
-
-This is the source-faithful form: if the working open set `U` lies in `closure E`, then density
-and continuity provide the local order `g^- <= g^+` near every point of `F ⊆ U`. -/
-theorem lowerUpperMcShaneEnvelope_ae_squeeze_of_cross_bound_on_open
-    {n : ℕ} {K : ℝ≥0} {E F U : Set (SourceCubeSpace n)} {g : SourceCubeSpace n → ℝ}
-    [Nonempty E]
-    (hLowerBound : ∃ M : ℝ, ∀ y ∈ E, -M ≤ g y)
-    (hUpperBound : ∃ M : ℝ, ∀ y ∈ E, g y ≤ M)
-    (hFE : F ⊆ E)
-    (hFU : F ⊆ U)
-    (hUopen : IsOpen U)
-    (hUclosure : U ⊆ closure E)
-    (hcross : ∀ x ∈ F, ∀ y ∈ E, |g y - g x| ≤ (K : ℝ) * dist y x)
-    (hF : MeasurableSet F) :
-    ∀ᵐ x ∂(volume.restrict F : Measure (SourceCubeSpace n)),
-      ∃ ell : SourceCubeSpace n,
-        (fun y : SourceCubeSpace n => g y - g x - inner ℝ ell (y - x))
-          =o[𝓝[E] x] fun y => ‖y - x‖ := by
-  refine
-    lipschitzEnvelope_ae_touching_squeeze_expansion_localOrder
-      (E := E) (F := F) (g := g)
-      (gminus := lowerMcShaneEnvelope K E g)
-      (gplus := upperMcShaneEnvelope K E g)
-      (Kminus := K) (Kplus := K)
-      (lowerMcShaneEnvelope_lipschitzWith (K := K) (E := E) (g := g) hLowerBound)
-      (upperMcShaneEnvelope_lipschitzWith (K := K) (E := E) (g := g) hUpperBound)
-      ?_ ?_ ?_ ?_ hF
-  · intro x hx
-    exact
-      lowerMcShaneEnvelope_eventually_le_upperMcShaneEnvelope_of_mem_open_subset_closure
-        (K := K) (E := E) (U := U) (g := g)
-        hLowerBound hUpperBound hUopen hUclosure (hFU hx)
-  · intro x hx
-    rw [lowerMcShaneEnvelope_eq_on_of_cross_bound hLowerBound hFE hcross hx,
-      upperMcShaneEnvelope_eq_on_of_cross_bound hUpperBound hFE hcross hx]
-  · intro x hx
-    exact lowerMcShaneEnvelope_increment_le_of_cross_bound hLowerBound hFE hcross hx
-  · intro x hx
-    exact le_upperMcShaneEnvelope_increment_of_cross_bound hUpperBound hFE hcross hx
-
-/-- Ambient-measure version of
-`lowerUpperMcShaneEnvelope_ae_squeeze_of_cross_bound_on_open`, avoiding a measurability
-assumption on the touching set `F`. -/
+/-- Ambient-measure a.e. squeeze of the lower and upper McShane envelopes under a cross bound on an
+open set, avoiding a measurability assumption on the touching set `F`. -/
 theorem lowerUpperMcShaneEnvelope_ae_squeeze_of_cross_bound_on_open_of_mem
     {n : ℕ} {K : ℝ≥0} {E F U : Set (SourceCubeSpace n)} {g : SourceCubeSpace n → ℝ}
     [Nonempty E]

@@ -15,10 +15,6 @@ open scoped NNReal
 
 namespace AleksandrovDifferentiability
 
-def CoordinateSliceBadPredicateMeasurable {n : ℕ}
-    (sliceBad : CoordinateSliceBadPredicate n) (t : ℝ) : Prop :=
-  ∀ i : Fin n, MeasurableSet {p : SourceCubeSpace n × ℝ | sliceBad i p.1 p.2 t}
-
 /-- Analytic content required from the coordinate slice bad predicate: outside the slice bad
 sets, the one-dimensional estimates give quadratic endpoint bounds for the ambient
 Fréchet-gradient affine remainder on each coordinate line.
@@ -48,15 +44,6 @@ def upperContactEstimateTotalBadSet {n : ℕ} (u : SourceCubeSpace n → ℝ)
     (sliceBad : CoordinateSliceBadPredicate n) (t : ℝ) : Set (SourceCubeSpace n) :=
   (sourceOpenCube n 1 \ firstOrderDifferentiabilitySet u) ∪
     ⋃ i : Fin n, coordinateSliceBadSet sliceBad i t
-
-/-- Source-local normalized cube theorem.  This corresponds to the preparatory convex source
-note's normalized cube theorem, formulated for global functions restricted to `Q_3`. -/
-def ConvexAleksandrovNormalizedCubeStatement (n : ℕ) : Prop :=
-  1 ≤ n →
-    ∀ u : SourceCubeSpace n → ℝ,
-      BoundedOn (sourceOpenCube n 3) u →
-        ConvexOn ℝ (sourceOpenCube n 3) u →
-          volume (sourceOpenCube n 1 \ secondOrderDifferentiabilitySet u) = 0
 
 /-- Source-local upper-contact estimate target, corresponding to Proposition
 `p.upper-contact-estimate`.  The constant is packaged existentially as a dimensional constant. -/
@@ -106,85 +93,12 @@ def ConvexFiniteUpperContactOpeningAEOnCubeStatement (n : ℕ) : Prop :=
                 finiteUpperContactOpeningSet (sourceOpenCube n 3) u) = 0
 
 @[simp]
-theorem mem_firstOrderDifferentiabilitySet {n : ℕ} {u : SourceCubeSpace n → ℝ}
-    {x : SourceCubeSpace n} :
-    x ∈ firstOrderDifferentiabilitySet u ↔ DifferentiableAt ℝ u x :=
-  Iff.rfl
-
-@[simp]
-theorem mem_finiteUpperContactOpeningSet {n : ℕ} {s : Set (SourceCubeSpace n)}
-    {u : SourceCubeSpace n → ℝ} {x : SourceCubeSpace n} :
-    x ∈ finiteUpperContactOpeningSet s u ↔
-      ∃ A : ℝ, HasUpperContactOpeningAtMostOn s u x A :=
-  Iff.rfl
-
-@[simp]
-theorem mem_upperContactOpeningBadSet {n : ℕ} {u : SourceCubeSpace n → ℝ}
-    {A : ℝ} {x : SourceCubeSpace n} :
-    x ∈ upperContactOpeningBadSet n u A ↔
-      x ∈ sourceOpenCube n 1 ∧
-        ¬ HasUpperContactOpeningAtMostOn (sourceOpenCube n 3) u x A :=
-  Iff.rfl
-
-@[simp]
 theorem mem_cubeGoodSet {n : ℕ} {u : SourceCubeSpace n → ℝ} {A : ℝ}
     {x : SourceCubeSpace n} :
     x ∈ cubeGoodSet n u A ↔
       x ∈ sourceOpenCube n 1 ∧ DifferentiableAt ℝ u x ∧
         HasUpperContactOpeningAtMostOn (sourceOpenCube n 3) u x A := by
   simp [cubeGoodSet, firstOrderDifferentiabilitySet]
-
-@[simp]
-theorem mem_coordinateSliceBadSet {n : ℕ} {sliceBad : CoordinateSliceBadPredicate n}
-    {i : Fin n} {t : ℝ} {x : SourceCubeSpace n} :
-    x ∈ coordinateSliceBadSet sliceBad i t ↔
-      x ∈ sourceOpenCube n 1 ∧ sliceBad i (coordinateLineBase i x) (x i) t :=
-  Iff.rfl
-
-@[simp]
-theorem mem_upperContactEstimateTotalBadSet {n : ℕ} {u : SourceCubeSpace n → ℝ}
-    {sliceBad : CoordinateSliceBadPredicate n} {t : ℝ} {x : SourceCubeSpace n} :
-    x ∈ upperContactEstimateTotalBadSet u sliceBad t ↔
-      x ∈ sourceOpenCube n 1 ∧ ¬ DifferentiableAt ℝ u x ∨
-        ∃ i : Fin n, x ∈ coordinateSliceBadSet sliceBad i t := by
-  simp [upperContactEstimateTotalBadSet, firstOrderDifferentiabilitySet]
-
-theorem cubeGoodSet_subset_sourceOpenCube {n : ℕ} {u : SourceCubeSpace n → ℝ} {A : ℝ} :
-    cubeGoodSet n u A ⊆ sourceOpenCube n 1 := by
-  intro x hx
-  exact hx.1
-
-theorem cubeGoodSet_subset_finiteUpperContactOpeningSet {n : ℕ}
-    {u : SourceCubeSpace n → ℝ} {A : ℝ} :
-    cubeGoodSet n u A ⊆ finiteUpperContactOpeningSet (sourceOpenCube n 3) u := by
-  intro x hx
-  exact ⟨A, hx.2.2⟩
-
-theorem coordinateSliceBadSet_subset_sourceOpenCube {n : ℕ}
-    {sliceBad : CoordinateSliceBadPredicate n} {i : Fin n} {t : ℝ} :
-    coordinateSliceBadSet sliceBad i t ⊆ sourceOpenCube n 1 := by
-  intro x hx
-  exact hx.1
-
-/-- Product-coordinate measurability of a slice bad predicate implies measurability of the
-ambient coordinate bad set `E_i(t)`. -/
-theorem MeasurableSet.coordinateSliceBadSet_of_product {n : ℕ}
-    {sliceBad : CoordinateSliceBadPredicate n} {i : Fin n} {t : ℝ}
-    (hbad : MeasurableSet {p : SourceCubeSpace n × ℝ | sliceBad i p.1 p.2 t}) :
-    MeasurableSet (coordinateSliceBadSet sliceBad i t) := by
-  have hcoord :
-      Continuous (fun x : SourceCubeSpace n => (coordinateLineBase i x, x i)) :=
-    (continuous_coordinateLineBase i).prodMk (EuclideanSpace.proj (𝕜 := ℝ) i).continuous
-  exact (isOpen_sourceOpenCube (n := n) 1).measurableSet.inter
-    (hbad.preimage hcoord.measurable)
-
-/-- Named-obligation version of
-`MeasurableSet.coordinateSliceBadSet_of_product`, for all coordinate directions. -/
-theorem CoordinateSliceBadPredicateMeasurable.coordinateSliceBadSet {n : ℕ}
-    {sliceBad : CoordinateSliceBadPredicate n} {t : ℝ}
-    (hbad : CoordinateSliceBadPredicateMeasurable sliceBad t) :
-    ∀ i : Fin n, MeasurableSet (coordinateSliceBadSet sliceBad i t) :=
-  fun i => MeasurableSet.coordinateSliceBadSet_of_product (hbad i)
 
 /-- The upper-contact bad set is antitone in the opening threshold: a larger allowed opening
 leaves fewer bad points. -/
@@ -193,21 +107,6 @@ theorem upperContactOpeningBadSet_mono_bound {n : ℕ} {u : SourceCubeSpace n �
     upperContactOpeningBadSet n u B ⊆ upperContactOpeningBadSet n u A := by
   intro x hx
   exact ⟨hx.1, fun hA => hx.2 (hA.mono_bound hAB)⟩
-
-theorem coordinateSliceBadSet_base_mem_sourceOpenCube {n : ℕ}
-    {sliceBad : CoordinateSliceBadPredicate n} {i : Fin n} {t : ℝ} {x : SourceCubeSpace n}
-    (hx : x ∈ coordinateSliceBadSet sliceBad i t) :
-    coordinateLineBase i x ∈ sourceOpenCube n 1 :=
-  coordinateLineBase_mem_sourceOpenCube_one hx.1
-
-theorem upperContactEstimateTotalBadSet_subset_sourceOpenCube {n : ℕ}
-    {u : SourceCubeSpace n → ℝ} {sliceBad : CoordinateSliceBadPredicate n} {t : ℝ} :
-    upperContactEstimateTotalBadSet u sliceBad t ⊆ sourceOpenCube n 1 := by
-  intro x hx
-  rcases hx with hxDiff | hxSlice
-  · exact hxDiff.1
-  · rcases Set.mem_iUnion.mp hxSlice with ⟨i, hi⟩
-    exact hi.1
 
 /-- If a point of `Q_1` is not in the source total bad set `E(t)`, then it belongs to the
 differentiability set `D`. -/
@@ -228,35 +127,6 @@ theorem not_sliceBad_of_mem_sourceOpenCube_of_not_mem_totalBadSet {n : ℕ}
     ¬ sliceBad i (coordinateLineBase i x) (x i) t := by
   intro hbad
   exact hxE (Or.inr (Set.mem_iUnion.mpr ⟨i, ⟨hxQ, hbad⟩⟩))
-
-/-- At a source-good point `x ∈ Q_1 \ E(t)`, convexity makes the source Fréchet gradient a
-subgradient on `Q_3`. -/
-theorem ConvexOn.sourceCube_subgradientOn_frechetGradient_of_not_mem_totalBadSet {n : ℕ}
-    {u : SourceCubeSpace n → ℝ} {sliceBad : CoordinateSliceBadPredicate n}
-    {x : SourceCubeSpace n} {t : ℝ}
-    (hu : ConvexOn ℝ (sourceOpenCube n 3) u) (hxQ : x ∈ sourceOpenCube n 1)
-    (hxE : x ∉ upperContactEstimateTotalBadSet u sliceBad t) :
-    SubgradientOn (sourceOpenCube n 3) u x (frechetGradient u x) := by
-  have hxInterior : x ∈ interior (sourceOpenCube n 3) :=
-    sourceOpenCube_one_subset_interior_three hxQ
-  have hd : DifferentiableAt ℝ u x :=
-    differentiableAt_of_mem_sourceOpenCube_of_not_mem_totalBadSet hxQ hxE
-  exact AleksandrovDifferentiability.ConvexOn.sourceCube_subgradientOn_frechetGradient
-    hu hxInterior hd
-
-/-- Source-good-point version of the affine-remainder nonnegativity: if `x ∈ Q_1` is outside the
-total bad set `E(t)`, then `x` is differentiable, lies in the interior of `Q_3`, and convexity
-gives the lower support for the source normalized remainder. -/
-theorem affineRemainder_nonneg_increment_of_convex_of_not_mem_totalBadSet {n : ℕ}
-    {u : SourceCubeSpace n → ℝ} {sliceBad : CoordinateSliceBadPredicate n}
-    {x z : SourceCubeSpace n} {t : ℝ}
-    (hu : ConvexOn ℝ (sourceOpenCube n 3) u) (hxQ : x ∈ sourceOpenCube n 1)
-    (hxE : x ∉ upperContactEstimateTotalBadSet u sliceBad t)
-    (hz : x + z ∈ sourceOpenCube n 3) :
-    0 ≤ affineRemainder u x (frechetGradient u x) (x + z) := by
-  have hp : SubgradientOn (sourceOpenCube n 3) u x (frechetGradient u x) :=
-    ConvexOn.sourceCube_subgradientOn_frechetGradient_of_not_mem_totalBadSet hu hxQ hxE
-  exact hp.affineRemainder_nonneg hz
 
 /-- A source-normalized affine-remainder upper bound is exactly an upper contact with the same
 opening and slope. -/
@@ -279,15 +149,6 @@ theorem HasSourceCubeIncrementQuadraticBound.affineRemainderQuadraticBound {n : 
   intro y hy
   have hinc := h.2 (y - x) (by simpa [add_comm, add_left_comm, add_assoc] using hy)
   simpa [sub_eq_add_neg, add_comm, add_left_comm, add_assoc] using hinc
-
-/-- Pointwise source-style bounds on `Q_3` imply the increment-coordinate formulation. -/
-theorem HasSourceCubeAffineRemainderQuadraticBound.incrementQuadraticBound {n : ℕ}
-    {u : SourceCubeSpace n → ℝ} {x p : SourceCubeSpace n} {K : ℝ}
-    (h : HasSourceCubeAffineRemainderQuadraticBound n u x p K) :
-    HasSourceCubeIncrementQuadraticBound n u x p K := by
-  refine ⟨h.1, ?_⟩
-  intro z hz
-  simpa using h.2 (x + z) hz
 
 /-- Combine the small- and large-increment cases from the source proof into a global
 increment-coordinate quadratic bound. -/
@@ -316,18 +177,6 @@ theorem HasSourceCubeSmallIncrementQuadraticBound.affineRemainderQuadraticBound_
     (hKsmall : Ksmall ≤ K) (hKlarge : Klarge ≤ K) :
     HasSourceCubeAffineRemainderQuadraticBound n u x p K :=
   (hsmall.combine_large hlarge hKsmall hKlarge).affineRemainderQuadraticBound
-
-/-- Source-style `K * ‖y - x‖^2` control gives the normalized opening `2*K`. -/
-theorem HasSourceCubeAffineRemainderQuadraticBound.upperBound_two_mul {n : ℕ}
-    {u : SourceCubeSpace n → ℝ} {x p : SourceCubeSpace n} {K : ℝ}
-    (h : HasSourceCubeAffineRemainderQuadraticBound n u x p K) :
-    HasSourceCubeAffineRemainderUpperBound n u x p (2 * K) := by
-  refine ⟨h.1, ?_⟩
-  intro y hy
-  have hupper := h.2 y hy
-  have hfactor : ((2 * K) / 2) * ‖y - x‖ ^ 2 = K * ‖y - x‖ ^ 2 := by
-    ring
-  simpa [hfactor] using hupper
 
 /-- Source-style `K * ‖y - x‖^2` control gives approximate opening at most `2*K`. -/
 theorem HasSourceCubeAffineRemainderQuadraticBound.openingAtMost_two_mul {n : ℕ}

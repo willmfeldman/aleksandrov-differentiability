@@ -223,14 +223,6 @@ The cube bad sets already impose `x ∈ Q_1`, so they use this predicate form. -
 def sourceLocalizedMaximalBadPredicate (μ : Measure ℝ) (s t : ℝ) : Prop :=
   localizedMaximalBadPredicate μ sourceMaximalDomain s t
 
-/-- Product-coordinate measurability of a parameterized source-local maximal bad predicate.
-
-Here `μparam a` is the one-dimensional measure attached to parameter `a`, and the product
-coordinate is `(a,s)`.  This is the natural measurability target for sliced Fubini arguments. -/
-def SourceLocalizedMaximalBadPredicateMeasurable
-    {α : Type*} [MeasurableSpace α] (μparam : α → Measure ℝ) (t : ℝ) : Prop :=
-  MeasurableSet {p : α × ℝ | sourceLocalizedMaximalBadPredicate (μparam p.1) p.2 t}
-
 /-- Source-window-restricted product-coordinate measurability of a parameterized source-local
 maximal bad predicate.  This is the exact form needed by the source cube proof, where the
 coordinate parameter is already known to lie in `(-1,1)`. -/
@@ -341,20 +333,6 @@ theorem rat_Ioo_subset_sourceMaximalDomain_of_subset
   intro y hy
   rcases hy with ⟨hqy, hyr⟩
   exact hsub ⟨by linarith, by linarith⟩
-
-/-- Pure geometry: every source-admissible real interval through `s` contains a rational
-source-admissible subinterval through `s`. -/
-theorem exists_rat_sourceInterval_subset_of_mem
-    {a b s : ℝ} (hsub : Set.Ioo a b ⊆ sourceMaximalDomain)
-    (hs : s ∈ Set.Ioo a b) :
-    ∃ q r : ℚ,
-      a < (q : ℝ) ∧ (q : ℝ) < s ∧ s < (r : ℝ) ∧ (r : ℝ) < b ∧
-        (q : ℝ) < (r : ℝ) ∧ Set.Ioo (q : ℝ) (r : ℝ) ⊆ sourceMaximalDomain := by
-  rcases hs with ⟨has, hsb⟩
-  rcases exists_rat_btwn has with ⟨q, haq, hqs⟩
-  rcases exists_rat_btwn hsb with ⟨r, hsr, hrb⟩
-  exact ⟨q, r, haq, hqs, hsr, hrb, by linarith,
-    rat_Ioo_subset_sourceMaximalDomain_of_subset hsub haq hrb⟩
 
 /-- Reverse cover obligation for a countable interval model of the source average-exceeds set.
 
@@ -627,18 +605,6 @@ theorem SourceLocalizedMaximalAverageExceedsMeasurable.of_countableIntervalFamil
   rw [SourceLocalizedMaximalAverageExceedsMeasurable, hcover,
     sourceLocalizedMaximalAverageExceedsCountableIntervalSet]
   exact MeasurableSet.iUnion hfixed
-
-@[simp]
-theorem mem_localizedMaximalBadSet {μ : Measure ℝ} {domain window : Set ℝ} {t s : ℝ} :
-    s ∈ localizedMaximalBadSet μ domain window t ↔
-      s ∈ window ∧ localizedMaximalBadPredicate μ domain s t :=
-  Iff.rfl
-
-@[simp]
-theorem mem_sourceLocalizedMaximalBadSet {μ : Measure ℝ} {t s : ℝ} :
-    s ∈ sourceLocalizedMaximalBadSet μ t ↔
-      s ∈ sourceMaximalWindow ∧ sourceLocalizedMaximalBadPredicate μ s t :=
-  Iff.rfl
 
 theorem localizedMaximalFunction_eq_sSup_intervalAverageSet
     (μ : Measure ℝ) (domain : Set ℝ) (s : ℝ) :

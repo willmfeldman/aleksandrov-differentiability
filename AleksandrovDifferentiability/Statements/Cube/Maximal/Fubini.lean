@@ -25,23 +25,6 @@ def CoordinateSliceMaximalTransverseFubiniEstimate {n : ℕ}
       volume (coordinateSliceBadSet (coordinateSliceMaximalBadPredicate μslice) i t) ≤
         ENNReal.ofReal Ctrans * B
 
-/-- The transverse Fubini estimate follows from the canonical coordinate product model once the
-chart measurability, chart measure comparison, and transverse-volume bound are supplied. -/
-theorem CoordinateSliceMaximalTransverseFubiniEstimate.of_coordinateProductModel {n : ℕ}
-    {μslice : CoordinateSliceMeasureFamily n} {Ctrans t : ℝ}
-    (hbad_le :
-      ∀ i : Fin n,
-        volume (coordinateSliceBadSet (coordinateSliceMaximalBadPredicate μslice) i t) ≤
-          (volume : Measure (SourceTransverseSpace i)).prod (volume : Measure ℝ)
-            (coordinateSliceBadSetProductModel μslice i t))
-    (hS : ∀ i : Fin n, MeasurableSet (coordinateSliceBadSetProductModel μslice i t))
-    (hAmeasure :
-      ∀ i : Fin n, volume (sourceTransverseOpenCube i 1) ≤ ENNReal.ofReal Ctrans) :
-    CoordinateSliceMaximalTransverseFubiniEstimate μslice Ctrans t := by
-  intro B hline i
-  exact coordinateSliceBadSet_measure_le_of_coordinateProductModel
-    (i := i) (B := B) (hbad_le i) (hS i) (hAmeasure i) hline
-
 /-- The transverse Fubini estimate follows from measure-preserving canonical coordinate charts,
 measurability of the coordinate bad sets, and the transverse-volume bound. -/
 theorem CoordinateSliceMaximalTransverseFubiniEstimate.of_coordinateChartMeasurePreserving
@@ -84,27 +67,6 @@ theorem CoordinateSliceMaximalTransverseFubiniEstimate.of_badSetMeasurable
     CoordinateSliceMaximalTransverseFubiniEstimate μslice Ctrans t :=
   CoordinateSliceMaximalTransverseFubiniEstimate.of_coordinateBadSetMeasurable
     hbad hAmeasure
-
-/-- If the coordinate bad sets are measurable, then some real transverse constant gives the
-transverse Fubini estimate.  This is the constant-existence form of the source Fubini step. -/
-theorem exists_coordinateSliceMaximalTransverseFubiniEstimate_of_coordinateBadSetMeasurable
-    {n : ℕ} {μslice : CoordinateSliceMeasureFamily n} {t : ℝ}
-    (hbad :
-      ∀ i : Fin n,
-        MeasurableSet (coordinateSliceBadSet (coordinateSliceMaximalBadPredicate μslice) i t)) :
-    ∃ Ctrans : ℝ, CoordinateSliceMaximalTransverseFubiniEstimate μslice Ctrans t := by
-  rcases exists_forall_sourceTransverseOpenCube_volume_le_ofReal (n := n) with
-    ⟨Ctrans, hAmeasure⟩
-  exact ⟨Ctrans,
-    CoordinateSliceMaximalTransverseFubiniEstimate.of_coordinateBadSetMeasurable
-      hbad hAmeasure⟩
-
-/-- Named-obligation version of the existential transverse Fubini step. -/
-theorem CoordinateSliceMaximalBadSetMeasurable.exists_transverseFubiniEstimate
-    {n : ℕ} {μslice : CoordinateSliceMeasureFamily n} {t : ℝ}
-    (hbad : CoordinateSliceMaximalBadSetMeasurable μslice t) :
-    ∃ Ctrans : ℝ, CoordinateSliceMaximalTransverseFubiniEstimate μslice Ctrans t :=
-  exists_coordinateSliceMaximalTransverseFubiniEstimate_of_coordinateBadSetMeasurable hbad
 
 /-- The one-dimensional localized maximal estimate plus the source mass bound controls each
 coordinate-line bad fiber. -/
@@ -320,19 +282,6 @@ theorem CoordinateSliceMaximalTransverseFubiniEstimate.fubiniEstimate {n : ℕ}
       _ = Ccoord * osc / t := by ring
   rw [hleft]
   exact ENNReal.ofReal_le_ofReal hreal
-
-/-- Coordinate bad-set measurability, the transverse-volume bound, and a scalar constant
-comparison supply the older packaged Fubini estimate used by the maximal-slice assembly. -/
-theorem CoordinateSliceMaximalFubiniEstimate.of_badSetMeasurable {n : ℕ}
-    {μslice : CoordinateSliceMeasureFamily n} {Ctrans Cline Ccoord osc t : ℝ}
-    (hbad : CoordinateSliceMaximalBadSetMeasurable μslice t)
-    (hAmeasure :
-      ∀ i : Fin n, volume (sourceTransverseOpenCube i 1) ≤ ENNReal.ofReal Ctrans)
-    (hCtrans_nonneg : 0 ≤ Ctrans)
-    (hC : Ctrans * Cline ≤ Ccoord) (hscale : 0 ≤ osc / t) :
-    CoordinateSliceMaximalFubiniEstimate μslice Cline Ccoord osc t :=
-  (CoordinateSliceMaximalTransverseFubiniEstimate.of_badSetMeasurable
-    hbad hAmeasure).fubiniEstimate hCtrans_nonneg hC hscale
 
 /-- Source mass bounds plus the localized maximal estimate supply the line-fiber hypotheses
 needed by `CoordinateSliceMaximalFubiniEstimate`. -/

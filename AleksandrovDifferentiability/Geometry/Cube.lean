@@ -103,19 +103,9 @@ def sourceCoordinateChartMap {n : ℕ} (i : Fin n) :
   fun p => sourceCoordinateChartPoint i p.1 p.2
 
 @[simp]
-theorem mem_sourceOpenCubeAt {n : ℕ} {c x : SourceCubeSpace n} {r : ℝ} :
-    x ∈ sourceOpenCubeAt c r ↔ ∀ i : Fin n, |x i - c i| < r :=
-  Iff.rfl
-
-@[simp]
 theorem mem_sourceOpenCube {n : ℕ} {x : SourceCubeSpace n} {r : ℝ} :
     x ∈ sourceOpenCube n r ↔ ∀ i : Fin n, |x i| < r := by
   simp [sourceOpenCube, sourceOpenCubeAt]
-
-@[simp]
-theorem mem_sourceClosedCube {n : ℕ} {x : SourceCubeSpace n} {r : ℝ} :
-    x ∈ sourceClosedCube n r ↔ ∀ i : Fin n, |x i| ≤ r :=
-  Iff.rfl
 
 theorem sourceOpenCubeAt_subset_of_le {n : ℕ} {c : SourceCubeSpace n} {r R : ℝ}
     (hrR : r ≤ R) :
@@ -406,12 +396,6 @@ theorem coordinateLinePoint_apply_ne {n : ℕ} {i j : Fin n} (hji : j ≠ i)
   simp [coordinateLinePoint, sourceCoordinateVector, hji]
 
 @[simp]
-theorem mem_sourceTransverseOpenCube {n : ℕ} {i : Fin n} {a : SourceTransverseSpace i}
-    {r : ℝ} :
-    a ∈ sourceTransverseOpenCube i r ↔ ∀ j : {j : Fin n // j ≠ i}, |a j| < r :=
-  Iff.rfl
-
-@[simp]
 theorem sourceTransverseEmbed_apply_self {n : ℕ} (i : Fin n) (a : SourceTransverseSpace i) :
     sourceTransverseEmbed i a i = 0 := by
   simp [sourceTransverseEmbed]
@@ -533,16 +517,6 @@ def sourceCoordinateChartLinearIsometryEquiv {n : ℕ} (i : Fin n) :
   norm_map' := sourceCoordinateChartLinearMap_norm i
 
 @[simp]
-theorem coordinateLineBase_sourceTransverseEmbed {n : ℕ} (i : Fin n)
-    (a : SourceTransverseSpace i) :
-    coordinateLineBase i (sourceTransverseEmbed i a) = sourceTransverseEmbed i a := by
-  ext j
-  by_cases hji : j = i
-  · subst hji
-    simp
-  · simp [coordinateLineBase_apply_ne hji]
-
-@[simp]
 theorem coordinateLineBase_sourceCoordinateChartPoint {n : ℕ} (i : Fin n)
     (a : SourceTransverseSpace i) (s : ℝ) :
     coordinateLineBase i (sourceCoordinateChartPoint i a s) = sourceTransverseEmbed i a := by
@@ -552,13 +526,6 @@ theorem coordinateLineBase_sourceCoordinateChartPoint {n : ℕ} (i : Fin n)
     simp
   · simp [sourceCoordinateChartPoint_apply_ne hji, coordinateLineBase_apply_ne hji,
       sourceTransverseEmbed_apply_ne hji]
-
-@[simp]
-theorem sourceCoordinateChartPoint_base_self {n : ℕ} (i : Fin n)
-    (a : SourceTransverseSpace i) (s : ℝ) :
-    coordinateLinePoint i (sourceTransverseEmbed i a) s =
-      sourceCoordinateChartPoint i a s := by
-  rfl
 
 theorem sourceTransverseEmbed_mem_sourceOpenCube {n : ℕ} {i : Fin n}
     {a : SourceTransverseSpace i} {r : ℝ}
@@ -724,13 +691,6 @@ theorem sourceOpenCube_three_halves_add_norm_le_three_halves_mem_three {n : ℕ}
   have hz_i : |z i| ≤ (3 / 2 : ℝ) := (abs_sourceCoordinate_le_norm z i).trans hz
   have hlt : |x i + z i| < 3 := by linarith
   simpa using hlt
-
-/-- A displacement of Euclidean norm at most `1` from `Q_1` stays inside `Q_3`. -/
-theorem sourceOpenCube_one_sub_norm_le_one_mem_three {n : ℕ}
-    {x z : SourceCubeSpace n} (hx : x ∈ sourceOpenCube n 1) (hz : ‖z‖ ≤ 1) :
-    x - z ∈ sourceOpenCube n 3 := by
-  simpa [sub_eq_add_neg] using
-    sourceOpenCube_one_add_norm_le_one_mem_three hx (z := -z) (by simpa using hz)
 
 /-- A one-coordinate displacement of size less than `2` from `Q_1` stays inside `Q_3`.
 This is the source-proof domain check for the endpoints `x + h e_i`. -/

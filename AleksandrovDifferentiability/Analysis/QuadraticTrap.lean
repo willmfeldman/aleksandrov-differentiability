@@ -1,3 +1,3 @@
 module
 
-public import AleksandrovDifferentiability.Analysis.QuadraticTrap.ZeroHessian
+public import AleksandrovDifferentiability.Analysis.QuadraticTrap.RealScalar

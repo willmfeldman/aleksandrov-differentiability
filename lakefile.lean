@@ -2,7 +2,7 @@ import Lake
 open Lake DSL
 
 package "AleksandrovDifferentiability" where
-  version := v!"0.4.0"
+  version := v!"0.4.1"
   -- Projects that require a release tag download the prebuilt build archive attached to the
   -- GitHub release (see .github/workflows/release-build-archive.yml) instead of building.
   preferReleaseBuild := true

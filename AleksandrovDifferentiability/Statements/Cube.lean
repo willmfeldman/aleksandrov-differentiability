@@ -3,7 +3,9 @@ module
 public import AleksandrovDifferentiability.Statements.Cube.FirstOrder
 public import AleksandrovDifferentiability.Statements.Cube.GoodSet
 public import AleksandrovDifferentiability.Statements.Cube.Envelope
-public import AleksandrovDifferentiability.Statements.Cube.EndpointAttainment
+public import AleksandrovDifferentiability.Analysis.EpigraphLineLift
+public import AleksandrovDifferentiability.Analysis.LineRestriction
+public import AleksandrovDifferentiability.Statements.Cube.Oscillation
 public import AleksandrovDifferentiability.Statements.Cube.Maximal
 public import AleksandrovDifferentiability.Statements.Cube.Measure
 public import AleksandrovDifferentiability.Statements.Cube.SecondOrder

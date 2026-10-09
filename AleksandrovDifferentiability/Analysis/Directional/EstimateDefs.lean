@@ -138,26 +138,6 @@ def SymmetricCompatibleDirectionalSliceQuotientEstimateAt {ι : Type*} (D : Fins
       RealScalarQuadraticQuotientEstimateWithDataAt (lineRestriction u x (v i + v j)) 0
         (inner ℝ p (v i + v j)) (r i j))
 
-/-- Points carrying mixed-directional quadratic estimate data. -/
-def mixedDirectionalQuadraticEstimateSet {ι : Type*} (D : Finset ι) (v : ι → E)
-    (u : E → ℝ) : Set E :=
-  {x | MixedDirectionalQuadraticEstimateAt D v u x}
-
-/-- Points carrying punctured normalized mixed-directional quadratic estimate data. -/
-def mixedDirectionalQuadraticQuotientEstimateSet {ι : Type*} (D : Finset ι) (v : ι → E)
-    (u : E → ℝ) : Set E :=
-  {x | MixedDirectionalQuadraticQuotientEstimateAt D v u x}
-
-/-- Points carrying polarized mixed-directional quadratic estimate data. -/
-def polarizedMixedDirectionalQuadraticEstimateSet {ι : Type*} [DecidableEq ι]
-    (D : Finset ι) (v : ι → E) (u : E → ℝ) : Set E :=
-  {x | PolarizedMixedDirectionalQuadraticEstimateAt D v u x}
-
-/-- Points carrying punctured normalized polarized mixed-directional quadratic estimate data. -/
-def polarizedMixedDirectionalQuadraticQuotientEstimateSet {ι : Type*} [DecidableEq ι]
-    (D : Finset ι) (v : ι → E) (u : E → ℝ) : Set E :=
-  {x | PolarizedMixedDirectionalQuadraticQuotientEstimateAt D v u x}
-
 /-- Points carrying scalar estimate data on the finite list of selected directions and their
 pairwise sums. -/
 def directionalSliceEstimateSet {ι : Type*} (D : Finset ι) (v : ι → E)
@@ -203,88 +183,5 @@ def directionalLineScalarEstimateSet (v : E) (u : E → ℝ) : Set E :=
 quotient-estimate data at the base parameter. -/
 def directionalLineScalarQuotientEstimateSet (v : E) (u : E → ℝ) : Set E :=
   {x | RealScalarQuadraticQuotientEstimateAt (lineRestriction u x v) 0}
-
-@[simp]
-theorem mem_mixedDirectionalQuadraticEstimateSet
-    {ι : Type*} {D : Finset ι} {v : ι → E} {u : E → ℝ} {x : E} :
-    x ∈ mixedDirectionalQuadraticEstimateSet D v u ↔
-      MixedDirectionalQuadraticEstimateAt D v u x :=
-  Iff.rfl
-
-@[simp]
-theorem mem_mixedDirectionalQuadraticQuotientEstimateSet
-    {ι : Type*} {D : Finset ι} {v : ι → E} {u : E → ℝ} {x : E} :
-    x ∈ mixedDirectionalQuadraticQuotientEstimateSet D v u ↔
-      MixedDirectionalQuadraticQuotientEstimateAt D v u x :=
-  Iff.rfl
-
-@[simp]
-theorem mem_polarizedMixedDirectionalQuadraticEstimateSet
-    {ι : Type*} [DecidableEq ι] {D : Finset ι} {v : ι → E} {u : E → ℝ} {x : E} :
-    x ∈ polarizedMixedDirectionalQuadraticEstimateSet D v u ↔
-      PolarizedMixedDirectionalQuadraticEstimateAt D v u x :=
-  Iff.rfl
-
-@[simp]
-theorem mem_polarizedMixedDirectionalQuadraticQuotientEstimateSet
-    {ι : Type*} [DecidableEq ι] {D : Finset ι} {v : ι → E} {u : E → ℝ} {x : E} :
-    x ∈ polarizedMixedDirectionalQuadraticQuotientEstimateSet D v u ↔
-      PolarizedMixedDirectionalQuadraticQuotientEstimateAt D v u x :=
-  Iff.rfl
-
-@[simp]
-theorem mem_directionalSliceEstimateSet
-    {ι : Type*} {D : Finset ι} {v : ι → E} {u : E → ℝ} {x : E} :
-    x ∈ directionalSliceEstimateSet D v u ↔ DirectionalSliceEstimateAt D v u x :=
-  Iff.rfl
-
-@[simp]
-theorem mem_compatibleDirectionalSliceEstimateSet
-    {ι : Type*} {D : Finset ι} {v : ι → E} {u : E → ℝ} {x : E} :
-    x ∈ compatibleDirectionalSliceEstimateSet D v u ↔
-      CompatibleDirectionalSliceEstimateAt D v u x :=
-  Iff.rfl
-
-@[simp]
-theorem mem_symmetricCompatibleDirectionalSliceEstimateSet
-    {ι : Type*} {D : Finset ι} {v : ι → E} {u : E → ℝ} {x : E} :
-    x ∈ symmetricCompatibleDirectionalSliceEstimateSet D v u ↔
-      SymmetricCompatibleDirectionalSliceEstimateAt D v u x :=
-  Iff.rfl
-
-@[simp]
-theorem mem_directionalSliceQuotientEstimateSet
-    {ι : Type*} {D : Finset ι} {v : ι → E} {u : E → ℝ} {x : E} :
-    x ∈ directionalSliceQuotientEstimateSet D v u ↔
-      DirectionalSliceQuotientEstimateAt D v u x :=
-  Iff.rfl
-
-@[simp]
-theorem mem_compatibleDirectionalSliceQuotientEstimateSet
-    {ι : Type*} {D : Finset ι} {v : ι → E} {u : E → ℝ} {x : E} :
-    x ∈ compatibleDirectionalSliceQuotientEstimateSet D v u ↔
-      CompatibleDirectionalSliceQuotientEstimateAt D v u x :=
-  Iff.rfl
-
-@[simp]
-theorem mem_symmetricCompatibleDirectionalSliceQuotientEstimateSet
-    {ι : Type*} {D : Finset ι} {v : ι → E} {u : E → ℝ} {x : E} :
-    x ∈ symmetricCompatibleDirectionalSliceQuotientEstimateSet D v u ↔
-      SymmetricCompatibleDirectionalSliceQuotientEstimateAt D v u x :=
-  Iff.rfl
-
-@[simp]
-theorem mem_directionalLineScalarEstimateSet
-    {v : E} {u : E → ℝ} {x : E} :
-    x ∈ directionalLineScalarEstimateSet v u ↔
-      RealScalarQuadraticEstimateAt (lineRestriction u x v) 0 :=
-  Iff.rfl
-
-@[simp]
-theorem mem_directionalLineScalarQuotientEstimateSet
-    {v : E} {u : E → ℝ} {x : E} :
-    x ∈ directionalLineScalarQuotientEstimateSet v u ↔
-      RealScalarQuadraticQuotientEstimateAt (lineRestriction u x v) 0 :=
-  Iff.rfl
 
 end AleksandrovDifferentiability

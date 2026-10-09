@@ -88,14 +88,6 @@ theorem HasUpperContactOn.exists_subgradient_contact_of_convex_of_mem_interior
   rcases h.exists_slope_contact with ⟨p, hp⟩
   exact ⟨p, hp.subgradientOn_of_convex_of_mem_interior hu hx, hp⟩
 
-/-- A convex upper quadratic contact at an interior point admits an ambient subgradient slope. -/
-theorem HasUpperContactOn.exists_subgradient_of_convex_of_mem_interior
-    {s : Set E} {u : E → ℝ} {x : E} {a : ℝ}
-    (h : HasUpperContactOn s u x a) (hu : ConvexOn ℝ s u) (hx : x ∈ interior s) :
-    ∃ p : E, SubgradientOn s u x p := by
-  rcases h.exists_subgradient_contact_of_convex_of_mem_interior hu hx with ⟨p, hp, _⟩
-  exact ⟨p, hp⟩
-
 /-- A bounded upper-contact opening for a convex function gives, for every larger opening, a
 slope which is both a subgradient and an upper-contact slope. -/
 theorem HasUpperContactOpeningAtMostOn.exists_subgradient_contact_add_pos_of_convex_of_mem_interior
@@ -122,15 +114,6 @@ theorem
     hqContact.slope_unique_of_convex_of_mem_interior hpContact hu hx
   simpa [hqp] using hqContact
 
-/-- A subgradient controls the right derivative of every one-dimensional restriction. -/
-theorem SubgradientOn.directional_le_lineRightDeriv
-    {s : Set E} {u : E → ℝ} {x p v : E} (hp : SubgradientOn s u x p)
-    (hu : ConvexOn ℝ s u) (h0 : (0 : ℝ) ∈ interior (lineDomain s x v)) :
-    inner ℝ p v ≤ rightDeriv (lineRestriction u x v) 0 := by
-  have hpLine := hp.lineRestriction_subgradientOn (v := v)
-  have huLine := ConvexOn.lineRestriction (x := x) (v := v) hu
-  simpa using hpLine.le_rightDeriv_of_convex huLine h0
-
 /-- A subgradient at an arbitrary point of a line controls the right derivative of the line
 restriction at the corresponding parameter. -/
 theorem SubgradientOn.directional_le_lineRightDeriv_at
@@ -141,15 +124,6 @@ theorem SubgradientOn.directional_le_lineRightDeriv_at
   have hpLine := hp.lineRestriction_subgradientOn_at (x := x) (v := v) (t := t)
   have huLine := ConvexOn.lineRestriction (x := x) (v := v) hu
   simpa using hpLine.le_rightDeriv_of_convex huLine ht
-
-/-- A subgradient controls the left derivative of every one-dimensional restriction. -/
-theorem SubgradientOn.lineLeftDeriv_le_directional
-    {s : Set E} {u : E → ℝ} {x p v : E} (hp : SubgradientOn s u x p)
-    (hu : ConvexOn ℝ s u) (h0 : (0 : ℝ) ∈ interior (lineDomain s x v)) :
-    leftDeriv (lineRestriction u x v) 0 ≤ inner ℝ p v := by
-  have hpLine := hp.lineRestriction_subgradientOn (v := v)
-  have huLine := ConvexOn.lineRestriction (x := x) (v := v) hu
-  simpa using hpLine.leftDeriv_le_of_convex huLine h0
 
 /-- A subgradient at an arbitrary point of a line controls the left derivative of the line
 restriction at the corresponding parameter. -/
@@ -173,36 +147,6 @@ theorem SubgradientOn.directional_mem_Icc_leftDeriv_rightDeriv_at
       (rightDeriv (lineRestriction u x v) t) :=
   ⟨hp.lineLeftDeriv_le_directional_at hu ht, hp.directional_le_lineRightDeriv_at hu ht⟩
 
-/-- Interior-domain version of the right-derivative bound along a line. -/
-theorem SubgradientOn.directional_le_lineRightDeriv_of_mem_interior
-    {s : Set E} {u : E → ℝ} {x p v : E} (hp : SubgradientOn s u x p)
-    (hu : ConvexOn ℝ s u) (hx : x ∈ interior s) :
-    inner ℝ p v ≤ rightDeriv (lineRestriction u x v) 0 :=
-  hp.directional_le_lineRightDeriv hu (zero_mem_interior_lineDomain hx)
-
-/-- Interior-domain version of the left-derivative bound along a line. -/
-theorem SubgradientOn.lineLeftDeriv_le_directional_of_mem_interior
-    {s : Set E} {u : E → ℝ} {x p v : E} (hp : SubgradientOn s u x p)
-    (hu : ConvexOn ℝ s u) (hx : x ∈ interior s) :
-    leftDeriv (lineRestriction u x v) 0 ≤ inner ℝ p v :=
-  hp.lineLeftDeriv_le_directional hu (zero_mem_interior_lineDomain hx)
-
-/-- Interior-domain version of the arbitrary-parameter right-derivative bound along a line. -/
-theorem SubgradientOn.directional_le_lineRightDeriv_at_of_mem_interior
-    {s : Set E} {u : E → ℝ} {x p v : E} {t : ℝ}
-    (hp : SubgradientOn s u (x + t • v) p) (hu : ConvexOn ℝ s u)
-    (ht : x + t • v ∈ interior s) :
-    inner ℝ p v ≤ rightDeriv (lineRestriction u x v) t :=
-  hp.directional_le_lineRightDeriv_at hu (mem_interior_lineDomain_of_line_mem_interior ht)
-
-/-- Interior-domain version of the arbitrary-parameter left-derivative bound along a line. -/
-theorem SubgradientOn.lineLeftDeriv_le_directional_at_of_mem_interior
-    {s : Set E} {u : E → ℝ} {x p v : E} {t : ℝ}
-    (hp : SubgradientOn s u (x + t • v) p) (hu : ConvexOn ℝ s u)
-    (ht : x + t • v ∈ interior s) :
-    leftDeriv (lineRestriction u x v) t ≤ inner ℝ p v :=
-  hp.lineLeftDeriv_le_directional_at hu (mem_interior_lineDomain_of_line_mem_interior ht)
-
 /-- Interior-domain version of the interval bound for ambient subgradient directional values. -/
 theorem SubgradientOn.directional_mem_Icc_leftDeriv_rightDeriv_at_of_mem_interior
     {s : Set E} {u : E → ℝ} {x p v : E} {t : ℝ}
@@ -213,120 +157,5 @@ theorem SubgradientOn.directional_mem_Icc_leftDeriv_rightDeriv_at_of_mem_interio
       (rightDeriv (lineRestriction u x v) t) :=
   hp.directional_mem_Icc_leftDeriv_rightDeriv_at hu
     (mem_interior_lineDomain_of_line_mem_interior ht)
-
-/-- If a cluster gradient dominates the right derivative of the line restriction, then it
-dominates every ambient subgradient in that direction. -/
-theorem SubgradientOn.exists_cluster_inner_ge_of_lineRightDeriv_le
-    {s D : Set E} {u : E → ℝ} {G : E → E} {x p v : E}
-    (hp : SubgradientOn s u x p) (hu : ConvexOn ℝ s u) (hx : x ∈ interior s)
-    (hcluster : ∃ q ∈ HasSubgradientLinearizationOnAt.GradientClusterSet D G x,
-      rightDeriv (lineRestriction u x v) 0 ≤ inner ℝ q v) :
-    ∃ q ∈ HasSubgradientLinearizationOnAt.GradientClusterSet D G x,
-      inner ℝ p v ≤ inner ℝ q v := by
-  rcases hcluster with ⟨q, hq, hright⟩
-  exact ⟨q, hq, (hp.directional_le_lineRightDeriv_of_mem_interior hu hx).trans hright⟩
-
-/-- Eventual version of the right-derivative-to-cluster bridge for all subgradients and
-directions. -/
-theorem eventually_directional_dominating_cluster_of_lineRightDeriv_le
-    {s D approach : Set E} {u : E → ℝ} {G : E → E} {x : E}
-    (hu : ConvexOn ℝ s u)
-    (hinterior : ∀ᶠ y in nhdsWithin x approach, y ∈ interior s)
-    (hcluster : ∀ᶠ y in nhdsWithin x approach,
-      ∀ v : E, ∃ q ∈ HasSubgradientLinearizationOnAt.GradientClusterSet D G y,
-        rightDeriv (lineRestriction u y v) 0 ≤ inner ℝ q v) :
-    ∀ᶠ y in nhdsWithin x approach,
-      ∀ p : E, SubgradientOn s u y p →
-        ∀ v : E, ∃ q ∈ HasSubgradientLinearizationOnAt.GradientClusterSet D G y,
-          inner ℝ p v ≤ inner ℝ q v := by
-  filter_upwards [hinterior, hcluster] with y hyInterior hyCluster p hp v
-  exact hp.exists_cluster_inner_ge_of_lineRightDeriv_le hu hyInterior (hyCluster v)
-
-/-- If a subgradient has directional value at least the right derivative, then it realizes the
-right derivative exactly.  The reverse inequality is the general subgradient directional bound. -/
-theorem SubgradientOn.lineRightDeriv_eq_inner_of_lineRightDeriv_le
-    {s : Set E} {u : E → ℝ} {x p v : E} {t : ℝ}
-    (hp : SubgradientOn s u (x + t • v) p) (hu : ConvexOn ℝ s u)
-    (ht : t ∈ interior (lineDomain s x v))
-    (hle : rightDeriv (lineRestriction u x v) t ≤ inner ℝ p v) :
-    rightDeriv (lineRestriction u x v) t = inner ℝ p v :=
-  le_antisymm hle (hp.directional_le_lineRightDeriv_at hu ht)
-
-/-- Interior-domain version of
-`SubgradientOn.lineRightDeriv_eq_inner_of_lineRightDeriv_le`. -/
-theorem SubgradientOn.lineRightDeriv_eq_inner_of_lineRightDeriv_le_of_mem_interior
-    {s : Set E} {u : E → ℝ} {x p v : E} {t : ℝ}
-    (hp : SubgradientOn s u (x + t • v) p) (hu : ConvexOn ℝ s u)
-    (ht : x + t • v ∈ interior s)
-    (hle : rightDeriv (lineRestriction u x v) t ≤ inner ℝ p v) :
-    rightDeriv (lineRestriction u x v) t = inner ℝ p v :=
-  hp.lineRightDeriv_eq_inner_of_lineRightDeriv_le hu
-    (mem_interior_lineDomain_of_line_mem_interior ht) hle
-
-/-- If a subgradient has directional value at most the left derivative, then it realizes the
-left derivative exactly.  The reverse inequality is the general subgradient directional bound. -/
-theorem SubgradientOn.lineLeftDeriv_eq_inner_of_inner_le_lineLeftDeriv
-    {s : Set E} {u : E → ℝ} {x p v : E} {t : ℝ}
-    (hp : SubgradientOn s u (x + t • v) p) (hu : ConvexOn ℝ s u)
-    (ht : t ∈ interior (lineDomain s x v))
-    (hle : inner ℝ p v ≤ leftDeriv (lineRestriction u x v) t) :
-    leftDeriv (lineRestriction u x v) t = inner ℝ p v :=
-  le_antisymm (hp.lineLeftDeriv_le_directional_at hu ht) hle
-
-/-- Interior-domain version of
-`SubgradientOn.lineLeftDeriv_eq_inner_of_inner_le_lineLeftDeriv`. -/
-theorem SubgradientOn.lineLeftDeriv_eq_inner_of_inner_le_lineLeftDeriv_of_mem_interior
-    {s : Set E} {u : E → ℝ} {x p v : E} {t : ℝ}
-    (hp : SubgradientOn s u (x + t • v) p) (hu : ConvexOn ℝ s u)
-    (ht : x + t • v ∈ interior s)
-    (hle : inner ℝ p v ≤ leftDeriv (lineRestriction u x v) t) :
-    leftDeriv (lineRestriction u x v) t = inner ℝ p v :=
-  hp.lineLeftDeriv_eq_inner_of_inner_le_lineLeftDeriv hu
-    (mem_interior_lineDomain_of_line_mem_interior ht) hle
-
-/-- Compact-subdifferential right-endpoint attainment wrapper.
-
-The hypothesis `hmax_le` is the support-function inequality expected from applying Mathlib's
-separation theorem to the epigraph/line-minorant configuration.  The compactness and extreme-value
-boilerplate is handled here. -/
-theorem ConvexOn.exists_subgradient_lineRightDeriv_eq_inner_of_isBounded_of_forall_isMaxOn
-    [ProperSpace E] {s : Set E} {u : E → ℝ} {x z : E} {t : ℝ}
-    (hu : ConvexOn ℝ s u) (ht : x + t • z ∈ interior s)
-    (hne : {p : E | SubgradientOn s u (x + t • z) p}.Nonempty)
-    (hb : Bornology.IsBounded {p : E | SubgradientOn s u (x + t • z) p})
-    (hmax_le : ∀ p : E, SubgradientOn s u (x + t • z) p →
-      IsMaxOn (fun q : E => inner ℝ q z)
-        {q : E | SubgradientOn s u (x + t • z) q} p →
-      rightDeriv (AleksandrovDifferentiability.lineRestriction u x z) t ≤ inner ℝ p z) :
-    ∃ p : E, SubgradientOn s u (x + t • z) p ∧
-      rightDeriv (AleksandrovDifferentiability.lineRestriction u x z) t = inner ℝ p z := by
-  rcases exists_isMaxOn_inner_subgradientOn_of_isBounded
-      (s := s) (u := u) (x := x + t • z) z hne hb with
-    ⟨p, hp, hpmax⟩
-  exact ⟨p, hp,
-    hp.lineRightDeriv_eq_inner_of_lineRightDeriv_le_of_mem_interior hu ht
-      (hmax_le p hp hpmax)⟩
-
-/-- Compact-subdifferential left-endpoint attainment wrapper.
-
-The hypothesis `hmin_le` is the support-function inequality expected from applying Mathlib's
-separation theorem to the epigraph/line-minorant configuration. -/
-theorem ConvexOn.exists_subgradient_lineLeftDeriv_eq_inner_of_isBounded_of_forall_isMinOn
-    [ProperSpace E] {s : Set E} {u : E → ℝ} {x z : E} {t : ℝ}
-    (hu : ConvexOn ℝ s u) (ht : x + t • z ∈ interior s)
-    (hne : {p : E | SubgradientOn s u (x + t • z) p}.Nonempty)
-    (hb : Bornology.IsBounded {p : E | SubgradientOn s u (x + t • z) p})
-    (hmin_le : ∀ p : E, SubgradientOn s u (x + t • z) p →
-      IsMinOn (fun q : E => inner ℝ q z)
-        {q : E | SubgradientOn s u (x + t • z) q} p →
-      inner ℝ p z ≤ leftDeriv (AleksandrovDifferentiability.lineRestriction u x z) t) :
-    ∃ p : E, SubgradientOn s u (x + t • z) p ∧
-      leftDeriv (AleksandrovDifferentiability.lineRestriction u x z) t = inner ℝ p z := by
-  rcases exists_isMinOn_inner_subgradientOn_of_isBounded
-      (s := s) (u := u) (x := x + t • z) z hne hb with
-    ⟨p, hp, hpmin⟩
-  exact ⟨p, hp,
-    hp.lineLeftDeriv_eq_inner_of_inner_le_lineLeftDeriv_of_mem_interior hu ht
-      (hmin_le p hp hpmin)⟩
 
 end AleksandrovDifferentiability

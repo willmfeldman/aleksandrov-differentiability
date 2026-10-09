@@ -79,20 +79,6 @@ def coordinateSliceLineBadSet {n : ℕ} (μslice : CoordinateSliceMeasureFamily 
     (i : Fin n) (y : SourceCubeSpace n) (t : ℝ) : Set ℝ :=
   sourceLocalizedMaximalBadSet (μslice i y) t
 
-/-- Product-coordinate measurability obligation for the concrete localized maximal slice
-predicate. -/
-def CoordinateSliceMaximalBadPredicateMeasurable {n : ℕ}
-    (μslice : CoordinateSliceMeasureFamily n) (t : ℝ) : Prop :=
-  CoordinateSliceBadPredicateMeasurable (coordinateSliceMaximalBadPredicate μslice) t
-
-/-- One-dimensional parameterized measurability obligation for every coordinate slice family.
-
-For each coordinate direction `i`, the parameter is the coordinate-line base `y`, and the
-one-dimensional source-local maximal bad predicate is measurable in `(y,s)`. -/
-def CoordinateSliceSourceLocalizedMaximalMeasurable {n : ℕ}
-    (μslice : CoordinateSliceMeasureFamily n) (t : ℝ) : Prop :=
-  ∀ i : Fin n, SourceLocalizedMaximalBadPredicateMeasurable (μslice i) t
-
 /-- Source-window-restricted one-dimensional measurability obligation for every coordinate slice
 family.  This is sufficient for the cube bad sets, since their coordinate parameter lies in
 `sourceMaximalWindow`. -/
@@ -166,32 +152,6 @@ def CoordinateSliceMaximalBadSetMeasurable {n : ℕ}
     (μslice : CoordinateSliceMeasureFamily n) (t : ℝ) : Prop :=
   ∀ i : Fin n,
     MeasurableSet (coordinateSliceBadSet (coordinateSliceMaximalBadPredicate μslice) i t)
-
-/-- Joint product-coordinate measurability of the maximal bad predicate gives measurability of
-the ambient coordinate maximal bad sets. -/
-theorem CoordinateSliceMaximalBadPredicateMeasurable.badSetMeasurable {n : ℕ}
-    {μslice : CoordinateSliceMeasureFamily n} {t : ℝ}
-    (hbad : CoordinateSliceMaximalBadPredicateMeasurable μslice t) :
-    CoordinateSliceMaximalBadSetMeasurable μslice t :=
-  hbad.coordinateSliceBadSet
-
-/-- Parameterized one-dimensional maximal measurability supplies the product-coordinate
-measurability of the coordinate maximal bad predicate. -/
-theorem CoordinateSliceSourceLocalizedMaximalMeasurable.badPredicateMeasurable {n : ℕ}
-    {μslice : CoordinateSliceMeasureFamily n} {t : ℝ}
-    (hbad : CoordinateSliceSourceLocalizedMaximalMeasurable μslice t) :
-    CoordinateSliceMaximalBadPredicateMeasurable μslice t := by
-  intro i
-  simpa [CoordinateSliceMaximalBadPredicateMeasurable, CoordinateSliceBadPredicateMeasurable,
-    SourceLocalizedMaximalBadPredicateMeasurable, coordinateSliceMaximalBadPredicate] using hbad i
-
-/-- Parameterized one-dimensional maximal measurability supplies measurability of the ambient
-coordinate maximal bad sets. -/
-theorem CoordinateSliceSourceLocalizedMaximalMeasurable.badSetMeasurable {n : ℕ}
-    {μslice : CoordinateSliceMeasureFamily n} {t : ℝ}
-    (hbad : CoordinateSliceSourceLocalizedMaximalMeasurable μslice t) :
-    CoordinateSliceMaximalBadSetMeasurable μslice t :=
-  hbad.badPredicateMeasurable.badSetMeasurable
 
 /-- Source-window-restricted one-dimensional maximal measurability supplies measurability of the
 ambient coordinate maximal bad sets. -/
@@ -294,14 +254,6 @@ end CoordinateSliceSourceLocalizedMaximalAverageExceedsRationalRefinement
 
 namespace CoordinateSliceSourceLocalizedMaximalAverageExceedsCountableIntervalReverseCover
 
-/-- Coordinate inner-rational refinement gives coordinate rational refinement. -/
-theorem rationalRefinement_of_inner
-    {n : ℕ} {μslice : CoordinateSliceMeasureFamily n} {t : ℝ}
-    (hrefine :
-      CoordinateSliceSourceLocalizedMaximalAverageExceedsInnerRationalRefinement μslice t) :
-    CoordinateSliceSourceLocalizedMaximalAverageExceedsRationalRefinement μslice t :=
-  CoordinateSliceSourceLocalizedMaximalAverageExceedsRationalRefinement.of_inner hrefine
-
 /-- A rational interval enumeration and coordinate rational refinement give the coordinate
 reverse-cover direction. -/
 theorem of_rationalRefinement
@@ -328,20 +280,6 @@ theorem CoordinateSliceAverageExceedsCountableIntervalFamily.of_measurableAverag
     SourceLocalizedMaximalAverageExceedsCountableIntervalFamilyMeasurable.of_measurableAverage
       (havg i)
 
-/-- A countable fixed-interval representation of the source average-exceeds sets is enough for
-coordinate maximal bad-set measurability. -/
-theorem CoordinateSliceAverageExceedsCountableIntervalFamily.badSetMeasurable
-    {n : ℕ} {μslice : CoordinateSliceMeasureFamily n} {a b : ℕ → ℝ}
-    {t : ℝ}
-    (hfixed :
-      CoordinateSliceSourceLocalizedMaximalAverageExceedsCountableIntervalFamilyMeasurable
-        μslice a b t)
-    (hcover :
-      CoordinateSliceSourceLocalizedMaximalAverageExceedsCountableIntervalCover μslice a b t) :
-    CoordinateSliceMaximalBadSetMeasurable μslice t :=
-  (CoordinateSliceSourceLocalizedMaximalAverageExceedsMeasurable.of_countableIntervalFamily
-    hfixed hcover).badSetMeasurable
-
 /-- Uniform source mass bound for every coordinate slice over bases in `Q_1`.  In the source
 proof this comes from the one-dimensional convex second-derivative mass estimate applied to
 `s ↦ u(y + s e_i)`, and the bound by `osc_{Q_3} u`. -/
@@ -357,40 +295,11 @@ theorem mem_coordinateSliceLineBadSet {n : ℕ} {μslice : CoordinateSliceMeasur
       s ∈ sourceMaximalWindow ∧ sourceLocalizedMaximalBadPredicate (μslice i y) s t :=
   Iff.rfl
 
-/-- Membership in a coordinate-line maximal bad set is equivalent to the existence of one
-source-admissible interval through the line parameter whose slice-measure average exceeds the
-threshold. -/
-theorem mem_coordinateSliceLineBadSet_iff_exists_average_gt {n : ℕ}
-    {μslice : CoordinateSliceMeasureFamily n} {i : Fin n} {y : SourceCubeSpace n} {t s : ℝ} :
-    s ∈ coordinateSliceLineBadSet μslice i y t ↔
-      s ∈ sourceMaximalWindow ∧
-        ∃ a b : ℝ,
-          a < b ∧ Set.Ioo a b ⊆ sourceMaximalDomain ∧ s ∈ Set.Ioo a b ∧
-            t < openIntervalMeasureAverage (μslice i y) a b := by
-  constructor
-  · intro hsbad
-    exact ⟨hsbad.1,
-      (sourceLocalizedMaximalBadPredicate_iff_exists_average_gt_of_mem_window
-        (μ := μslice i y) hsbad.1).mp hsbad.2⟩
-  · rintro ⟨hswindow, hinterval⟩
-    exact ⟨hswindow,
-      (sourceLocalizedMaximalBadPredicate_iff_exists_average_gt_of_mem_window
-        (μ := μslice i y) hswindow).mpr hinterval⟩
-
 /-- Product-chart preimage of the concrete coordinate bad set for direction `i`. -/
 def coordinateSliceBadSetProductModel {n : ℕ} (μslice : CoordinateSliceMeasureFamily n)
     (i : Fin n) (t : ℝ) : Set (SourceTransverseSpace i × ℝ) :=
   sourceCoordinateChartMap i ⁻¹'
     coordinateSliceBadSet (coordinateSliceMaximalBadPredicate μslice) i t
-
-@[simp]
-theorem mem_coordinateSliceBadSetProductModel {n : ℕ}
-    {μslice : CoordinateSliceMeasureFamily n} {i : Fin n} {t : ℝ}
-    {p : SourceTransverseSpace i × ℝ} :
-    p ∈ coordinateSliceBadSetProductModel μslice i t ↔
-      sourceCoordinateChartPoint i p.1 p.2 ∈
-        coordinateSliceBadSet (coordinateSliceMaximalBadPredicate μslice) i t :=
-  Iff.rfl
 
 /-- Measurability of the product-model bad set follows from measurability of the ambient
 coordinate bad set and continuity of the coordinate chart. -/
@@ -454,30 +363,6 @@ theorem mem_coordinateSliceBadSet_maximal_iff {n : ℕ}
   · rintro ⟨hxQ, hxiBad⟩
     exact ⟨hxQ, hxiBad.2⟩
 
-/-- Ambient coordinate maximal bad-set membership in interval-average form.  This is the
-source-proof description of `E_i(t)`: a point of `Q_1` is bad in coordinate direction `i` iff
-some source-admissible interval through its coordinate parameter has average larger than `t`. -/
-theorem mem_coordinateSliceBadSet_maximal_iff_exists_average_gt {n : ℕ}
-    {μslice : CoordinateSliceMeasureFamily n} {i : Fin n} {t : ℝ}
-    {x : SourceCubeSpace n} :
-    x ∈ coordinateSliceBadSet (coordinateSliceMaximalBadPredicate μslice) i t ↔
-      x ∈ sourceOpenCube n 1 ∧
-        ∃ a b : ℝ,
-          a < b ∧ Set.Ioo a b ⊆ sourceMaximalDomain ∧ x i ∈ Set.Ioo a b ∧
-            t < openIntervalMeasureAverage (μslice i (coordinateLineBase i x)) a b := by
-  constructor
-  · intro hx
-    rcases mem_coordinateSliceBadSet_maximal_iff.mp hx with ⟨hxQ, hline⟩
-    exact ⟨hxQ, (mem_coordinateSliceLineBadSet_iff_exists_average_gt.mp hline).2⟩
-  · rintro ⟨hxQ, hinterval⟩
-    have hxi_window : x i ∈ sourceMaximalWindow := by
-      have hxi_abs : |x i| < 1 := by
-        simpa using hxQ i
-      simpa [sourceMaximalWindow] using (abs_lt.mp hxi_abs)
-    exact mem_coordinateSliceBadSet_maximal_iff.mpr
-      ⟨hxQ, mem_coordinateSliceLineBadSet_iff_exists_average_gt.mpr
-        ⟨hxi_window, hinterval⟩⟩
-
 /-- The product-model coordinate bad set is supported over the transverse unit cube. -/
 theorem coordinateSliceBadSetProductModel_subset_transverse {n : ℕ}
     {μslice : CoordinateSliceMeasureFamily n} {i : Fin n} {t : ℝ} :
@@ -512,21 +397,6 @@ theorem sourceTransverseOpenCube_volume_le_ofReal_toReal {n : ℕ} (i : Fin n) :
     volume (sourceTransverseOpenCube i 1) ≤
       ENNReal.ofReal (volume (sourceTransverseOpenCube i 1)).toReal := by
   rw [ENNReal.ofReal_toReal (sourceTransverseOpenCube_volume_lt_top i).ne]
-
-/-- There exists a real transverse constant bounding the Lebesgue measure of every coordinate
-transverse unit cube.  This is the constant-existence form needed before choosing a cleaner
-closed-form scalar in the final source estimate. -/
-theorem exists_forall_sourceTransverseOpenCube_volume_le_ofReal {n : ℕ} :
-    ∃ Ctrans : ℝ,
-      ∀ i : Fin n, volume (sourceTransverseOpenCube i 1) ≤ ENNReal.ofReal Ctrans := by
-  classical
-  refine ⟨∑ i : Fin n, (volume (sourceTransverseOpenCube i 1)).toReal, ?_⟩
-  intro i
-  refine (sourceTransverseOpenCube_volume_le_ofReal_toReal i).trans ?_
-  exact ENNReal.ofReal_le_ofReal (Finset.single_le_sum
-    (fun j _ => ENNReal.toReal_nonneg
-      (a := volume (sourceTransverseOpenCube j 1)))
-    (Finset.mem_univ i))
 
 /-- There exists a nonnegative real transverse constant bounding the Lebesgue measure of every
 coordinate transverse unit cube. -/

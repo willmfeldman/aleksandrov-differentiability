@@ -257,34 +257,6 @@ theorem volume_biUnion_enlarged_witnessBall_le_tsum
       Metric.ball (SourceMaximalWitnessInterval.center I)
         (τ * SourceMaximalWitnessInterval.radius I))
 
-/-- The source pointwise ball estimate summed over a countable selected witness family. -/
-theorem volume_biUnion_enlarged_witnessBall_le_tsum_average
-    {μ : Measure ℝ} {t τ : ℝ} {u : Set (SourceMaximalWitnessInterval μ t)}
-    (hcount : u.Countable) (ht : 0 < t) (hτ : 0 ≤ τ) :
-    volume
-        (⋃ I ∈ u,
-          Metric.ball (SourceMaximalWitnessInterval.center I)
-            (τ * SourceMaximalWitnessInterval.radius I)) ≤
-      ∑' I : u,
-        ENNReal.ofReal
-          ((τ / t) * μ.real (SourceMaximalWitnessInterval.interval I.1)) := by
-  calc
-    volume
-        (⋃ I ∈ u,
-          Metric.ball (SourceMaximalWitnessInterval.center I)
-            (τ * SourceMaximalWitnessInterval.radius I)) ≤
-        ∑' I : u,
-          volume
-            (Metric.ball (SourceMaximalWitnessInterval.center I.1)
-              (τ * SourceMaximalWitnessInterval.radius I.1)) :=
-      volume_biUnion_enlarged_witnessBall_le_tsum (μ := μ) (t := t) (τ := τ) hcount
-    _ ≤
-        ∑' I : u,
-          ENNReal.ofReal
-            ((τ / t) * μ.real (SourceMaximalWitnessInterval.interval I.1)) :=
-      ENNReal.tsum_le_tsum fun I =>
-        SourceMaximalWitnessInterval.volume_enlargedBall_le_of_average I.1 ht hτ
-
 /-- The source pointwise ball estimate summed in measure-valued form over a countable selected
 witness family. -/
 theorem volume_biUnion_enlarged_witnessBall_le_mul_tsum_measure

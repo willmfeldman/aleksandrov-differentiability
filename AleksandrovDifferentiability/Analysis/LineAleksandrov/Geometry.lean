@@ -35,28 +35,6 @@ def unitSpanLinearIsometryEquivReal (ξ : E) (hξ : ‖ξ‖ = 1) : (ℝ ∙ ξ)
     simp [mul_comm]
   simpa [RCLike.inner_apply, mul_comm] using hrhs.symm
 
-@[simp]
-theorem unitSpanLinearIsometryEquivReal_apply_self (ξ : E) (hξ : ‖ξ‖ = 1) :
-    unitSpanLinearIsometryEquivReal ξ hξ
-      (⟨ξ, Submodule.mem_span_singleton_self ξ⟩ : ℝ ∙ ξ) = 1 := by
-  unfold unitSpanLinearIsometryEquivReal
-  simp [LinearEquiv.coord_self]
-
-/-- Splitting by the hyperplane perpendicular to `ξ` sends `ξ` to its vertical component. -/
-theorem orthogonalDecomposition_orthogonal_span_singleton_apply_self (ξ : E) :
-    ((ℝ ∙ ξ)ᗮ).orthogonalDecomposition ξ =
-      WithLp.toLp 2
-        ((0 : (ℝ ∙ ξ)ᗮ),
-          (⟨ξ, (ℝ ∙ ξ).le_orthogonal_orthogonal (Submodule.mem_span_singleton_self ξ)⟩ :
-            ((ℝ ∙ ξ)ᗮ)ᗮ)) := by
-  rw [Submodule.orthogonalDecomposition_apply]
-  congr
-  · exact Submodule.orthogonalProjectionOnto_orthogonal_apply_eq_zero
-      (K := ℝ ∙ ξ) (Submodule.mem_span_singleton_self ξ)
-  · exact Submodule.orthogonalProjectionOnto_mem_subspace_eq_self
-      (⟨ξ, (ℝ ∙ ξ).le_orthogonal_orthogonal (Submodule.mem_span_singleton_self ξ)⟩ :
-        ((ℝ ∙ ξ)ᗮ)ᗮ)
-
 /-- A canonical coordinate model sending a unit direction to the vertical vector `(0,1)`.
 
 The first factor is the hyperplane perpendicular to the direction, and the second factor is the
@@ -70,40 +48,5 @@ def verticalizingLinearIsometryEquiv (ξ : E) (hξ : ‖ξ‖ = 1) :
       (unitSpanLinearIsometryEquivReal ξ hξ)
   K.orthogonalDecomposition.trans
     (LinearIsometryEquiv.withLpProdCongr 2 (LinearIsometryEquiv.refl ℝ K) lineToReal)
-
-@[simp]
-theorem verticalizingLinearIsometryEquiv_apply_self (ξ : E) (hξ : ‖ξ‖ = 1) :
-    verticalizingLinearIsometryEquiv ξ hξ ξ =
-      WithLp.toLp 2 (((0 : (ℝ ∙ ξ)ᗮ), (1 : ℝ)) : ((ℝ ∙ ξ)ᗮ) × ℝ) := by
-  dsimp [verticalizingLinearIsometryEquiv]
-  let K : Submodule ℝ E := (ℝ ∙ ξ)ᗮ
-  let horth : Kᗮ = ℝ ∙ ξ := Submodule.orthogonal_orthogonal (ℝ ∙ ξ)
-  have hfst : (((ℝ ∙ ξ)ᗮ).orthogonalDecomposition ξ).fst = (0 : (ℝ ∙ ξ)ᗮ) := by
-    rw [Submodule.fst_orthogonalDecomposition_apply]
-    exact Submodule.orthogonalProjectionOnto_orthogonal_apply_eq_zero
-      (K := ℝ ∙ ξ) (Submodule.mem_span_singleton_self ξ)
-  have hsnd :
-      (((ℝ ∙ ξ)ᗮ).orthogonalDecomposition ξ).snd =
-        (⟨ξ, (ℝ ∙ ξ).le_orthogonal_orthogonal (Submodule.mem_span_singleton_self ξ)⟩ :
-          ((ℝ ∙ ξ)ᗮ)ᗮ) := by
-    rw [Submodule.snd_orthogonalDecomposition_apply]
-    exact Submodule.orthogonalProjectionOnto_mem_subspace_eq_self
-      (⟨ξ, (ℝ ∙ ξ).le_orthogonal_orthogonal (Submodule.mem_span_singleton_self ξ)⟩ :
-        ((ℝ ∙ ξ)ᗮ)ᗮ)
-  have hofEq :
-      (LinearIsometryEquiv.ofEq ((ℝ ∙ ξ)ᗮ)ᗮ (ℝ ∙ ξ)
-          (Submodule.orthogonal_orthogonal (ℝ ∙ ξ)))
-        (⟨ξ, (ℝ ∙ ξ).le_orthogonal_orthogonal (Submodule.mem_span_singleton_self ξ)⟩ :
-          ((ℝ ∙ ξ)ᗮ)ᗮ) =
-        (⟨ξ, Submodule.mem_span_singleton_self ξ⟩ : ℝ ∙ ξ) := by
-    ext
-    exact LinearIsometryEquiv.coe_ofEq_apply (Submodule.orthogonal_orthogonal (ℝ ∙ ξ))
-      (⟨ξ, (ℝ ∙ ξ).le_orthogonal_orthogonal (Submodule.mem_span_singleton_self ξ)⟩ :
-        ((ℝ ∙ ξ)ᗮ)ᗮ)
-  simp only [LinearIsometryEquiv.withLpProdCongr_apply]
-  rw [hfst, hsnd]
-  simp only [LinearIsometryEquiv.trans_apply, hofEq]
-  simp [unitSpanLinearIsometryEquivReal_apply_self]
-
 
 end AleksandrovDifferentiability

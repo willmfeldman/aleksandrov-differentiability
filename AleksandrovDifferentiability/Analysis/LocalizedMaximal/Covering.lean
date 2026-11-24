@@ -283,7 +283,7 @@ theorem volume_biUnion_enlarged_witnessBall_le_mul_tsum_measure
         ∑' I : u,
           ENNReal.ofReal (τ / t) *
             μ (SourceMaximalWitnessInterval.interval I.1) := by
-      refine ENNReal.tsum_le_tsum fun I => ?_
+      refine tsum_le_tsum fun I => ?_
       have hfiniteI :
           μ (SourceMaximalWitnessInterval.interval I.1) ≠ ⊤ :=
         (measure_ne_top_of_subset

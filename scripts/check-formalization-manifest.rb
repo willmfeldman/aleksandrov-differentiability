@@ -10,7 +10,7 @@
 #   challenges/*/config.json; each workspace is complete, its Vocabulary.lean and its
 #   self-contained Challenge.lean import only Mathlib, and its Solution.lean only Vocabulary,
 #   AleksandrovDifferentiability and Mathlib modules; config theorem names and permitted axioms agree;
-# * the pinned Comparator tool revisions agree with scripts/release-comparator.sh.
+# * the comparator engine is the toolchain's `lake comparator` (no pinned tool revisions).
 #
 # Lean checks (after `lake build`): every target and API smoke-test name resolves, and each target
 # depends on exactly axioms.expected.
@@ -128,14 +128,14 @@ entries.each do |entry|
   failures << "#{path}: unexpected solution module" unless config.fetch('solution_module') == 'Solution'
 end
 
-driver = File.read('scripts/release-comparator.sh')
-{ 'comparator_revision' => 'COMPARATOR_REV',
-  'lean4export_revision' => 'LEAN4EXPORT_REV',
-  'landrun_revision' => 'LANDRUN_REV' }.each do |key, var|
-  pinned = driver[/^#{var}=(\h+)$/, 1]
-  failures << "#{key} #{external[key].inspect} differs from #{var} in scripts/release-comparator.sh" \
-    unless pinned && external[key] == pinned
+# The comparator ships with the toolchain, so the toolchain pin is the tool pin.
+failures << "comparator engine #{external['engine'].inspect} is not \"lake comparator\"" \
+  unless external['engine'] == 'lake comparator'
+%w[comparator_revision lean4export_revision landrun_revision].each do |key|
+  failures << "#{key} is obsolete (the engine is lake comparator); remove it" if external.key?(key)
 end
+failures << 'scripts/release-comparator.sh is not the lake comparator driver' \
+  unless File.read('scripts/release-comparator.sh').include?('lake comparator')
 
 abort failures.join("\n") unless failures.empty?
 if metadata_only

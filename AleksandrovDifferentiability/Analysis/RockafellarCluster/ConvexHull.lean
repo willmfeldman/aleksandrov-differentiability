@@ -4,6 +4,7 @@ public import AleksandrovDifferentiability.Analysis.RockafellarCluster.Exposed
 public import Mathlib.Analysis.Convex.Caratheodory
 public import Mathlib.Analysis.Convex.KreinMilman
 public import Mathlib.Analysis.Convex.StdSimplex
+public import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
 
 /-!
 # Closed convex hull and Straszewicz reductions

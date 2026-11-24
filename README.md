@@ -57,7 +57,7 @@ Rockafellar/Straszewicz-style exposed-point and subgradient-cluster material und
 
 ## Build
 
-This project uses Lean `v4.35.0-rc3` and Mathlib `v4.35.0-rc3`, as recorded in `lean-toolchain`,
+This project uses Lean `v4.36.0` and Mathlib `v4.36.0`, as recorded in `lean-toolchain`,
 `lakefile.lean`, and `lake-manifest.json`.
 
 ```bash
@@ -93,7 +93,8 @@ The directory `challenges/` contains the standalone comparator challenge workspa
 `Challenge.lean` is self-contained (its vocabulary block is generated from `Vocabulary.lean`), and
 only `Solution.lean` imports `AleksandrovDifferentiability`.
 Ordinary CI elaborates these sources, but exact statement equality and permitted axioms are gated
-by `.github/workflows/release-comparator.yml` on a GitHub-hosted Linux runner.
+by `.github/workflows/release-comparator.yml`, which runs the pinned toolchain's `lake comparator`
+(with every checker bundled with the toolchain) on a GitHub-hosted Linux runner.
 
 The file `AleksandrovDifferentiability/Comparator.lean` remains a Lean API-regression smoke-test
 surface for public imports and supporting interfaces. It is wired as the default Lake target

@@ -57,7 +57,10 @@ jobs:
           [ "$GITHUB_REF" = refs/heads/main ] || { echo "Dispatch on main (got $GITHUB_REF)." >&2; exit 1; }
           [ "$sha" = "$(git rev-parse origin/main)" ] || { echo "$sha is not the main tip." >&2; exit 1; }
           [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "Version must be X.Y.Z." >&2; exit 1; }
-          have=$(sed -nE 's/^[[:space:]]*version[[:space:]]*:?=[[:space:]]*(v!)?"([^"]+)".*/\2/p' lakefile.toml lakefile.lean 2>/dev/null | head -1)
+          # Only the lakefiles that exist: sed exits 2 on a missing file, which pipefail would turn into a failure.
+          have=$(for f in lakefile.toml lakefile.lean; do
+                   [ ! -f "$f" ] || sed -nE 's/^[[:space:]]*version[[:space:]]*:?=[[:space:]]*(v!)?"([^"]+)".*/\2/p' "$f"
+                 done | head -1)
           [ "$have" = "$VERSION" ] || { echo "Lakefile version is '$have', not $VERSION." >&2; exit 1; }
           if git ls-remote --exit-code --tags origin "refs/tags/$TAG" >/dev/null; then
             echo "Tag $TAG already exists." >&2; exit 1
@@ -67,14 +70,15 @@ jobs:
         run: |
           set -euo pipefail
           workflows=("CI" "Release comparator")
-          [ "$PREFLIGHT" = true ] && workflows+=("Challenge preflight")
+          if [ "$PREFLIGHT" = true ]; then workflows+=("Challenge preflight"); fi
           for wf in "${workflows[@]}"; do
             # The newest run on this commit counts, so a re-run of a transient failure supersedes it.
             out=$(gh run list -R "$GITHUB_REPOSITORY" --workflow "$wf" --commit "$SHA" --limit 1 \
                     --json databaseId,status,conclusion -q '.[0] | "\(.status) \(.conclusion) \(.databaseId)"')
             echo "$wf: ${out:-no run}"
             case $out in
-              "completed success "*) [ "$wf" = "Release comparator" ] && echo "COMPARATOR_RUN=${out##* }" >> "$GITHUB_ENV" ;;
+              "completed success "*)
+                if [ "$wf" = "Release comparator" ]; then echo "COMPARATOR_RUN=${out##* }" >> "$GITHUB_ENV"; fi ;;
               *) echo "Gate not green ($wf). Not tagging." >&2; exit 1 ;;
             esac
           done
